@@ -4,7 +4,8 @@ describe "Chassis Config" do
           user = ENV["ipmiuser"]
           pass = ENV["ipmipass"]
           host = ENV["ipmihost"]
-          @conn = Freeipmi.connect(user, pass, host)
+          provider = ENV["ipmiprovider"]
+          @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
 

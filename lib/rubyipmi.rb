@@ -9,19 +9,24 @@ module Rubyipmi
 
     def self.connect(user, pass, host, provider="any")
 
+      # use this variable to reduce cmd calls
+      installed = false
+
       # use the first available provider
       if provider == "any"
-        if is_provider_present?("freeipmi")
+        if is_provider_installed?("freeipmi")
           provider = "freeipmi"
-        elsif is_provider_present?("ipmitool")
+          installed = true
+        elsif is_provider_installed?("ipmitool")
           provider = "ipmitool"
+          installed = true
         else
           raise "No IPMI provider is installed, please install freeipmi or ipmitool"
         end
       end
 
       # If the provider is available create a connection object
-      if is_provider_present?(provider)
+      if installed or is_provider_installed?(provider)
         if provider == "freeipmi"
           @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host)
         elsif provider == "ipmitool"
@@ -42,7 +47,7 @@ module Rubyipmi
     end
 
     # Return true or false if the provider is available
-    def self.is_provider_present?(provider)
+    def self.is_provider_installed?(provider)
       case provider
         when "freeipmi"
           cmdpath = `which ipmipower`.strip
@@ -58,4 +63,18 @@ module Rubyipmi
       ["freeipmi", "ipmitool"]
     end
 
+    # returns true if any of the providers are installed
+    def self.provider_installed?
+      providers_installed?.length > 0
+    end
+
+    def self.providers_installed?
+      available = []
+      providers.each do |prov|
+        if is_provider_installed?(prov)
+          available << prov
+        end
+      end
+      return available
+    end
   end

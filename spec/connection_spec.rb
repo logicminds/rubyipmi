@@ -5,7 +5,8 @@ describe "Connection" do
           user = ENV["ipmiuser"]
           pass = ENV["ipmipass"]
           host = ENV["ipmihost"]
-          @conn = Freeipmi.connect(user, pass, host)
+          provider = ENV["ipmiprovider"]
+          @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
 
@@ -22,9 +23,6 @@ describe "Connection" do
     @conn.chassis.should_not be_nil
   end
 
-  it 'bmc info object is not null' do
-    @conn.bmc.info.should_not be_nil
-  end
 
 end
 #it "raises an error if host is unreachable" do

@@ -35,7 +35,7 @@ module Rubyipmi::Ipmitool
     end
 
     # set boot device from given boot device
-    def bootdevice(device, persistent=false, reboot=false)
+    def bootdevice(device, reboot=false,persistent=false)
       if config.bootdevices.include?(device)
         status = config.bootdevice(device, persistent)
         if reboot and status

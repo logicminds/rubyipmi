@@ -1,6 +1,5 @@
 = rubyipmi
 
-Description goes here.
 
 == Contributing to rubyipmi
  

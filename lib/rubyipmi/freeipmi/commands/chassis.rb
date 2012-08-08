@@ -35,7 +35,7 @@ module Rubyipmi::Freeipmi
     end
 
     # set boot device from given boot device
-    def bootdevice(device, reboot=false, persistent=false,)
+    def bootdevice(device, reboot=false, persistent=false)
       if config.bootdevices.include?(device)
         bootstatus = config.bootdevice(device, persistent)
         if reboot and bootstatus
@@ -85,16 +85,37 @@ module Rubyipmi::Freeipmi
     end
 
     def status
-       options["get-chassis-status"] = false
+       options["get-status"] = false
        value = runcmd
-       options.delete_notify("chassis-identify")
-       return { :result => @result, :value => value }
+       options.delete_notify("get-status")
+       if value
+         return parsestatus
+       else
+         return value
+       end
+
     end
 
     # A currently unsupported method to retrieve the led status
     def identifystatus
+      # TODO implement this function
       # parse out the identify status
-      status.result
+     # status.result
+    end
+
+    private
+    def parsestatus
+      statusresult = @result
+      statusvalues = {}
+      subkey = nil
+      statusresult.lines.each do |line|
+        # clean up the data from spaces
+        item = line.split(':')
+        key = item.first.strip
+        value = item.last.strip
+        statusvalues[key] = value
+      end
+      return statusvalues
     end
 
 

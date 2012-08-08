@@ -43,6 +43,9 @@ module Rubyipmi::Freeipmi
     end
 
     def bootdevices
+      # freeipmi returns a list of supported devices
+      # However, for now we will just assume the following
+      ["PXE", "HARD-DRIVE", "CD-DVD", "BIOS-SETUP"]
       # TODO return array of possible boot devices
     end
 

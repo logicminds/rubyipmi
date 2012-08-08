@@ -1,6 +1,7 @@
 require 'rubyipmi/ipmitool/errorcodes'
 require 'rubyipmi/observablehash'
 require 'rubyipmi/commands/basecommand'
+require 'rubyipmi/ipmitool/commands/basecommand'
 
 Dir[File.dirname(__FILE__) + '/commands/*.rb'].each do |file|
   require "#{file.split(".rb").first}"

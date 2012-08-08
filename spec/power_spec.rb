@@ -4,7 +4,8 @@ describe "Power" do
           user = ENV["ipmiuser"]
           pass = ENV["ipmipass"]
           host = ENV["ipmihost"]
-          @conn = Freeipmi.connect(user, pass, host)
+          provider = ENV["ipmiprovider"]
+          @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
 
@@ -17,7 +18,7 @@ describe "Power" do
   end
 
   it "test power status" do
-    @conn.chassis.power.status.should_not be_nil
+    @conn.chassis.power.status.should_not be nil
 
   end
 
