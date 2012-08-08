@@ -16,9 +16,9 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rubyipmi"
   gem.homepage = "http://github.com/logicminds/rubyipmi"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.license = "GPLv3"
+  gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
+  gem.description = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
   gem.email = "corey@logicminds.biz"
   gem.authors = ["Corey Osman"]
   # dependencies defined in Gemfile

@@ -25,7 +25,13 @@ module Rubyipmi::Freeipmi
 
     # Power cycle the system
     def cycle
-      command("cycle")
+      # if the system is off turn it on
+      if off?
+        on
+      else
+        command("cycle")
+      end
+
     end
 
     # Perform a power reset on the system

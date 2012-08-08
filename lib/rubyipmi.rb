@@ -54,4 +54,8 @@ module Rubyipmi
       return $?.success?
     end
 
+    def self.providers
+      ["freeipmi", "ipmitool"]
+    end
+
   end

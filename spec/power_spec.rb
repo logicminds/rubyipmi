@@ -36,15 +36,4 @@ describe "Power" do
     @conn.chassis.power.off?.should == true
   end
 
-  it "test to turn on uid light" do
-      #@conn.chassis.power.identifyOn.should be true
-  end
-
-  it "test to turn off uid light" do
-      #@conn.chassis.power.identifyOff.should be true
-
-  end
-
-
-
 end
