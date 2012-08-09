@@ -5,15 +5,16 @@
 
 Gem::Specification.new do |s|
   s.name = "rubyipmi"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Osman"]
-  s.date = "2012-08-08"
+  s.date = "2012-08-09"
   s.description = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
     "LICENSE.txt",
+    "README.md",
     "README.rdoc"
   ]
   s.files = [
@@ -21,6 +22,7 @@ Gem::Specification.new do |s|
     ".rspec",
     "Gemfile",
     "LICENSE.txt",
+    "README.md",
     "README.rdoc",
     "Rakefile",
     "VERSION",
@@ -36,14 +38,13 @@ Gem::Specification.new do |s|
     "lib/rubyipmi/freeipmi/errorcodes.rb",
     "lib/rubyipmi/ipmitool/commands/basecommand.rb",
     "lib/rubyipmi/ipmitool/commands/bmc.rb",
-    "lib/rubyipmi/ipmitool/commands/bmcinfo.rb",
     "lib/rubyipmi/ipmitool/commands/chassis.rb",
     "lib/rubyipmi/ipmitool/commands/chassisconfig.rb",
     "lib/rubyipmi/ipmitool/commands/power.rb",
     "lib/rubyipmi/ipmitool/connection.rb",
     "lib/rubyipmi/ipmitool/errorcodes.rb",
     "lib/rubyipmi/observablehash.rb",
-    "spec/bmc-info_spec.rb",
+    "rubyipmi.gemspec",
     "spec/bmc_spec.rb",
     "spec/chassis_config_spec.rb",
     "spec/chassis_spec.rb",
@@ -53,10 +54,10 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb"
   ]
   s.homepage = "http://github.com/logicminds/rubyipmi"
-  s.licenses = ["MIT"]
+  s.licenses = ["GPLv3"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

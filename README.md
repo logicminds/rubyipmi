@@ -19,6 +19,11 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
    Providertype: optional (ipmitool or freeipmi)
 
+   If you don't specify the provider type, Rubyipmi will detect if freeipmi or ipmitool
+   is installed and load the first tool found.  If you specify the provider type rubyipmi will only use that specific
+   provider.
+
+
 #### Use power functions (not all listed)
    <pre>
    conn.chassis.power.on
