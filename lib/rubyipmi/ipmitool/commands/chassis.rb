@@ -37,7 +37,7 @@ module Rubyipmi::Ipmitool
     # set boot device from given boot device
     def bootdevice(device, reboot=false,persistent=false)
       if config.bootdevices.include?(device)
-        status = config.bootdevice(device, persistent)
+        bootstatus = config.bootdevice(device, persistent)
         if reboot and status
           power.cycle
         end
@@ -45,43 +45,47 @@ module Rubyipmi::Ipmitool
       else
         raise "Device with name: #{device} is not a valid boot device for host #{options["hostname"]}"
       end
+      return bootstatus
     end
 
     # set boot device to pxe with option to reboot
     def bootpxe(reboot=false,persistent=false)
-      status = config.bootpxe(persistent)
+      bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and status
+      if reboot and bootstatus
         power.cycle
       end
+      return bootstatus
     end
 
     # set boot device to disk with option to reboot
     def bootdisk(reboot=false,persistent=false)
-      config.bootdisk(persistent)
+      bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and status
+      if reboot and bootstatus
         power.cycle
       end
-
+      return bootstatus
     end
 
     # set boot device to cdrom with option to reboot
     def bootcdrom(reboot=false,persistent=false)
-      config.bootcdrom(persistent)
+      bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and status
+      if reboot and bootstatus
         power.cycle
       end
+      return bootstatus
     end
 
     # boot into bios setup with option to reboot
     def bootbios(reboot=false,persistent=false)
-      config.bootbios(persistent)
+      bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and status
+      if reboot and bootstatus
         power.cycle
       end
+      return bootstatus
     end
 
     def status
