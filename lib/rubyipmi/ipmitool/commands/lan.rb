@@ -15,6 +15,8 @@ module Rubyipmi::Ipmitool
     def info
       if @info.length < 1
         parse(print)
+      else
+        @info
       end
     end
 

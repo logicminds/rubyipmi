@@ -6,8 +6,8 @@ module Rubyipmi::Freeipmi
     attr_accessor :channel
 
 
-    def initialize(opts = {})
-      @config ||= Rubyipmi::Freeipmi::BmcConfig.new(opts)
+    def initialize(config)
+      @config = config
       @info = {}
       @channel = 2
     end
@@ -15,6 +15,8 @@ module Rubyipmi::Freeipmi
     def info
       if @info.length < 1
         parse(@config.section("Lan_Conf"))
+      else
+        @info
       end
     end
 

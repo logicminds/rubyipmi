@@ -2,11 +2,12 @@ module Rubyipmi::Ipmitool
 
   class Bmc < Rubyipmi::Ipmitool::BaseCommand
 
+    attr_accessor :config
+
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
       @bmcinfo = {}
     end
-
 
     def lan
       @lan ||= Rubyipmi::Ipmitool::Lan.new(@options)

@@ -3,6 +3,7 @@ module Rubyipmi::Freeipmi
   class Bmc
 
     attr_accessor :options
+    attr_accessor :config
 
     def initialize(opts = ObservableHash.new)
       @options = opts
@@ -21,8 +22,12 @@ module Rubyipmi::Freeipmi
        information.guid
     end
 
+    def config
+      @config ||= Rubyipmi::Freeipmi::BmcConfig.new(opts)
+    end
+
     def lan
-      @lan ||= Rubyipmi::Freeipmi::Lan.new(@options)
+      @lan ||= Rubyipmi::Freeipmi::Lan.new(config)
     end
 
     def information
