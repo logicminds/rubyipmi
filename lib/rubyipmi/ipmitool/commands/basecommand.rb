@@ -2,38 +2,20 @@ module Rubyipmi::Ipmitool
 
   class BaseCommand < Rubyipmi::BaseCommand
 
-
-    def run(debug=false)
-      # will need to format according to this type of format:
-      # ipmitool -U admin -P password -H 192.168.1.41 -I lanplus chassis identify
-      @result = nil
+    def makecommand
       args = ""
       # need to format the options to ipmitool format
       @options.each do  |k,v|
         next if k == "cmdargs"
         args << "-#{k} #{v} "
-
       end
       # since ipmitool requires commands to be in specific order
       args << " " + options["cmdargs"]
 
-      if debug
-        return "#{cmd} #{args}"
-      else
-        @lastcall = "#{cmd} #{args}"
-        @result = `#{cmd} #{args} 2>&1`
-      end
-      #puts "Last Call: #{@lastcall}"
-
-
-      # sometimes the command tool doesnt return the correct result
-      process_status = validate_status($?)
-
-      if not process_status
-        throwError
-      end
-      return process_status
+      return "#{cmd} #{args}"
     end
+
+
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
     # If a fix is found it is applied to the options hash, and then the last run command is retried
     # until all the fixes are exhausted or a error not defined in the errorcodes is found

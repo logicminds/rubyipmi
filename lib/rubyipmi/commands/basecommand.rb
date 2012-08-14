@@ -9,6 +9,13 @@ module Rubyipmi
     attr_accessor :options
     attr_reader :lastcall
 
+    def makecommand
+      # override in subclass
+    end
+
+    def to_s
+      makecommand
+    end
 
     def initialize(commandname, opts = ObservableHash.new)
       # This will locate the command path or raise an error if not found
@@ -80,21 +87,13 @@ module Rubyipmi
 
     def run(debug=false)
       @result = nil
-      # need to format the options to freeipmi format
-        args = @options.collect { |k, v|
-          if not v
-            "--#{k}"
-          else
-            "--#{k}=#{v}"
-          end
-        }.join(" ")
-
+      command = makecommand
       if debug
-        return "#{cmd} #{args}"
-      else
-        @lastcall = "#{cmd} #{args}"
-        @result = `#{cmd} #{args} 2>&1`
+        return command
       end
+
+      @lastcall = "#{command}"
+      @result = `#{command} 2>&1`
       #puts "Last Call: #{@lastcall}"
 
       # sometimes the command tool doesnt return the correct result

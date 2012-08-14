@@ -2,6 +2,18 @@ module Rubyipmi::Freeipmi
 
   class BaseCommand < Rubyipmi::BaseCommand
 
+    def makecommand
+      # need to format the options to freeipmi format
+      args = @options.collect { |k, v|
+        if not v
+          "--#{k}"
+        else
+          "--#{k}=#{v}"
+        end
+      }.join(" ")
+
+      return "#{cmd} #{args}"
+    end
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
