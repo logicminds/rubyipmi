@@ -10,8 +10,8 @@ module Rubyipmi::Ipmitool
     # Turn the led light on / off or with a delay
     def identify(status=false, delay=0)
       if status
-        if delay <= 0
-          options["cmdargs"] = "chassis identify -1"
+        if not delay.between?(1,255)
+          options["cmdargs"] = "chassis identify 255"
         else
           options["cmdargs"] = "chassis identify #{delay}"
         end
