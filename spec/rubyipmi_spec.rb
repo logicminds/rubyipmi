@@ -14,20 +14,32 @@ describe "rubyipmi" do
   end
 
   it "should test if a provider is present" do
-    Rubyipmi.is_provider_installed?("ipmitool").should_not be false
-    Rubyipmi.is_provider_installed?("freeipmi").should_not be false
+    value = Rubyipmi.is_provider_installed?("ipmitool")
+    value2 = Rubyipmi.is_provider_installed?("freeipmi")
+    (value|value2).should_not be false
 
   end
 
-  it "should create a connection object if freeipmi is present" do
-    conn = Rubyipmi.connect(@user, @pass, @host, "freeipmi")
-    conn.should be instance_of(Rubyipmi::Freeipmi::Connection)
-  end
+    it "should create a connection object if freeipmi is present" do
+      begin
+        conn = Rubyipmi.connect(@user, @pass, @host, "freeipmi")
+        conn.kind_of?(Rubyipmi::Freeipmi::Connection).should be_true
+      rescue Exception => e
+        e.message.match(/freeipmi\ is\ not\ installed/).should be_true
+        puts "#{e.message}"
+      end
+    end
 
-  it "should create a connection object if ipmitool is present" do
-    conn = Rubyipmi.connect(@user, @pass, @host, "ipmitool")
-    conn.should be instance_of(Rubyipmi::Ipmitool::Connection)
-  end
+    it "should create a connection object if ipmitool is present" do
+      begin
+        conn = Rubyipmi.connect(@user, @pass, @host, "ipmitool")
+      rescue Exception => e
+        e.message.match(/ipmitool\ is\ not\ installed/).should be_true
+        puts "#{e.message}"
+        return true
+      end
+      conn.kind_of?(Rubyipmi::Ipmitool::Connection).should be_true
+    end
 
   it "should not create a connection object if a provider is not present" do
     begin

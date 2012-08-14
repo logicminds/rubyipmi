@@ -21,6 +21,9 @@ module Rubyipmi::Freeipmi
        information.guid
     end
 
+    def lan
+      @lan ||= Rubyipmi::Freeipmi::Lan.new(@options)
+    end
 
     def information
       @info ||= Rubyipmi::Freeipmi::BmcInfo.new(@options)

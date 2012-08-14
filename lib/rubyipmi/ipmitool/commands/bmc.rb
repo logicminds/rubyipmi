@@ -7,6 +7,11 @@ module Rubyipmi::Ipmitool
       @bmcinfo = {}
     end
 
+
+    def lan
+      @lan ||= Rubyipmi::Ipmitool::Lan.new(@options)
+    end
+
     def info
       if @bmcinfo.length > 0
         @bmcinfo

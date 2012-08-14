@@ -15,7 +15,7 @@ module Rubyipmi::Ipmitool
 
     # Set the boot device
     def bootdevice(device, persistent=false)
-      @options["cmdargs"] = "bootdev #{device}"
+      @options["cmdargs"] = "chassis bootdev #{device}"
       value = runcmd
       @options.delete_notify("cmdargs")
       return value
@@ -30,22 +30,22 @@ module Rubyipmi::Ipmitool
 
     # shortcut to set boot device to pxe
     def bootpxe(persistent=false)
-      bootdevice = "pxe"
+      bootdevice("pxe")
     end
 
     # shortcut to set boot device to disk
     def bootdisk(persistent=false)
-      bootdevice = "disk"
+      bootdevice("disk")
     end
 
     # shortcut to set boot device to cdrom
     def bootcdrom(persistent=false)
-      bootdevice = "cdrom"
+      bootdevice("cdrom")
     end
 
     # shortcut to boot into bios setup
     def bootbios(persistent=false)
-      bootdevice = "bios"
+      bootdevice("bios")
     end
 
   end
