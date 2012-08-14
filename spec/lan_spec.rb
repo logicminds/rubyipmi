@@ -33,6 +33,15 @@ describe "Lan" do
     @conn.bmc.lan.dhcp?.should_not be nil
   end
 
+  it "static should be opposite of dhcp" do
+    @conn.bmc.lan.dhcp?.should_not == @conn.bmc.lan.static?
+  end
+
+  it "dhcp should be opposite of static" do
+      @conn.bmc.lan.static?.should_not == @conn.bmc.lan.dhcp?
+  end
+
+
   it "should set gateway address" do
     gw = @conn.bmc.lan.gateway
         @conn.bmc.lan.set_gateway(gw).should_not be nil

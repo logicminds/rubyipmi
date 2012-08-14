@@ -24,6 +24,10 @@ module Rubyipmi::Freeipmi
           if @result.length > 23
             return false
           end
+        when "bmc-config"
+          if @result.length > 100
+            return true
+          end
       end
       return exitstatus.success?
 

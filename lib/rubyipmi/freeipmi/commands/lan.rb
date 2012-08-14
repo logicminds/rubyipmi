@@ -4,10 +4,11 @@ module Rubyipmi::Freeipmi
 
     attr_accessor :info
     attr_accessor :channel
+    attr_accessor :config
 
+    def initialize(opts)
+      @config = Rubyipmi::Freeipmi::BmcConfig.new(opts)
 
-    def initialize(config)
-      @config = config
       @info = {}
       @channel = 2
     end
@@ -24,7 +25,7 @@ module Rubyipmi::Freeipmi
       if @info.length < 1
         parse(@config.section("Lan_Conf"))
       end
-      @info["ip address source"].match(/dhcp/i) != nil
+      @info["ip_address_source"].match(/dhcp/i) != nil
     end
 
     def static?
@@ -93,9 +94,10 @@ module Rubyipmi::Freeipmi
     def parse(landata)
       landata.lines.each do |line|
         # clean up the data from spaces
-        next if line.start_with?("#")
-        item = line.split(/\t/)
-        next if item.length > 2
+        next if line.match(/#+/)
+        next if line.match(/Section/i)
+        line.gsub!(/\t/, '')
+        item = line.split(/\s+/)
         key = item.first.strip.downcase
         value = item.last.strip
         @info[key] = value

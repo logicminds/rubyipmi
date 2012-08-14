@@ -23,11 +23,11 @@ module Rubyipmi::Freeipmi
     end
 
     def config
-      @config ||= Rubyipmi::Freeipmi::BmcConfig.new(opts)
+      @config ||= Rubyipmi::Freeipmi::BmcConfig.new(options)
     end
 
     def lan
-      @lan ||= Rubyipmi::Freeipmi::Lan.new(config)
+      @lan ||= Rubyipmi::Freeipmi::Lan.new(options)
     end
 
     def information
