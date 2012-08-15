@@ -68,7 +68,7 @@ module Rubyipmi
         # The errorcode code hash contains the fix
         fix = ErrorCodes.code[result]
         if not fix
-          raise "Ipmi Fix not found, email author with error: #{result}"
+          raise "#{result}"
         else
           @options.merge_notify!(fix)
           # retry the last called method
