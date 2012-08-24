@@ -37,6 +37,10 @@ module Rubyipmi
         @bmc ||= Rubyipmi::Ipmitool::Bmc.new(@options)
       end
 
+      def sensors
+        @sensors ||= Rubyipmi::Ipmitool::Sensors.new(@options)
+      end
+
       def chassis
         @chassis ||= Rubyipmi::Ipmitool::Chassis.new(@options)
       end

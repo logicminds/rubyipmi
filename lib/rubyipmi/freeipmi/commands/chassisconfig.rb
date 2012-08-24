@@ -38,8 +38,8 @@ module Rubyipmi::Freeipmi
       end
     end
 
-    def bootdevice(device, persistent=false)
-      setBootFlag("Boot_Device", device)
+    def bootdevice(device, persistent)
+      setBootFlag("Boot_Device", device,persistent)
     end
 
     def bootdevices
@@ -65,28 +65,28 @@ module Rubyipmi::Freeipmi
 
 
     # shortcut to set boot device to pxe
-    def bootpxe(persistent=false)
-      bootdevice("PXE")
+    def bootpxe(persistent=true)
+      bootdevice("PXE",persistent)
     end
 
     # shortcut to set boot device to disk
-    def bootdisk(persistent=false)
-      bootdevice("HARD-DRIVE")
+    def bootdisk(persistent=true)
+      bootdevice("HARD-DRIVE",persistent)
     end
 
     # shortcut to set boot device to cdrom
-    def bootcdrom(persistent=false)
-      bootdevice("CD-DVD")
+    def bootcdrom(persistent=true)
+      bootdevice("CD-DVD",persistent)
     end
 
     # shortcut to boot into bios setup
-    def bootbios(persistent=false)
-      bootdevice("BIOS-SETUP")
+    def bootbios(persistent=true)
+      bootdevice("BIOS-SETUP",persistent)
     end
 
     private
 
-    def setBootFlag(key,flag, persistent=false)
+    def setBootFlag(key,flag, persistent)
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
       @options.delete_notify("key-pair")

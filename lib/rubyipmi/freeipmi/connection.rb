@@ -38,6 +38,10 @@ module Rubyipmi
         @chassis ||= Rubyipmi::Freeipmi::Chassis.new(@options)
       end
 
+      def sensors
+        @sensors ||= Rubyipmi::Freeipmi::Sensors.new(@options)
+      end
+
     end
   end
 end

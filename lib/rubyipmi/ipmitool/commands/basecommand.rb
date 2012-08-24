@@ -25,7 +25,7 @@ module Rubyipmi::Ipmitool
         fix = Rubyipmi::Ipmitool::ErrorCodes.code[result]
 
         if not fix
-          raise "Ipmi Fix not found, email author with error: #{result}"
+          raise "#{result}"
         else
           @options.merge_notify!(fix)
           # retry the last called method
