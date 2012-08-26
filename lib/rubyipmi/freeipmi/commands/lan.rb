@@ -49,7 +49,7 @@ module Rubyipmi::Freeipmi
       @info["mac_address"]
     end
 
-    def subnet
+    def netmask
       if @info.length < 1
         parse(@config.section("Lan_Conf"))
       end

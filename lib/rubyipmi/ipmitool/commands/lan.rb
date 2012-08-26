@@ -51,7 +51,7 @@ module Rubyipmi::Ipmitool
       @info["mac address"]
     end
 
-    def subnet
+    def netmask
       if @info.length < 1
         parse(print)
       end
