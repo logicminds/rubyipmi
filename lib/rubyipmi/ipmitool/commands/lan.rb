@@ -79,21 +79,21 @@ module Rubyipmi::Ipmitool
   #    return value
   #  end
 
-    def set_ip(address, static=true)
+    def ip=(address)
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
       return value
     end
 
-    def set_subnet(subnet)
-      @options["cmdargs"] = "lan set #{channel} netmask #{subnet}"
+    def netmask=(mask)
+      @options["cmdargs"] = "lan set #{channel} netmask #{mask}"
       value = runcmd
       @options.delete_notify("cmdargs")
       return value
     end
 
-    def set_gateway(address)
+    def gateway=(address)
       @options["cmdargs"] = "lan set #{channel} defgw #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")

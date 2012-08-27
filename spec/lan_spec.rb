@@ -17,8 +17,8 @@ describe "Lan" do
       @conn.bmc.lan.ip.should_not be nil
   end
 
-  it "get subnet" do
-    @conn.bmc.lan.subnet.should_not be nil
+  it "get netmask" do
+    @conn.bmc.lan.netmask.should_not be nil
   end
 
   it "get gateway address" do
@@ -44,17 +44,17 @@ describe "Lan" do
 
   it "should set gateway address" do
     gw = @conn.bmc.lan.gateway
-        @conn.bmc.lan.set_gateway(gw).should_not be nil
+    (@conn.bmc.lan.gateway = gw).should_not be nil
   end
 
-  it "should set subnet" do
-    netmask = @conn.bmc.lan.subnet
-    @conn.bmc.lan.set_subnet(netmask).should_not be nil
+  it "should set netmask" do
+    netmask = @conn.bmc.lan.netmask
+    (@conn.bmc.lan.netmask = netmask).should_not be nil
   end
 
   it "should set ip address" do
     ip = @conn.bmc.lan.ip
-    @conn.bmc.lan.set_ip(ip).should_not be nil
+    (@conn.bmc.lan.ip = ip).should_not be nil
   end
 
 

@@ -2,16 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Sensors" do
 
+  attr_accessor :provider
   before :each do
     user = ENV["ipmiuser"]
     pass = ENV["ipmipass"]
     host = ENV["ipmihost"]
     provider = ENV["ipmiprovider"]
-    if provider == "ipmitool"
-      include Rubyipmi::Ipmitool
-    else
-      include Rubyipmi::Freeipmi
-    end
     @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
@@ -23,7 +19,8 @@ describe "Sensors" do
   it "test should refresh data" do
     old = @conn.sensors.list
     @conn.sensors.refresh
-    @conn.sensors.list.should_not equal?(old)
+    new = @conn.sensors.list
+    old.should_not equal(new)
   end
 
   it "test should return count greater than 1" do
@@ -43,7 +40,11 @@ describe "Sensors" do
   end
 
   it "test should create new Sensor" do
-    Sensor.new("fakesensor").should_not be nil
+    if provider == "ipmitool"
+      Rubyipmi::Ipmitool::Sensor.new("fakesensor").should_not be nil
+    else
+      Rubyipmi::Freeipmi::Sensor.new("fakesensor").should_not be nil
+    end
   end
 
   it "test missing method with known good method" do

@@ -83,12 +83,14 @@ module Rubyipmi::Ipmitool
         sensor[:value] = data[1].strip
         sensor[:unit] = data[2].strip
         sensor[:status] = data[3].strip
-        sensor[:lower_nonrec] = data[4].strip
-        sensor[:lower_crit] = data[5].strip
-        sensor[:lower_noncrit] = data[6].strip
-        sensor[:upper_noncrit] = data[7].strip
-        sensor[:upper_crit] = data[8].strip
-        sensor[:upper_nonrec] = data[9].strip
+        sensor[:type] = nil
+        sensor[:state] = nil
+        #sensor[:lower_nonrec] = data[4].strip
+        #sensor[:lower_crit] = data[5].strip
+        #sensor[:lower_noncrit] = data[6].strip
+        #sensor[:upper_noncrit] = data[7].strip
+        #sensor[:upper_crit] = data[8].strip
+        #sensor[:upper_nonrec] = data[9].strip
         sensorlist[sensor[:name]] = sensor
 
       end

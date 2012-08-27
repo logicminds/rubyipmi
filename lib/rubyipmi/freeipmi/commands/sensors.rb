@@ -4,8 +4,8 @@ module Rubyipmi::Freeipmi
 
     def initialize(opts = ObservableHash.new)
       super("ipmi-sensors", opts)
-      @options["--no-header-output"] = false
-      @options["--output-sensor-state"] = false
+      @options["no-header-output"] = false
+      @options["output-sensor-state"] = false
     end
 
     def refresh
@@ -82,11 +82,12 @@ module Rubyipmi::Freeipmi
         data = line.split(/\|/)
         # remove number column
         data.shift
-        sensor = Sensor.new(data.first.strip)
+        sensor = Sensor.new(data[0].strip)
         sensor[:type] = data[1].strip
-        sensor[:value] = data[2].strip
-        sensor[:unit] = data[3].strip
-        sensor[:status] = data[4].strip
+        sensor[:state] = data[2].strip
+        sensor[:value] = data[3].strip
+        sensor[:unit] = data[4].strip
+        sensor[:status] = data[5].strip
         sensorlist[sensor[:name]] = sensor
 
       end

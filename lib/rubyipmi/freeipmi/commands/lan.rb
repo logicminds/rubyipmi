@@ -75,15 +75,15 @@ module Rubyipmi::Freeipmi
   #
   #  end
 
-    def set_ip(address, static=true)
+    def ip=(address)
       @config.setsection("Lan_Conf", "IP_Address", address)
     end
 
-    def set_subnet(subnet)
-      @config.setsection("Lan_Conf", "Subnet_Mask", subnet)
+    def netmask=(netmask)
+      @config.setsection("Lan_Conf", "Subnet_Mask", netmask)
     end
 
-    def set_gateway(address)
+    def gateway=(address)
       @config.setsection("Lan_Conf", "Default_Gateway_IP_Address", address)
     end
 
