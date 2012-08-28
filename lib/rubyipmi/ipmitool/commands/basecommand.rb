@@ -2,6 +2,15 @@ module Rubyipmi::Ipmitool
 
   class BaseCommand < Rubyipmi::BaseCommand
 
+    def setpass
+      super
+      @options["f"] = @passfile.path
+      @passfile.puts "#{@options["P"]}"
+      @passfile.close
+
+
+    end
+
     def makecommand
       args = ""
       # need to format the options to ipmitool format
@@ -9,6 +18,9 @@ module Rubyipmi::Ipmitool
         next if k == "cmdargs"
         args << "-#{k} #{v} "
       end
+      # must remove from command line as its handled via conf file
+      args.delete("-P")
+
       # since ipmitool requires commands to be in specific order
       args << " " + options["cmdargs"]
 

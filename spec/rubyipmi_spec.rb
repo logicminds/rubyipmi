@@ -53,6 +53,10 @@ describe "rubyipmi" do
     Rubyipmi.providers_installed?.length.should be > 0
   end
 
+  it "test printdiag report" do
+    Rubyipmi.printdiag(@user, @pass, @host).should be_true
+  end
+
 
 
 end

@@ -1,9 +1,11 @@
 require "observer"
+require 'tempfile'
 
 module Rubyipmi
 
   class BaseCommand
     include Observable
+
 
     attr_reader :cmd
     attr_accessor :options
@@ -11,6 +13,15 @@ module Rubyipmi
 
     def makecommand
       # override in subclass
+    end
+
+    def setpass
+      @passfile = Tempfile.new('')
+      @passfile.open
+    end
+
+    def removepass
+      @passfile.close!
     end
 
     def to_s
@@ -86,6 +97,7 @@ module Rubyipmi
 
 
     def run(debug=false)
+      setpass
       @result = nil
       command = makecommand
       if debug
@@ -94,6 +106,7 @@ module Rubyipmi
 
       @lastcall = "#{command}"
       @result = `#{command} 2>&1`
+      removepass
       #puts "Last Call: #{@lastcall}"
 
       # sometimes the command tool doesnt return the correct result
@@ -108,12 +121,14 @@ module Rubyipmi
 
 
     def run_without_opts(args=[], debug=false)
+      setpass
       @result = ""
       if debug
         return "#{cmd} #{args.join(" ")}"
       else
         @lastcall = "#{cmd} #{args.join(" ")}"
         @result = `#{cmd} #{args.join(" ")} 2>&1`
+        removepass
       end
 
       process_status = validate_status($?)

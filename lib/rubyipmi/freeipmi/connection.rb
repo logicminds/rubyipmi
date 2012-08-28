@@ -30,6 +30,10 @@ module Rubyipmi
         return "freeipmi"
       end
 
+      def fru
+        @fru ||= Rubyipmi::Freeipmi::Fru.new(@options)
+      end
+
       def bmc
         @bmc ||= Rubyipmi::Freeipmi::Bmc.new(@options)
       end

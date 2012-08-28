@@ -1,5 +1,7 @@
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
+require 'net/smtp'
+
 
 module Rubyipmi
 
@@ -77,4 +79,13 @@ module Rubyipmi
       end
       return available
     end
-  end
+
+    def self.printdiag(user, pass, host)
+      @conn = Rubyipmi::connect(user, pass, host)
+      puts "Product: #{@conn.fru.product}"
+      puts "Manufacturer: #{@conn.fru.manufacturer}"
+      puts "BMC Info #{@conn.bmc.info.inspect}\n"
+      puts "Please email to corey@logicminds.biz when troubleshooting"
+      return true
+    end
+end

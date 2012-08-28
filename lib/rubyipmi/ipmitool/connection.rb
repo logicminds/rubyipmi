@@ -29,6 +29,10 @@ module Rubyipmi
         #getWorkArounds
       end
 
+      def fru
+        @fru ||= Rubyipmi::Ipmitool::Fru.new(@options)
+      end
+
       def provider
         return "ipmitool"
       end

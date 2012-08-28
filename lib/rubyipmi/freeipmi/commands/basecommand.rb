@@ -2,6 +2,15 @@ module Rubyipmi::Freeipmi
 
   class BaseCommand < Rubyipmi::BaseCommand
 
+    def setpass
+      super
+      @options["config-file"] = @passfile.path
+      @passfile.puts "password #{@options["password"]}\n"
+      @passfile.puts "username #{@options["username"]}"
+
+      @passfile.close
+    end
+
     def makecommand
       # need to format the options to freeipmi format
       args = @options.collect { |k, v|
@@ -11,6 +20,10 @@ module Rubyipmi::Freeipmi
           "--#{k}=#{v}"
         end
       }.join(" ")
+      # must remove from command line as its handled via conf file
+      args.delete("--password")
+      args.delete("--username")
+
 
       return "#{cmd} #{args}"
     end
