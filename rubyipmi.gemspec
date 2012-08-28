@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rubyipmi"
-  s.version = "0.4.0"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Osman"]
-  s.date = "2012-08-27"
+  s.date = "2012-08-28"
   s.description = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
     "lib/rubyipmi/freeipmi/commands/bmcinfo.rb",
     "lib/rubyipmi/freeipmi/commands/chassis.rb",
     "lib/rubyipmi/freeipmi/commands/chassisconfig.rb",
+    "lib/rubyipmi/freeipmi/commands/fru.rb",
     "lib/rubyipmi/freeipmi/commands/lan.rb",
     "lib/rubyipmi/freeipmi/commands/power.rb",
     "lib/rubyipmi/freeipmi/commands/sensors.rb",
@@ -44,6 +45,7 @@ Gem::Specification.new do |s|
     "lib/rubyipmi/ipmitool/commands/bmc.rb",
     "lib/rubyipmi/ipmitool/commands/chassis.rb",
     "lib/rubyipmi/ipmitool/commands/chassisconfig.rb",
+    "lib/rubyipmi/ipmitool/commands/fru.rb",
     "lib/rubyipmi/ipmitool/commands/lan.rb",
     "lib/rubyipmi/ipmitool/commands/power.rb",
     "lib/rubyipmi/ipmitool/commands/sensors.rb",
@@ -55,6 +57,7 @@ Gem::Specification.new do |s|
     "spec/chassis_config_spec.rb",
     "spec/chassis_spec.rb",
     "spec/connection_spec.rb",
+    "spec/fru_spec.rb",
     "spec/lan_spec.rb",
     "spec/power_spec.rb",
     "spec/rubyipmi_spec.rb",
