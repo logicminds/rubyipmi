@@ -40,6 +40,24 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
    </pre>
 
+
+#### Sensors
+    <pre>
+    conn.sensors.names
+    conn.sensors.list
+    conn.sensors.<sensor name>
+
+    </pre>
+
+#### Fru
+    <pre>
+    conn.fru.list
+    conn.fru.serial
+    conn.fru.manufacturer
+    conn.fru.product
+
+    </pre>
+
 ## Testing
 There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
 In order to perform use the following steps.
@@ -53,9 +71,12 @@ DO NOT PERFORM THESE TEST ON ANY PRODUCTION SYSTEM.  THESE TESTS WILL TURN OFF T
 4.  report any failures with your make/model/firmware revision to corey@logicminds.biz
 
  ## Security
- Currently security is not enforced in the development process.  Furthermore, the rubyipmi library uses the same methods
- currently provided by the C based freeipmi command line tools.  This includes the use of freeipmi.conf file.  You can easily
- store credentials in this file which will be included automatically via the command line.
+ The only security used throughout the library is the use of temporary password files that store the password while
+ the command is being executed.  This password file is created and deleted on the fly with every library call.
+ The password will not be shown in any logs or process lists due to this enhancement.  The filename is a long random string
+ as is the folder name so it would be difficult to guess the password file.  If for some reason a command takes a long
+ time to run anyone could get the location of the file but the file is 0600 so it should not be readable by anyone outside
+ of the process.
 
 
 ## How the library works
