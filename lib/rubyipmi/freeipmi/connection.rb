@@ -4,7 +4,7 @@ require 'rubyipmi/commands/basecommand'
 require 'rubyipmi/freeipmi/commands/basecommand'
 
 Dir[File.dirname(__FILE__) + '/commands/*.rb'].each do |file|
-  require "#{file.split(".rb").first}"
+  require file
 end
 module Rubyipmi
   module Freeipmi
