@@ -9,7 +9,11 @@ module Rubyipmi::Ipmitool
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
       @info = {}
-      @channel = 2
+      if @options.has_key?("H")
+        @channel = 2
+      else
+        @channel = 1
+      end
 
     end
 
@@ -72,6 +76,24 @@ module Rubyipmi::Ipmitool
   #    @options.delete_notify("cmdargs")
   #    return value
   #  end
+
+    def enable
+
+    end
+
+    def disable
+
+    end
+
+    def tcpinfo
+      {:ip => ip, :netmask =>netmask, :gateway => gateway}
+    end
+
+    def tcpinfo=(args)
+      ip      = args[:ip]
+      netmask = args[:netmask]
+      gateway = args[:gateway]
+    end
 
     def ip=(address)
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
