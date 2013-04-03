@@ -25,38 +25,38 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 
 #### Use power functions (not all listed)
-   <pre>
+   `
    conn.chassis.power.on
    conn.chassis.power.off
    conn.chassis.power.on?
    conn.chassis.power.off?
    conn.chassis.power.cycle
-   </pre>
+   `
 
 #### Boot to specific device
-   <pre>
+  `
    conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
    conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
 
-   </pre>
+   `
 
 
 #### Sensors
-    <pre>
+    `
     conn.sensors.names
     conn.sensors.list
     conn.sensors.<sensor name>
 
-    </pre>
+    `
 
 #### Fru
-    <pre>
+    `
     conn.fru.list
     conn.fru.serial
     conn.fru.manufacturer
     conn.fru.product
 
-    </pre>
+    `
 
 ## Testing
 There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
@@ -70,7 +70,7 @@ DO NOT PERFORM THESE TEST ON ANY PRODUCTION SYSTEM.  THESE TESTS WILL TURN OFF T
 3.  rake ipmiuser=ipmiuser ipmipass=ipmiuserpass ipmihost=192.168.1.22 ipmiprovider=freeipmi   (fill in your your details)
 4.  report any failures with your make/model/firmware revision to corey@logicminds.biz
 
- ## Security
+## Security
  The only security used throughout the library is the use of temporary password files that store the password while
  the command is being executed.  This password file is created and deleted on the fly with every library call.
  The password will not be shown in any logs or process lists due to this enhancement.  The filename is a long random string
