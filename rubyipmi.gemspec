@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rubyipmi"
-  s.version = "0.5.0"
+  s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Osman"]
-  s.date = "2012-08-28"
+  s.date = "2013-04-03"
   s.description = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
