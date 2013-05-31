@@ -18,6 +18,10 @@ module Rubyipmi::Freeipmi
       end
     end
 
+    def reset(type='cold')
+      device.reset(type)
+    end
+
     def guid
        information.guid
     end
@@ -31,7 +35,12 @@ module Rubyipmi::Freeipmi
     end
 
     def information
-      @info ||= Rubyipmi::Freeipmi::BmcInfo.new(@options)
+      @info ||= Rubyipmi::Freeipmi::BmcInfo.new(options)
     end
+
+    def device
+      @bmcdevice ||= Rubyipmi::Freeipmi::BmcDevice.new(options)
+    end
+
   end
 end
