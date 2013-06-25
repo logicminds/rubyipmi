@@ -49,6 +49,14 @@ module Rubyipmi::Ipmitool
 
     end
 
+    # Return FW version of BMC
+    def version
+      if @bmcinfo.length < 1
+        retrieve
+      end
+      @bmcinfo["Firmware Revision"]
+    end
+
     # Some sample data for info
     # Device ID                 : 17
     # Device Revision           : 1

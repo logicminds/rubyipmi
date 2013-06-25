@@ -43,4 +43,8 @@ describe "Bmc" do
     @conn.bmc.guid.should_not be_nil
   end
 
+  it "is able to retrieve the BMC firmware version" do
+    @conn.bmc.version.should_not be_nil
+  end
+
 end
