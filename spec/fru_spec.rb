@@ -24,6 +24,10 @@ describe "Fru" do
      @conn.fru.product.should_not be nil
    end
 
+   it "test should return asset tag" do
+     @conn.fru.asset_tag.should_not be nil
+   end
+
    it "test should return fru list" do
      @conn.fru.list.length.should be > 1
    end

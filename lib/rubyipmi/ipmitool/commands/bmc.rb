@@ -21,6 +21,19 @@ module Rubyipmi::Ipmitool
       end
     end
 
+    # reset the bmc device, useful for troubleshooting
+    def reset(type='cold')
+      if ['cold', 'warm'].include?(type)
+         @options["cmdargs"] = "bmc reset #{type}"
+         value = runcmd()
+         @options.delete_notify("cmdargs")
+         return value
+      else
+        raise "reset type: #{type} is not a valid choice, use warm or cold"
+      end
+
+    end
+
     def guid
       @options["cmdargs"] = "bmc guid"
       value = runcmd()
@@ -34,6 +47,14 @@ module Rubyipmi::Ipmitool
         }
       end
 
+    end
+
+    # Return FW version of BMC
+    def version
+      if @bmcinfo.length < 1
+        retrieve
+      end
+      @bmcinfo["Firmware Revision"]
     end
 
     # Some sample data for info

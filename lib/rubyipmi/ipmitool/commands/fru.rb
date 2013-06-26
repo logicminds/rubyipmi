@@ -12,8 +12,13 @@ module Rubyipmi::Ipmitool
     end
 
     # returns the serial of the board
+    def asset_tag
+       list["product_asset_tag"]
+    end
+
+    # returns the serial of the board
     def serial
-       list["board_serial"]
+       list["product_serial"]
     end
 
     # returns the manufacturer of the server
