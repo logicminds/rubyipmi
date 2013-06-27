@@ -23,11 +23,15 @@ module Rubyipmi::Ipmitool
       sensors.keys
     end
 
+    def get(sensor)
+      sensors[sensor]
+    end
+
     def fanlist(refreshdata=false)
       refresh if refreshdata
       flist = []
       values = sensors.each do |sensor|
-        match = sensor.first.match(/(fan)_(\d+)/)
+        match = sensor.first.match(/(fan)(\d+)/)
         next if match.nil?
         if match[1] == "fan"
           num = (match[2].to_i) -1

@@ -24,7 +24,7 @@ module Rubyipmi
         @options["U"] = user if user
         @options["P"] = pass if pass
         # default to IPMI 2.0 communication
-        #@options["I"] = "lanplus"
+        @options["I"] = "lanplus"
 
         #getWorkArounds
       end
