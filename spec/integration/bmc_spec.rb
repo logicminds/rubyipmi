@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe "Bmc" do
 
   before :each do
@@ -6,7 +6,7 @@ describe "Bmc" do
             pass = ENV["ipmipass"]
             host = ENV["ipmihost"]
             provider = ENV["ipmiprovider"]
-            @conn = Rubyipmi.connect(user, pass, host, provider)
+            @conn = Rubyipmi.connect(user, pass, host, provider, true)
 
   end
 
