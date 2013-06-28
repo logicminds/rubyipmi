@@ -23,8 +23,9 @@ module Rubyipmi
         # So they are not required
         @options["U"] = user if user
         @options["P"] = pass if pass
-        # default to IPMI 2.0 communication
-        #@options["I"] = "lanplus"
+        # default to IPMI 2.0 communication, this means that older devices will not work
+        # Those old servers should be recycled by now, as the 1.0, 1.5 spec came out in 2005ish and is 2013.
+        @options["I"] = "lanplus"
 
         #getWorkArounds
       end
