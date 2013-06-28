@@ -9,7 +9,7 @@ module Rubyipmi
   # The connect method will create a connection object based the provider type passed in
   # If provider is left blank the function will use the first available provider
 
-    def self.connect(user, pass, host, provider="any")
+    def self.connect(user, pass, host, provider="any",debug=false)
 
       # use this variable to reduce cmd calls
       installed = false
@@ -30,9 +30,9 @@ module Rubyipmi
       # If the provider is available create a connection object
       if installed or is_provider_installed?(provider)
         if provider == "freeipmi"
-          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host)
+          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, debug=false)
         elsif provider == "ipmitool"
-          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host)
+          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, debug=false)
         else
           raise "Incorrect provider given, must use freeipmi or ipmitool"
         end

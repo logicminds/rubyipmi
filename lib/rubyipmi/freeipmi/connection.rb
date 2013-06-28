@@ -14,7 +14,7 @@ module Rubyipmi
       attr_accessor :options
 
 
-      def initialize(user, pass, host)
+      def initialize(user, pass, host,debug=false)
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["hostname"] = host
