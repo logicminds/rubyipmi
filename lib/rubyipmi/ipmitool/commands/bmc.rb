@@ -49,29 +49,6 @@ module Rubyipmi::Ipmitool
 
     end
 
-    # Some sample data for info
-    # Device ID                 : 17
-    # Device Revision           : 1
-    # Firmware Revision         : 2.9
-    # IPMI Version              : 2.0
-    # Manufacturer ID           : 11
-    # Manufacturer Name         : Hewlett-Packard
-    # Product ID                : 8192 (0x2000)
-    # Product Name              : Unknown (0x2000)
-    # Device Available          : yes
-    # Provides Device SDRs      : yes
-    # Additional Device Support :
-    #     Sensor Device
-    #     SDR Repository Device
-    #     SEL Device
-    #     FRU Inventory Device
-    # Aux Firmware Rev Info     :
-    #     0x00
-    #     0x00
-    #     0x00
-    #     0x30
-
-
     # This function will get the bmcinfo and return a hash of each item in the info
     def retrieve
       @options["cmdargs"] = "bmc info"

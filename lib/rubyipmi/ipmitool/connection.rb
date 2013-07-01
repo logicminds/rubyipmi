@@ -12,10 +12,12 @@ module Rubyipmi
 
     class Connection
 
-      attr_accessor :options
+      attr_accessor :options, :debug
+      attr_reader :debug
 
 
-      def initialize(user, pass, host,debug=false)
+      def initialize(user, pass, host,debug_value=false)
+        @debug = debug_value
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["H"] = host

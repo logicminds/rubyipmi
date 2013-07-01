@@ -1,15 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-
-
-describe "Bmc" do
+describe :Connection do
 
   before :each do
             provider = "ipmitool"
             user = "ipmiuser"
             pass = "impipass"
             host = "ipmihost"
-            @conn = Rubyipmi.connect(user, pass, host, provider)
+            @conn = Rubyipmi.connect(user, pass, host, provider, true)
 
   end
 
@@ -42,10 +40,13 @@ describe "Bmc" do
     @conn.chassis.should_not be_nil
   end
 
-  it 'should return a string of the base command' do
-    @conn.chassis.to_s.should eq('help')
+  it "provider should return ipmitool" do
+    @conn.provider.should eq("ipmitool")
   end
 
+  it "debug value should be true" do
+    @conn.debug.should be_true
+  end
 
 
 
