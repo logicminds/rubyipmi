@@ -8,63 +8,42 @@ module Rubyipmi::Ipmitool
 
     def refresh
       @sensors = nil
-      sensors
+      list
     end
 
     def list
-      sensors
+      @sensors ||= parse(getsensors)
     end
 
     def count
-      sensors.count
+      list.count
     end
 
     def names
-      sensors.keys
+      list.keys
     end
 
+    # returns a hash of fan sensors where the key is fan name and value is the sensor
     def fanlist(refreshdata=false)
       refresh if refreshdata
-      flist = []
-      values = sensors.each do |sensor|
-        match = sensor.first.match(/(fan)_(\d+)/)
-        next if match.nil?
-        if match[1] == "fan"
-          num = (match[2].to_i) -1
-          flist[num] = sensor.last[:value]
+      flist = {}
+      list.each do | name,sensor |
+        if name =~ /.*fan.*/
+            flist[name] = sensor
         end
       end
-      flist
+      return flist
     end
 
     def templist(refreshdata=false)
       refresh if refreshdata
-      tlist = []
-      values = sensors.each do |sensor|
-        match = sensor.first.match(/(temp)_(\d+)/)
-        next if match.nil?
-        if match[1] == "temp"
-          num = (match[2].to_i) -1
-          tlist[num] = sensor.last[:value]
+      tlist = {}
+      list.each do | name , sensor |
+        if name =~ /.*temp|ambient.*/
+          tlist[name] = sensor
         end
       end
-      tlist
-    end
-
-
-
-    private
-
-    def sensors
-      @sensors ||= parse(getsensors)
-    end
-
-    def method_missing(method, *args, &block)
-      if not sensors.has_key?(method.to_s)
-        raise NoMethodError
-      else
-        sensors[method.to_s]
-      end
+      return tlist
     end
 
     def getsensors
@@ -73,6 +52,20 @@ module Rubyipmi::Ipmitool
       options.delete_notify("cmdargs")
       @result
     end
+
+    private
+
+
+
+    def method_missing(method, *args, &block)
+      if not list.has_key?(method.to_s)
+        raise NoMethodError
+      else
+        list[method.to_s]
+      end
+    end
+
+
 
     def parse(data)
       sensorlist = {}

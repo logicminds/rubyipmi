@@ -47,3 +47,8 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+#desc "send diagnostics to logicminds for testing"
+#task :send_diag do
+#  Rubyipmi.connect(...)
+#end

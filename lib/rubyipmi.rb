@@ -30,9 +30,9 @@ module Rubyipmi
       # If the provider is available create a connection object
       if installed or is_provider_installed?(provider)
         if provider == "freeipmi"
-          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, debug=false)
+          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, debug)
         elsif provider == "ipmitool"
-          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, debug=false)
+          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, debug)
         else
           raise "Incorrect provider given, must use freeipmi or ipmitool"
         end
@@ -79,6 +79,20 @@ module Rubyipmi
       end
       return available
     end
+
+    #def self.get_server_fixtures(user, past, host)
+    #
+    #  if Rubyipmi.is_provider_installed?('freeipmi')
+    #    @conn = Rubyipmi::connect(user, pass, host, 'freeipmi')
+    #
+    #  end
+    #  if Rubyipmi.is_provider_installed?('ipmitool')
+    #    @conn = Rubyipmi::connect(user, pass, host, 'ipmitool')
+    #    #sensors = @conn.sensors.getsensors
+    #    #fru     = @conn.fru.
+    #  end
+    #
+    #end
 
     def self.printdiag(user, pass, host)
       @conn = Rubyipmi::connect(user, pass, host)

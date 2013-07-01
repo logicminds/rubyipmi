@@ -4,16 +4,17 @@ describe "Sensors" do
 
   attr_accessor :provider
   before :each do
-    user = ENV["ipmiuser"]
-    pass = ENV["ipmipass"]
-    host = ENV["ipmihost"]
-    provider = ENV["ipmiprovider"]
+    user = ENV["ipmiuser"] || 'admin'
+    pass = ENV["ipmipass"] || 'creative'
+    host = ENV["ipmihost"] || '192.168.1.41'
+    provider = ENV["ipmiprovider"] || 'ipmitool'
     @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
 
   it "test get all sensors" do
     @conn.sensors.list.count.should be > 1
+    puts @conn.sensors.names.inspect
   end
 
   it "test should refresh data" do

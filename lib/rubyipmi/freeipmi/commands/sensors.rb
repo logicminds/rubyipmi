@@ -10,25 +10,22 @@ module Rubyipmi::Freeipmi
 
     def refresh
       @sensors = nil
-      sensors
-    end
-
-    def list
-      sensors
+      list
     end
 
     def count
-      sensors.count
+      list.count
     end
 
     def names
-      sensors.keys
+      list.keys
     end
 
     def fanlist(refreshdata=false)
+      return list
       refresh if refreshdata
       flist = []
-      values = sensors.each do |sensor|
+      values = list.names.each do |sensor|
         match = sensor.first.match(/(fan)_(\d+)/)
         next if match.nil?
         if match[1] == "fan"
@@ -42,7 +39,7 @@ module Rubyipmi::Freeipmi
     def templist(refreshdata=false)
       refresh if refreshdata
       tlist = []
-      values = sensors.each do |sensor|
+      values = list.each do |sensor|
         match = sensor.first.match(/(temp)_(\d+)/)
         next if match.nil?
         if match[1] == "temp"
@@ -53,27 +50,29 @@ module Rubyipmi::Freeipmi
       tlist
     end
 
-
-
-    private
-
-    def sensors
+    def list
       @sensors ||= parse(getsensors)
     end
-
-    def method_missing(method, *args, &block)
-      if not sensors.has_key?(method.to_s)
-        raise NoMethodError
-      else
-        sensors[method.to_s]
-      end
-    end
-
 
     def getsensors
       value = runcmd
       @result
     end
+
+    private
+
+
+
+    def method_missing(method, *args, &block)
+      if not list.has_key?(method.to_s)
+        raise NoMethodError
+      else
+        list[method.to_s]
+      end
+    end
+
+
+
 
     def parse(data)
       sensorlist = {}
