@@ -21,7 +21,7 @@ describe :Sensors do
   end
 
   it "should return a count of sensors" do
-    @sensors.count.should eq(63)
+    @sensors.count.should eq(99)
   end
 
   it "should return a list of fan names" do
@@ -29,12 +29,20 @@ describe :Sensors do
   end
 
   it 'should return a list of temp names' do
-    @sensors.templist.count.should.should eq(14)
+    @sensors.templist.count.should.should eq(43)
+    @sensors.templist.each do | temp |
+      puts temp.inspect
+    end
   end
 
   it 'should return a list of sensor names as an array' do
     @sensors.names.should be_an_instance_of(Array)
-    @sensors.names.count.should eq(63)
+    @sensors.names.count.should eq(99)
+  end
+
+  it 'should return an empty list if no data exists' do
+    @sensors.stub(:getsensors).and_return(nil)
+    @sensors.names.count.should eq(0)
   end
 
 
