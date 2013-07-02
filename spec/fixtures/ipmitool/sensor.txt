@@ -61,3 +61,45 @@ Temp 5           | 49.000     | degrees C  | ok    | 0.000     | 0.000     | 0.0
 Temp 6           | 40.000     | degrees C  | ok    | 0.000     | 0.000     | 0.000     | 68.000    | 127.000   | 127.000
 Temp 7           | 40.000     | degrees C  | ok    | 0.000     | 0.000     | 0.000     | 68.000    | 127.000   | 127.000
 Power Meter      | 374        | Watts      | ok    | na        | na        | na        | na        | na        | na
+UID Light        | 0x0        | discrete   | 0x0080| na        | na        | na        | na        | na        | na
+Sys. Health LED  | 0x0        | discrete   | 0x0080| na        | na        | na        | na        | na        | na
+Memory           | 0x0        | discrete   | 0x4080| na        | na        | na        | na        | na        | na
+Power Supply 1   | 1200.000   | Watts      | nc    | na        | na        | na        | na        | na        | na
+Power Supply 2   | 1200.000   | Watts      | nc    | na        | na        | na        | na        | na        | na
+Power Supply 3   | 1200.000   | Watts      | nc    | na        | na        | na        | na        | na        | na
+Power Supply 4   | 1200.000   | Watts      | nc    | na        | na        | na        | na        | na        | na
+Fan 3            | 46.648     | unspecified | nc    | na        | na        | na        | na        | na        | na
+Fan 4            | 46.648     | unspecified | nc    | na        | na        | na        | na        | na        | na
+01-Inlet Ambient | 19.000     | degrees C  | ok    | na        | na        | na        | na        | 42.000    | 46.000
+02-CPU 1         | 40.000     | degrees C  | ok    | na        | na        | na        | na        | 70.000    | 0.000
+03-CPU 2         | 40.000     | degrees C  | ok    | na        | na        | na        | na        | 70.000    | 0.000
+04-P1 DIMM 1-4   | 27.000     | degrees C  | ok    | na        | na        | na        | na        | 87.000    | 0.000
+05-P1 DIMM 5-8   | 25.000     | degrees C  | ok    | na        | na        | na        | na        | 87.000    | 0.000
+06-P2 DIMM 1-4   | 26.000     | degrees C  | ok    | na        | na        | na        | na        | 87.000    | 0.000
+07-P2 DIMM 5-8   | 27.000     | degrees C  | ok    | na        | na        | na        | na        | 87.000    | 0.000
+08-HD Max        | 35.000     | degrees C  | ok    | na        | na        | na        | na        | 60.000    | 0.000
+09-Chipset       | 44.000     | degrees C  | ok    | na        | na        | na        | na        | 105.000   | 0.000
+10-VR P1         | 34.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+11-VR P2         | 35.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+12-VR P1 Zone    | 27.000     | degrees C  | ok    | na        | na        | na        | na        | 90.000    | 95.000
+13-VR P2 Zone    | 27.000     | degrees C  | ok    | na        | na        | na        | na        | 90.000    | 95.000
+14-VR P1 Mem     | 31.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+15-VR P1 Mem     | 29.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+16-VR P2 Mem     | 32.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+17-VR P2 Mem     | 29.000     | degrees C  | ok    | na        | na        | na        | na        | 115.000   | 120.000
+18-VR P1Mem Zone | 30.000     | degrees C  | ok    | na        | na        | na        | na        | 90.000    | 95.000
+19-VR P2Mem Zone | 31.000     | degrees C  | ok    | na        | na        | na        | na        | 90.000    | 95.000
+20-SuperCap Max  | 21.000     | degrees C  | ok    | na        | na        | na        | na        | 65.000    | 0.000
+21-HD Controller | 40.000     | degrees C  | ok    | na        | na        | na        | na        | 100.000   | 0.000
+22-LOM           | na         | degrees C  | na    | na        | na        | na        | na        | 100.000   | 0.000
+23-LOM Card      | na         | degrees C  | na    | na        | na        | na        | na        | 100.000   | 0.000
+24-PCI 1         | na         | degrees C  | na    | na        | na        | na        | na        | 100.000   | 0.000
+25-PCI 2 Zone    | 25.000     | degrees C  | ok    | na        | na        | na        | na        | 65.000    | 70.000
+26-PCI 2         | 50.000     | degrees C  | ok    | na        | na        | na        | na        | 100.000   | 0.000
+42-P/S Board     | 24.000     | degrees C  | ok    | na        | na        | na        | na        | 80.000    | 85.000
+43-Sys Exhaust   | 29.000     | degrees C  | ok    | na        | na        | na        | na        | 90.000    | 95.000
+44-HD zone       | 29.000     | degrees C  | ok    | na        | na        | na        | na        | 65.000    | 0.000
+C3 P2I Bay 1     | 0.000      | unspecified | nc    | na        | na        | na        | na        | na        | na
+C3 P2I Bay 2     | 0.000      | unspecified | nc    | na        | na        | na        | na        | na        | na
+C3 P2I Bay 3     | 0.000      | unspecified | nc    | na        | na        | na        | na        | na        | na
+C3 P2I Bay 4     | 0.000      | unspecified | nc    | na        | na        | na        | na        | na        | na
