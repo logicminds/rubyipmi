@@ -98,8 +98,12 @@ module Rubyipmi::Ipmitool
                 :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled  ]
       # skip the header
       data = line.split(/\|/)
+      # should we ever encounter a field not in the fields list, just use a counter based fieldname
+      i = 0
       data.each do | value |
-        self[fields.shift] = value.strip
+        field ||= fields.shift || "field#{i}"
+        self[field] = value.strip
+        i = i.next
       end
     end
   end
