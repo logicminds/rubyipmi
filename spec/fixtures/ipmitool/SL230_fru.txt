@@ -1,0 +1,97 @@
+FRU Device Description : Builtin FRU Device (ID 0)
+ Chassis Type                    : -12 V
+ Chassis Serial                  : USE238F06P
+ Board Mfg Date        : Sun Dec 31 23:00:00 1995
+ Board Mfg             : HP
+ Board Product         : ProLiant SL230s Gen8
+ Board Serial          : USE238F0D0
+ Board Part Number     : 650047-B21
+ Product Manufacturer  : HP
+ Product Name          : ProLiant SL230s Gen8
+ Product Part Number   : 650047-B21
+ Product Serial        : USE238F0D0
+ Product Asset Tag     : 000015B90F82
+
+FRU Device Description : CPU 1 DIMM 1 (ID 110)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 1 DIMM 3 (ID 112)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 1 DIMM 6 (ID 115)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 1 DIMM 8 (ID 117)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 2 DIMM 1 (ID 118)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 2 DIMM 3 (ID 120)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 2 DIMM 6 (ID 123)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 2 DIMM 8 (ID 125)
+ Memory Size           : 680 MB
+ Memory Type           : Unknown (0x0B)
+ Voltage Intf          : Unknown (0x0B)
+ Error Detect/Cor      : Unknown (0x08)
+ Manufacturer          : Unknown (0x00)
+ Serial Number         : 00000000
+
+FRU Device Description : CPU 1 (ID 16)
+ Product Manufacturer  : Intel
+ Product Name          :  Intel(R) Xeon(R) CPU E5-2670 0 @ 2.60GHz
+
+FRU Device Description : CPU 2 (ID 17)
+ Product Manufacturer  : Intel
+ Product Name          :  Intel(R) Xeon(R) CPU E5-2670 0 @ 2.60GHz
+
+FRU Device Description : BMC CONTROLLER (ID 238)
+ Product Manufacturer  : HP
+ Product Name          : BMC CONTROLLER
+ Product Part Number   : iLO 4
+
+FRU Device Description : MB BIOS (ID 239)
+ Product Manufacturer  : HP
+ Product Name          : SYSTEM BIOS
+ Product Part Number   : P75
+ Product Version       : 07/05/2012
+

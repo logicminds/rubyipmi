@@ -8,7 +8,7 @@ module Rubyipmi::Ipmitool
 
     # return the list of fru information in a hash
     def list
-      @list ||= parse(command)
+      @list ||= parse(getfrus)
     end
 
     # returns the serial of the board
@@ -26,6 +26,11 @@ module Rubyipmi::Ipmitool
        list["product_name"]
     end
 
+    # method to retrieve the raw fru data
+    def getfrus
+      command
+    end
+
    private
 
     def method_missing(method, *args, &block)
@@ -39,14 +44,17 @@ module Rubyipmi::Ipmitool
     # parse the fru information
     def parse(data)
       datalist = {}
-      data.lines.each do |line|
-        key, value = line.split(':')
-        next if key =~ /\n/
-        key = key.strip.gsub(/\ /, '_').downcase
-        datalist[key] = value.strip
+      if ! data.nil?
+        data.lines.each do |line|
+          key, value = line.split(':', 2)
+          next if key =~ /\n/
+          key = key.strip.gsub(/\ /, '_').downcase
+          datalist[key] = value.strip
+        end
       end
       return datalist
     end
+
 
     # run the command and return result
     def command
@@ -56,6 +64,27 @@ module Rubyipmi::Ipmitool
        if value
          return @result
        end
+    end
+
+  end
+
+  class FruData < Hash
+
+    def initialize(data)
+      parse(data)
+    end
+
+    # parse the fru information
+    def parse(data)
+      if ! data.nil?
+        data.lines.each do |line|
+          key, value = line.split(':', 2)
+          next if key =~ /\n/
+          key = key.strip.gsub(/\ /, '_').downcase
+          datalist[key] = value.strip
+        end
+      end
+      return datalist
     end
 
   end
