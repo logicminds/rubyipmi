@@ -4,6 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
+<<<<<<< HEAD
   s.name = "rubyipmi"
   s.version = "0.7.0"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -90,17 +91,18 @@ Gem::Specification.new do |s|
     "spec/unit/ipmitool/sensors_spec.rb",
     "spec/unit/rubyipmi_spec.rb"
   ]
-  s.homepage = "http://github.com/logicminds/rubyipmi"
+  s.homepage = %q{http://github.com/logicminds/rubyipmi}
   s.licenses = ["GPLv3"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.7"
-  s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
+  s.rubygems_version = %q{1.3.6}
+  s.summary = %q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
 
   if s.respond_to? :specification_version then
-    s.specification_version = 4
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
+    s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, ["<= 2.8.0"])
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
