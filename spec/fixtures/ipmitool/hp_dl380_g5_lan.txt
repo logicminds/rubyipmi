@@ -1,0 +1,17 @@
+Set in Progress         : Set Complete
+Auth Type Support       :
+Auth Type Enable        : Callback :
+                        : User     : NONE MD2 MD5 PASSWORD OEM
+                        : Operator : NONE MD2 MD5
+                        : Admin    : MD2 MD5
+                        : OEM      :
+IP Address Source       : DHCP Address
+IP Address              : 192.168.1.41
+Subnet Mask             : 255.255.255.0
+MAC Address             : 00:17:a4:49:ab:70
+BMC ARP Control         : ARP Responses Enabled, Gratuitous ARP Disabled
+Gratituous ARP Intrvl   : 0.0 seconds
+Default Gateway IP      : 192.168.1.1
+802.1q VLAN ID          : Disabled
+802.1q VLAN Priority    : 0
+Cipher Suite Priv Max   : Not Available

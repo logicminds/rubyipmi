@@ -2,31 +2,22 @@ module Rubyipmi::Ipmitool
 
   class Fru < Rubyipmi::Ipmitool::BaseCommand
 
+    attr_accessor :list
+
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
+      @list = {}
     end
 
     # return the list of fru information in a hash
     def list
-      @list ||= parse(getfrus)
+      if @list.count < 1
+        parse(getfrus)
+      end
+      @list
     end
 
-    # returns the serial of the board
-    def serial
-       list["board_serial"]
-    end
-
-    # returns the manufacturer of the server
-    def manufacturer
-       list["product_manufacturer"]
-    end
-
-    # returns the product name of the server
-    def product
-       list["product_name"]
-    end
-
-    # method to retrieve the raw fru data
+  # method to retrieve the raw fru data
     def getfrus
       command
     end
@@ -34,26 +25,42 @@ module Rubyipmi::Ipmitool
    private
 
     def method_missing(method, *args, &block)
-          if not list.has_key?(method.to_s)
-            raise NoMethodError
-          else
-            list[method.to_s]
+        if list.has_key?('builtin_fru_device')
+          if list['builtin_fru_device'].has_key?(method.to_s)
+            list['builtin_fru_device'][method.to_s]
           end
+        else
+          raise NoMethodError
+        end
      end
 
     # parse the fru information
     def parse(data)
-      datalist = {}
       if ! data.nil?
+        parsed_data = []
         data.lines.each do |line|
-          key, value = line.split(':', 2)
-          next if key =~ /\n/
-          key = key.strip.gsub(/\ /, '_').downcase
-          datalist[key] = value.strip
+          if line =~ /^FRU\ Device\ Description.*/
+            # this is the either the first line of of the fru or another fru
+            if parsed_data.count != 0
+              # we have reached a new fru device so lets record the previous fru
+              new_fru = FruData.new(parsed_data)
+              parsed_data = []
+              @list[new_fru[:name]] = new_fru
+            end
+
+          end
+          parsed_data << line
+        end
+        # process the last fru
+        if parsed_data.count != 0
+          # we have reached a new fru device so lets record the previous fru
+          new_fru = FruData.new(parsed_data)
+          parsed_data = []
+          @list[new_fru[:name]] = new_fru
         end
       end
-      return datalist
     end
+  end
 
 
     # run the command and return result
@@ -66,27 +73,37 @@ module Rubyipmi::Ipmitool
        end
     end
 
-  end
 
   class FruData < Hash
+
+    def name
+      self[:name]
+    end
 
     def initialize(data)
       parse(data)
     end
 
-    # parse the fru information
+    # parse the fru information that should be an array of lines
     def parse(data)
       if ! data.nil?
-        data.lines.each do |line|
+        data.each do |line|
           key, value = line.split(':', 2)
-          next if key =~ /\n/
-          key = key.strip.gsub(/\ /, '_').downcase
-          datalist[key] = value.strip
+          if key =~ /^FRU\ Device\ Description.*/
+            if value =~ /([\w\s]*)\(.*\)/
+             self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
+            end
+          else
+            key = key.strip.gsub(/\ /, '_').downcase
+            if ! value.nil?
+              self[key] = value.strip
+            end
+          end
         end
       end
-      return datalist
     end
 
   end
+
 
 end

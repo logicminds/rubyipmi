@@ -1,5 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-
 describe :Sensors do
 
   before :each do
@@ -31,7 +30,6 @@ describe :Sensors do
   it 'should return a list of temp names' do
     @sensors.templist.count.should.should eq(43)
     @sensors.templist.each do | temp |
-      puts temp.inspect
     end
   end
 
@@ -43,6 +41,13 @@ describe :Sensors do
   it 'should return an empty list if no data exists' do
     @sensors.stub(:getsensors).and_return(nil)
     @sensors.names.count.should eq(0)
+  end
+
+  it 'should return a sensor using method missing' do
+    @sensors.names.each do |name|
+      sensor = @sensors.send(name)
+      sensor.should be_an_instance_of(Rubyipmi::Ipmitool::Sensor)
+    end
   end
 
 
