@@ -2,6 +2,8 @@
 
 require 'rubygems'
 require 'bundler'
+
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -48,7 +50,46 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-#desc "send diagnostics to logicminds for testing"
-#task :send_diag do
-#  Rubyipmi.connect(...)
-#end
+desc "send diagnostics to logicminds for testing for the given host"
+task :send_diag, :user, :pass, :host do |t, args |
+  require 'rubyipmi'
+  require 'net/smtp'
+  require 'json'
+  require "highline/import"
+
+  if args.count < 3
+    raise "You must provide arguments: rake send_diag[user, pass, host]"
+  end
+  data = Rubyipmi.get_diag(args[:user], args[:pass], args[:host])
+  emailto = 'corey@logicminds.biz'
+  subject = "Rubyipmi diagnostics data"
+  puts data.inspect
+  send_email(emailto, data.to_json, {:subject => subject})
+
+end
+
+def send_email(to,data, opts={})
+  gmail_id = ask("Enter your gmail account:  ")
+  pass = ask("Enter your gmail password:  ") { |q| q.echo = '*' }
+  opts[:from] = gmail_id
+  opts[:server]      ||= 'smtp.gmail.com'
+  opts[:from_alias]  ||= gmail_id
+  opts[:subject]     ||= @subject
+  opts[:body]        ||= data
+  opts[:to]          ||= to
+  opts[:port]        ||= 587
+  msg = <<END_OF_MESSAGE
+From: #{opts[:from_alias]} <#{opts[:from]}>
+To: <#{to}>
+Subject: #{opts[:subject]}
+Date: #{Time.now.rfc2822}
+
+  #{opts[:body]}
+END_OF_MESSAGE
+
+  smtp = Net::SMTP.new(opts[:server],opts[:port])
+  smtp.enable_starttls
+  smtp.start(opts[:server],gmail_id,pass,:login) do
+    smtp.send_message(msg, gmail_id, to)
+  end
+end
