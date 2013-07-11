@@ -63,7 +63,6 @@ task :send_diag, :user, :pass, :host do |t, args |
   data = Rubyipmi.get_diag(args[:user], args[:pass], args[:host])
   emailto = 'corey@logicminds.biz'
   subject = "Rubyipmi diagnostics data"
-  puts data.inspect
   send_email(emailto, data.to_json, {:subject => subject})
 
 end
