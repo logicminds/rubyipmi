@@ -52,6 +52,20 @@ module Rubyipmi
         @chassis ||= Rubyipmi::Ipmitool::Chassis.new(@options)
       end
 
+      def get_diag
+        data = {}
+        data['provider'] = provider
+        if @fru
+          data['frus'] = @fru.getfrus
+        end
+        if @sensors
+          data['sensors'] = @sensors.getsensors
+        end
+        if @bmc
+          data['bmc_info'] = @bmc.info
+        end
+      end
+
     end
   end
 end

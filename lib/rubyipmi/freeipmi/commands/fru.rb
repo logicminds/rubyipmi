@@ -23,6 +23,11 @@ module Rubyipmi::Freeipmi
       list["board_product_name"]
     end
 
+    # method to retrieve the raw fru data
+    def getfrus
+      command
+    end
+
     private
 
     def method_missing(method, *args, &block)

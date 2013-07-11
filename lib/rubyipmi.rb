@@ -1,6 +1,5 @@
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
-require 'net/smtp'
 
 
 module Rubyipmi
@@ -80,26 +79,25 @@ module Rubyipmi
       return available
     end
 
-    #def self.get_server_fixtures(user, past, host)
-    #
-    #  if Rubyipmi.is_provider_installed?('freeipmi')
-    #    @conn = Rubyipmi::connect(user, pass, host, 'freeipmi')
-    #
-    #  end
-    #  if Rubyipmi.is_provider_installed?('ipmitool')
-    #    @conn = Rubyipmi::connect(user, pass, host, 'ipmitool')
-    #    #sensors = @conn.sensors.getsensors
-    #    #fru     = @conn.fru.
-    #  end
-    #
-    #end
+    # gets data from the bmc device and puts in a hash for diagnostics
+    def self.get_diag(user, pass, host)
+      data = {}
 
-    def self.printdiag(user, pass, host)
-      @conn = Rubyipmi::connect(user, pass, host)
-      puts "Product: #{@conn.fru.product}"
-      puts "Manufacturer: #{@conn.fru.manufacturer}"
-      puts "BMC Info #{@conn.bmc.info.inspect}\n"
-      puts "Please email to corey@logicminds.biz when troubleshooting"
-      return true
+      if Rubyipmi.is_provider_installed?('freeipmi')
+        @freeconn = Rubyipmi::connect(user, pass, host, 'freeipmi')
+        if @freeconn
+          puts "Retrieving freeipmi data"
+          data['freeipmi'] = @freeconn.get_diag
+        end
+      end
+      if Rubyipmi.is_provider_installed?('ipmitool')
+        @ipmiconn = Rubyipmi::connect(user, pass, host, 'ipmitool')
+        if @ipmiconn
+          puts "Retrieving ipmitool data"
+          data['ipmitool'] = @ipmiconn.get_diag
+        end
+      end
+      return data
     end
+
 end
