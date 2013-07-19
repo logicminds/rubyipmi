@@ -1,0 +1,32 @@
+Device ID             : 17
+Device Revision       : 1
+Device SDRs           : supported
+Firmware Revision     : 2.09
+Device Available      : yes (normal operation)
+IPMI Version          : 2.0
+Sensor Device         : supported
+SDR Repository Device : supported
+SEL Device            : supported
+FRU Inventory Device  : supported
+IPMB Event Receiver   : unsupported
+IPMB Event Generator  : unsupported
+Bridge                : unsupported
+Chassis Device        : unsupported
+Manufacturer ID       : Hewlett-Packard (11)
+Product ID            : 8192
+
+Channel Information
+
+Channel Number       : 2
+Medium Type          : 802.3 LAN
+Protocol Type        : IPMB-1.0
+Active Session Count : 0
+Session Support      : multi-session
+Vendor ID            : Intelligent Platform Management Interface forum (7154)
+
+Channel Number       : 7
+Medium Type          : OEM
+Protocol Type        : KCS
+Active Session Count : 0
+Session Support      : session-less
+Vendor ID            : Intelligent Platform Management Interface forum (7154)

@@ -94,4 +94,3 @@ FRU Device Description : MB BIOS (ID 239)
  Product Name          : SYSTEM BIOS
  Product Part Number   : P75
  Product Version       : 07/05/2012
-

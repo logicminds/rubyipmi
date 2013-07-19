@@ -6,11 +6,16 @@ require 'spec_helper'
 describe "Bmc" do
 
   before :each do
-            provider = "ipmitool"
-            user = "ipmiuser"
-            pass = "impipass"
-            host = "ipmihost"
-            @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    Rubyipmi.stub(:is_provider_installed?).and_return(true)
+    # need to figure out how to mock the base class function
+    #Rubyipmi::BaseCommand.any_instance.stub(:locate_command).with('ipmi-fru').and_return('/usr/local/bin/ipmi-fru')
+
+    provider = "freeipmi"
+    user = "ipmiuser"
+    pass = "impipass"
+    host = "ipmihost"
+    @conn = Rubyipmi.connect(user, pass, host, provider, true)
+
 
   end
 
@@ -26,8 +31,8 @@ describe "Bmc" do
     @conn.provider.should_not be_nil
   end
 
-  it "provider should be ipmitool" do
-    @conn.provider.should == "ipmitool"
+  it "provider should be freeipmi" do
+    @conn.provider.should == "freeipmi"
   end
 
   it "bmc should not be nil" do

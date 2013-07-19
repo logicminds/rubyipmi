@@ -1,0 +1,317 @@
+#
+# Section UserX Comments 
+#
+# In the following User sections, users should configure usernames, passwords, 
+# and access rights for IPMI over LAN communication. Usernames can be set to any 
+# string with the exception of User1, which is a fixed to the "anonymous" 
+# username in IPMI. 
+#
+# For IPMI over LAN access for a username, set "Enable_User" to "Yes", 
+# "Lan_Enable_IPMI_Msgs" to "Yes", and "Lan_Privilege_Limit" to a privilege 
+# level. The privilege level is used to limit various IPMI operations for 
+# individual usernames. It is recommened that atleast one username be created 
+# with a privilege limit "Administrator", so all system functions are available 
+# to atleast one username via IPMI over LAN. For security reasons, we recommend 
+# not enabling the "anonymous" User1. For most users, "Lan_Session_Limit" can be 
+# set to 0 (or ignored) to support an unlimited number of simultaneous IPMI over 
+# LAN sessions. 
+#
+# If your system supports IPMI 2.0 and Serial-over-LAN (SOL), 
+# a"SOL_Payload_Access" field may be listed below. Set the "SOL_Payload_Access" 
+# field to "Yes" or "No" to enable or disable this username's ability to access 
+# SOL. 
+#
+# Please do not forget to uncomment those fields, such as "Password", that may 
+# be commented out during the checkout. 
+#
+# Some motherboards may require a "Username" to be configured prior to other 
+# fields being read/written. If this is the case, those fields will be set to 
+# <username-not-set-yet>. 
+#
+Section User1
+	## Give Username
+	## Username                                   NULL
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   Yes
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          Yes
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           Administrator
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User2
+	## Give Username
+	Username                                      admin
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   Yes
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          Yes
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           Administrator
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User3
+	## Give Username
+	Username                                      admin3
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User4
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User5
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User6
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User7
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User8
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User9
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User10
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User11
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+Section User12
+	## Give Username
+	Username                                      (Empty User)
+	## Give password or blank to clear. MAX 16 chars (20 chars if IPMI 2.0 supported).
+	## Password                                   
+	## Possible values: Yes/No or blank to not set
+	Enable_User                                   No
+	## Possible values: Yes/No
+	Lan_Enable_IPMI_Msgs                          No
+	## Possible values: Yes/No
+	Lan_Enable_Link_Auth                          No
+	## Possible values: Yes/No
+	Lan_Enable_Restricted_to_Callback             No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary/No_Access
+	Lan_Privilege_Limit                           No_Access
+	## Possible values: 0-17, 0 is unlimited; May be reset to 0 if not specified
+	## Lan_Session_Limit                          
+EndSection
+#
+# Section Lan_Channel Comments 
+#
+# In the Lan_Channel section, general IPMI over LAN can be enabled for disabled. 
+# In the below, "Volatile" configurations are immediately configured onto the 
+# BMC and will have immediate effect on the system. "Non_Volatile" 
+# configurations are only available after the next system reset. Generally, both 
+# the "Volatile" and "Non_Volatile" equivalent fields should be configured 
+# identically. 
+#
+# To enable IPMI over LAN, typically "Access_Mode" should be set to 
+# "Always_Available". "Channel_Privilege_Limit" should be set to the highest 
+# privilege level any username was configured with. Typically, this is set to 
+# "Administrator". 
+#
+# "User_Level_Auth" and "Per_Message_Auth" are typically set to "Yes" for 
+# additional security. 
+#
+Section Lan_Channel
+	## Possible values: Disabled/Pre_Boot_Only/Always_Available/Shared
+	Volatile_Access_Mode                          Always_Available
+	## Possible values: Yes/No
+	Volatile_Enable_User_Level_Auth               Yes
+	## Possible values: Yes/No
+	Volatile_Enable_Per_Message_Auth              No
+	## Possible values: Yes/No
+	Volatile_Enable_Pef_Alerting                  No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary
+	Volatile_Channel_Privilege_Limit              Administrator
+	## Possible values: Disabled/Pre_Boot_Only/Always_Available/Shared
+	Non_Volatile_Access_Mode                      Always_Available
+	## Possible values: Yes/No
+	Non_Volatile_Enable_User_Level_Auth           Yes
+	## Possible values: Yes/No
+	Non_Volatile_Enable_Per_Message_Auth          No
+	## Possible values: Yes/No
+	Non_Volatile_Enable_Pef_Alerting              No
+	## Possible values: Callback/User/Operator/Administrator/OEM_Proprietary
+	Non_Volatile_Channel_Privilege_Limit          Administrator
+EndSection
+#
+# Section Lan_Conf Comments 
+#
+# In the Lan_Conf section, typical networking configuration is setup. Most users 
+# will choose to set "Static" for the "IP_Address_Source" and set the 
+# appropriate "IP_Address", "MAC_Address", "Subnet_Mask", etc. for the machine. 
+#
+Section Lan_Conf
+	## Possible values: Unspecified/Static/Use_DHCP/Use_BIOS/Use_Others
+	IP_Address_Source                             Use_DHCP
+	## Give valid IP address
+	IP_Address                                    192.168.1.24
+	## Give valid MAC address
+	MAC_Address                                   00:17:A4:49:AB:70
+	## Give valid Subnet Mask
+	Subnet_Mask                                   255.255.255.0
+	## Give valid IP address
+	Default_Gateway_IP_Address                    192.168.1.1
+EndSection
+#
+# Section Lan_Conf_Auth Comments 
+#
+# In the Lan_Conf_Auth section, allowable authentication mechanisms for IPMI 1.5 
+# is configured. Most users will want to set all "MD5" authentication to "Yes" 
+# and the rest to "No". If you have configured a NULL username and a NULL 
+# password, you will also want to configure some of the "None" fields to "Yes" 
+# to allow "None" authentication to work. Some motherboards do not allow you to 
+# enable OEM authentication, so you may wish to set all OEM related fields to 
+# "No". 
+#
+Section Lan_Conf_Auth
