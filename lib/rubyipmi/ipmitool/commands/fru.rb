@@ -4,9 +4,17 @@ module Rubyipmi::Ipmitool
 
     attr_accessor :list
 
+    DEFAULT_FRU = 'builtin_fru_device'
+
+
+
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
       @list = {}
+    end
+
+    def names
+      list.keys
     end
 
     # return the list of fru information in a hash
@@ -24,22 +32,31 @@ module Rubyipmi::Ipmitool
 
    private
 
+    # I use method missing to allow the user to say Fru.<name> which returns a frudata object unless the user
+    # passes a keyname from the default fru device
     def method_missing(method, *args, &block)
-        if list.has_key?('builtin_fru_device')
-          if list['builtin_fru_device'].has_key?(method.to_s)
-            list['builtin_fru_device'][method.to_s]
-          end
+      name = method.to_s
+      fru = list.fetch(name, nil)
+      # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
+      # we return the Fru with the given name
+      if fru.nil?
+        if list[DEFAULT_FRU].keys.include?(name)
+          return list[DEFAULT_FRU][name]
         else
+          # maybe we should return nil instead? hmm...
           raise NoMethodError
         end
-     end
+      else
+        return fru
+      end
+    end
 
     # parse the fru information
     def parse(data)
       if ! data.nil?
         parsed_data = []
         data.lines.each do |line|
-          if line =~ /^FRU\ Device\ Description.*/
+          if line =~ /^FRU.*/
             # this is the either the first line of of the fru or another fru
             if parsed_data.count != 0
               # we have reached a new fru device so lets record the previous fru
@@ -89,9 +106,9 @@ module Rubyipmi::Ipmitool
       if ! data.nil?
         data.each do |line|
           key, value = line.split(':', 2)
-          if key =~ /^FRU\ Device\ Description.*/
+          if key =~ /^FRU\s+Device.*/
             if value =~ /([\w\s]*)\(.*\)/
-             self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
+              self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase
@@ -101,6 +118,12 @@ module Rubyipmi::Ipmitool
           end
         end
       end
+    end
+
+    private
+
+    def method_missing(method, *args, &block)
+      self.fetch(method.to_s, nil)
     end
 
   end

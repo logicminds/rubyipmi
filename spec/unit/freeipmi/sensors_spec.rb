@@ -3,7 +3,7 @@ describe :Sensors do
 
   before :each do
     data = nil
-    provider = "ipmitool"
+    provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
@@ -20,22 +20,20 @@ describe :Sensors do
   end
 
   it "should return a count of sensors" do
-    @sensors.count.should eq(99)
+    @sensors.count.should eq(29)
   end
 
   it "should return a list of fan names" do
-    @sensors.fanlist.count.should eq(17)
+    @sensors.fanlist.count.should eq(13)
   end
 
   it 'should return a list of temp names' do
-    @sensors.templist.count.should.should eq(43)
-    @sensors.templist.each do | temp |
-    end
+    @sensors.templist.count.should.should eq(7)
   end
 
   it 'should return a list of sensor names as an array' do
     @sensors.names.should be_an_instance_of(Array)
-    @sensors.names.count.should eq(99)
+    @sensors.names.count.should eq(29)
   end
 
   it 'should return an empty list if no data exists' do
@@ -46,7 +44,8 @@ describe :Sensors do
   it 'should return a sensor using method missing' do
     @sensors.names.each do |name|
       sensor = @sensors.send(name)
-      sensor.should be_an_instance_of(Rubyipmi::Ipmitool::Sensor)
+      sensor.should be_an_instance_of(Rubyipmi::Freeipmi::Sensor)
+      sensor[:name].should eq(name)
     end
   end
 

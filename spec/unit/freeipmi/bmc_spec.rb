@@ -5,7 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "Bmc" do
 
   before :each do
-    provider = "ipmitool"
+    provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"

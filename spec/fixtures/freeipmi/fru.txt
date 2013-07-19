@@ -1,0 +1,13 @@
+FRU Inventory Device: Default FRU Device (ID 00h)
+
+  FRU Chassis Type: Rack Mount Chassis
+  FRU Chassis Part Number: 430027-005      
+  FRU Chassis Serial Number: 2UX64201U2      
+
+  FRU Board Manufacturing Date/Time: 01/01/96 - 00:00:00
+  FRU Board Manufacturer: HP
+  FRU Board Product Name: ProLiant DL380 G5
+  FRU Board Serial Number: 2UX64201U2      
+  FRU Board Part Number: 430027-005      
+
+  FRU Error: product info area checksum invalid

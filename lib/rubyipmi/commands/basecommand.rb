@@ -31,12 +31,17 @@ module Rubyipmi
     def initialize(commandname, opts = ObservableHash.new)
       # This will locate the command path or raise an error if not found
       @cmdname = commandname
-      @cmd = `which #{commandname}`.strip
+      @cmd = locate_command(commandname)
+      @options = opts
+      @options.add_observer(self)
+    end
+
+    def locate_command(commandname)
+      location = `which #{commandname}`.strip
       if not $?.success?
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
-      @options = opts
-      @options.add_observer(self)
+      return location
     end
 
     # Use this function to run the command line tool, it will inherently use the options hash for all options

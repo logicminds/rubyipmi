@@ -6,11 +6,16 @@ module Rubyipmi::Freeipmi
       super("ipmi-sensors", opts)
       @options["no-header-output"] = false
       @options["output-sensor-state"] = false
+      @options["entity-sensor-names"] = false
     end
 
     def refresh
       @sensors = nil
       list
+    end
+
+    def list
+      @sensors ||= parse(getsensors)
     end
 
     def count
@@ -21,47 +26,38 @@ module Rubyipmi::Freeipmi
       list.keys
     end
 
+    # returns a hash of fan sensors where the key is fan name and value is the sensor
     def fanlist(refreshdata=false)
-      return list
       refresh if refreshdata
-      flist = []
-      values = list.names.each do |sensor|
-        match = sensor.first.match(/(fan)_(\d+)/)
-        next if match.nil?
-        if match[1] == "fan"
-          num = (match[2].to_i) -1
-          flist[num] = sensor.last[:value]
+      flist = {}
+      list.each do | name,sensor |
+        if name =~ /.*fan.*/
+          flist[name] = sensor
         end
       end
-      flist
+      return flist
     end
 
+    # returns a hash of sensors where each key is the name of the sensor and the value is the sensor
     def templist(refreshdata=false)
       refresh if refreshdata
-      tlist = []
-      values = list.each do |sensor|
-        match = sensor.first.match(/(temp)_(\d+)/)
-        next if match.nil?
-        if match[1] == "temp"
-          num = (match[2].to_i) -1
-          tlist[num] = sensor.last[:value]
+      tlist = {}
+      list.each do | name , sensor |
+        if sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/
+          tlist[name] = sensor
         end
       end
-      tlist
-    end
-
-    def list
-      @sensors ||= parse(getsensors)
+      return tlist
     end
 
     def getsensors
+      options["cmdargs"] = "sensor"
       value = runcmd
+      options.delete_notify("cmdargs")
       @result
     end
 
     private
-
-
 
     def method_missing(method, *args, &block)
       if not list.has_key?(method.to_s)
@@ -71,37 +67,47 @@ module Rubyipmi::Freeipmi
       end
     end
 
-
-
-
     def parse(data)
       sensorlist = {}
-      data.lines.each do | line|
-        # skip the header
-        data = line.split(/\|/)
-        # remove number column
-        data.shift
-        sensor = Sensor.new(data[0].strip)
-        sensor[:type] = data[1].strip
-        sensor[:state] = data[2].strip
-        sensor[:value] = data[3].strip
-        sensor[:unit] = data[4].strip
-        sensor[:status] = data[5].strip
-        sensorlist[sensor[:name]] = sensor
-
+      if ! data.nil?
+        data.lines.each do | line|
+          # skip the header
+          sensor = Sensor.new(line)
+          sensorlist[sensor[:name]] = sensor
+        end
       end
       return sensorlist
-
     end
+
   end
 
   class Sensor < Hash
-
-    def initialize(sname)
-      self[:fullname] = sname
-      self[:name] = sname.gsub(/\ /, '_').gsub(/\./, '').downcase
+    def initialize(line)
+      parse(line)
+      self[:name] = normalize(self[:name])
     end
 
+    private
+    def normalize(text)
+      text.gsub(/\ /, '_').gsub(/\./, '').downcase
+    end
+
+    # Parse the individual sensor
+    # Note: not all fields will exist on every server
+    def parse(line)
+      fields = [:id_num, :name, :value, :unit, :status, :type, :state, :lower_nonrec,
+                :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled  ]
+      data = line.split(/\|/)
+      # should we ever encounter a field not in the fields list, just use a counter based fieldname so we just
+      # use field1, field2, field3, ...
+      i = 0
+      data.each do | value |
+        field ||= fields.shift || "field#{i}"
+        self[field] = value.strip
+        i = i.next
+      end
+    end
   end
+
 end
 

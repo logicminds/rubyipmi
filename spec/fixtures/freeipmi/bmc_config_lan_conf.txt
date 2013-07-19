@@ -1,0 +1,19 @@
+#
+# Section Lan_Conf Comments 
+#
+# In the Lan_Conf section, typical networking configuration is setup. Most users 
+# will choose to set "Static" for the "IP_Address_Source" and set the 
+# appropriate "IP_Address", "MAC_Address", "Subnet_Mask", etc. for the machine. 
+#
+Section Lan_Conf
+	## Possible values: Unspecified/Static/Use_DHCP/Use_BIOS/Use_Others
+	IP_Address_Source                             Use_DHCP
+	## Give valid IP address
+	IP_Address                                    192.168.1.24
+	## Give valid MAC address
+	MAC_Address                                   00:17:A4:49:AB:70
+	## Give valid Subnet Mask
+	Subnet_Mask                                   255.255.255.0
+	## Give valid IP address
+	Default_Gateway_IP_Address                    192.168.1.1
+EndSection

@@ -4,7 +4,7 @@ describe :Fru do
 
   before :each do
     data = nil
-    provider = "ipmitool"
+    provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
@@ -16,45 +16,46 @@ describe :Fru do
     @fru.stub(:getfrus).and_return(data)
   end
 
+  it 'should list data' do
+    @fru.names.count.should eq(1)
+  end
+
   it 'should return a list of unparsed frus' do
     @fru.getfrus.should_not be_nil
   end
 
-  it 'should return a list of fru names' do
-    @fru.names.count.should eq(13)
-  end
 
   it "should return a list of parsed frus" do
-    @fru.list.count.should eq(13)
+    @fru.list.count.should eq(1)
   end
 
-  it 'should return a manufactor' do
-    @fru.product_manufacturer.should eq('HP')
+  it 'should return a manufacturer' do
+    @fru.board_manufacturer.should eq('HP')
   end
 
   it 'should return a product' do
-    @fru.product_name.should eq('ProLiant SL230s Gen8')
+    @fru.board_product_name.should eq('ProLiant DL380 G5')
+  end
+
+  it 'should return a chassis serial' do
+    @fru.chassis_serial_number.should eq('2UX64201U2')
   end
 
   it 'should return a board serial' do
-    @fru.board_serial.should eq('USE238F0D0')
+    @fru.board_serial_number.should eq('2UX64201U2')
   end
 
-  it 'should return a product serial' do
-    @fru.product_serial.should eq('USE238F0D0')
-  end
-
-  it 'should return a asset tag' do
-    @fru.product_asset_tag.should eq('000015B90F82')
+  it 'should return a list of fru names' do
+    @fru.names.count.should eq(1)
   end
 
   it 'should return a fru using method missing' do
     @fru.names.each do |name|
       fru = @fru.send(name)
-      fru.should be_an_instance_of(Rubyipmi::Ipmitool::FruData)
+      fru.should be_an_instance_of(Rubyipmi::Freeipmi::FruData)
       fru[:name].should eq(name)
+
     end
   end
-
 
 end
