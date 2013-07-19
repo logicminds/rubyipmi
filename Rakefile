@@ -29,8 +29,12 @@ Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
+RSpec::Core::RakeTask.new(:unit) do |spec|
+  spec.pattern = FileList['spec/unit/**/*_spec.rb']
+end
+
+RSpec::Core::RakeTask.new(:integration) do |spec|
+  spec.pattern = FileList['spec/integration/**/*_spec.rb']
 end
 
 RSpec::Core::RakeTask.new(:rcov) do |spec|
@@ -38,7 +42,7 @@ RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true
 end
 
-task :default => :spec
+task :default => :unit
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
