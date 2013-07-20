@@ -12,19 +12,21 @@ module Rubyipmi::Ipmitool
     end
 
     def makecommand
-      args = ""
+      args = ''
       # need to format the options to ipmitool format
       @options.each do  |k,v|
         next if k == "cmdargs"
-        args << "-#{k} #{v} "
+        args << " -#{k} #{v}"
       end
+
       # must remove from command line as its handled via conf file
       args.delete("-P")
 
       # since ipmitool requires commands to be in specific order
-      args << " " + options["cmdargs"]
 
-      return "#{cmd} #{args}"
+      args << ' ' + options.fetch('cmdargs', '')
+
+      return "#{cmd} #{args.lstrip}"
     end
 
 
