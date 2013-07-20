@@ -2,18 +2,35 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe :Fru do
 
-  before :each do
+  before :all do
+    @path = '/usr/local/bin'
+  end
+
+ before :each do
+    allow_message_expectations_on_nil
     data = nil
     provider = "ipmitool"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
+    Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+
     @conn = Rubyipmi.connect(user, pass, host, provider, true)
     @fru = @conn.fru
+
     File.open("spec/fixtures/#{provider}/fru.txt",'r') do |file|
       data = file.read
     end
-    @fru.stub(:getfrus).and_return(data)
+
+    @fru.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    @fru.stub(:`).and_return(data)
+    $?.stub(:success?).and_return(true)
+
+  end
+
+  it "cmd should be ipmi-sensors with four arguments" do
+    @fru.list
+    verify_ipmitool_command(@fru, 5, "#{@path}/ipmitool", 'fru')
   end
 
   it 'should return a list of unparsed frus' do

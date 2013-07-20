@@ -28,11 +28,6 @@ module Rubyipmi::Freeipmi
       @list
     end
 
-    # method to retrieve the raw fru data
-    def getfrus
-      command
-    end
-
     private
 
     def method_missing(method, *args, &block)

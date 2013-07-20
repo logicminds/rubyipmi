@@ -2,12 +2,17 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe :Connection do
 
+  before :all do
+    @path = '/usr/local/bin'
+  end
+
   before :each do
-            provider = "ipmitool"
-            user = "ipmiuser"
-            pass = "impipass"
-            host = "ipmihost"
-            @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    provider = "ipmitool"
+    user = "ipmiuser"
+    pass = "impipass"
+    host = "ipmihost"
+    Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    @conn = Rubyipmi.connect(user, pass, host, provider, true)
 
   end
 
