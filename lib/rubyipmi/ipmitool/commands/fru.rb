@@ -77,18 +77,20 @@ module Rubyipmi::Ipmitool
         end
       end
     end
-  end
-
 
     # run the command and return result
     def command
-       @options["cmdargs"] = "fru"
-       value = runcmd
-       @options.delete_notify("cmdargs")
-       if value
-         return @result
-       end
+      @options["cmdargs"] = "fru"
+      value = runcmd
+      @options.delete_notify("cmdargs")
+      if value
+        return @result
+      end
     end
+
+  end
+
+
 
 
   class FruData < Hash

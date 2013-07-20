@@ -51,9 +51,7 @@ module Rubyipmi::Freeipmi
     end
 
     def getsensors
-      options["cmdargs"] = "sensor"
       value = runcmd
-      options.delete_notify("cmdargs")
       @result
     end
 

@@ -2,18 +2,34 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe :Fru do
 
+  before :all do
+    @path = '/usr/local/bin'
+  end
+
   before :each do
+
+    allow_message_expectations_on_nil
     data = nil
     provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
+    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+
     @conn = Rubyipmi.connect(user, pass, host, provider, true)
     @fru = @conn.fru
     File.open("spec/fixtures/#{provider}/fru.txt",'r') do |file|
       data = file.read
     end
-    @fru.stub(:getfrus).and_return(data)
+
+    @fru.stub(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
+    @fru.stub(:`).and_return(data)
+    $?.stub(:success?).and_return(true)
+  end
+
+  it "cmd should be ipmi-fru with four arguments" do
+   @fru.list
+   verify_freeipmi_command(@fru, 4, "#{@path}/ipmi-fru")
   end
 
   it 'should list data' do

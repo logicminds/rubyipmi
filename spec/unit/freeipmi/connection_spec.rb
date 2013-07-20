@@ -5,15 +5,18 @@ require 'spec_helper'
 
 describe "Bmc" do
 
-  before :each do
-    Rubyipmi.stub(:is_provider_installed?).and_return(true)
-    # need to figure out how to mock the base class function
-    #Rubyipmi::BaseCommand.any_instance.stub(:locate_command).with('ipmi-fru').and_return('/usr/local/bin/ipmi-fru')
+  before :all do
+    @path = '/usr/local/bin'
+  end
+
+ before :each do
 
     provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
+    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+
     @conn = Rubyipmi.connect(user, pass, host, provider, true)
 
 

@@ -1,18 +1,36 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe :Sensors do
+  before :all do
+    @path = '/usr/local/bin'
+  end
 
   before :each do
+    allow_message_expectations_on_nil
     data = nil
     provider = "freeipmi"
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
+    # this stub allows us to mock the command that would be used to verify provider installation
+    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+
     @conn = Rubyipmi.connect(user, pass, host, provider, true)
     @sensors = @conn.sensors
     File.open("spec/fixtures/#{provider}/sensors.txt",'r') do |file|
       data = file.read
     end
-    @sensors.stub(:getsensors).and_return(data)
+    # this stub allows us to mock the command that is used with this test case
+    @sensors.stub(:locate_command).with('ipmi-sensors').and_return('/usr/local/bin/ipmi-sensors')
+
+    # these stubs allow us to run the command and return the fixtures
+    @sensors.stub(:`).and_return(data)
+    $?.stub(:success?).and_return(true)
+
+  end
+
+  it "cmd should be ipmi-sensors with four arguments" do
+    @sensors.list
+    verify_freeipmi_command(@sensors, 7, "#{@path}/ipmi-sensors")
   end
 
   it "can return a list of sensors" do

@@ -9,9 +9,9 @@ module Rubyipmi::Freeipmi
 
 
     def guid
-      @options["guid"] = false
+      options["guid"] = false
       status = runcmd
-      @options.delete_notify["guid"]
+      options.delete_notify("guid")
       if not status
         raise @result
       else
@@ -19,27 +19,7 @@ module Rubyipmi::Freeipmi
       end
 
     end
-    # freeipmi
-    # Device ID:         17
-    # Device Revision:   1
-    #                    [SDR Support]
-    # Firmware Revision: 2.09
-    #                    [Device Available (normal operation)]
-    # IPMI Version:      2.0
-    # Additional Device Support:
-    #                    [Sensor Device]
-    #                    [SDR Repository Device]
-    #                    [SEL Device]
-    #                    [FRU Inventory Device]
-    # Manufacturer ID:   11
-    # Product ID:        8192
-    # Channel Information:
-    #        Channel No: 2
-    #       Medium Type: 802.3 LAN
-    #     Protocol Type: IPMB-1.0
-    #        Channel No: 7
-    #       Medium Type: OEM
-    #     Protocol Type: KCS
+
     def retrieve
       bmcinfo = {}
       status = runcmd

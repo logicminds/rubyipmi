@@ -47,17 +47,27 @@ module Rubyipmi
       raise "No Connection available, please use the connect method"
     end
 
+    # method used to find the command which also makes it easier to mock with
+    def self.locate_command(commandname)
+      location = `which #{commandname}`.strip
+      if not $?.success?
+        location = nil
+      end
+      return location
+    end
+
     # Return true or false if the provider is available
     def self.is_provider_installed?(provider)
       case provider
         when "freeipmi"
-          cmdpath = `which ipmipower`.strip
+          cmdpath = locate_command('ipmipower')
         when "ipmitool"
-          cmdpath = `which ipmitool`.strip
+          cmdpath = locate_command('ipmitool')
         else
           raise "Invalid BMC provider type"
       end
-      return $?.success?
+      # return false if command was not found
+      return ! cmdpath.nil?
     end
 
     def self.providers
