@@ -24,14 +24,13 @@ module Rubyipmi
       @passfile.close!
     end
 
-    def to_s
+    def dump_command
       makecommand
     end
 
     def initialize(commandname, opts = ObservableHash.new)
       # This will locate the command path or raise an error if not found
       @cmdname = commandname
-      @cmd = locate_command(commandname)
       @options = opts
       @options.add_observer(self)
     end
@@ -102,6 +101,10 @@ module Rubyipmi
 
 
     def run(debug=false)
+      # we search for the command everytime just in case its removed during execution
+      # we also don't want to add this to the initialize since mocking is difficult and we don't want to
+      # throw errors upon object creation
+      @cmd = locate_command(@cmdname)
       setpass
       @result = nil
       command = makecommand

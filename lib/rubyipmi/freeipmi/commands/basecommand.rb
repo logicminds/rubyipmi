@@ -25,7 +25,7 @@ module Rubyipmi::Freeipmi
       args.delete("--username")
 
 
-      return "#{cmd} #{args}"
+      return "#{cmd} #{args.rstrip}"
     end
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
