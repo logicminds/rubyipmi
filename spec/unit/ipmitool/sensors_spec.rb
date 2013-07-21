@@ -27,10 +27,16 @@ describe :Sensors do
 
   end
 
+  #it 'should figure out to add the -I lanplus' do
+  #  error = 'Authentication type NONE not supported'
+  #  @sensors.stub(:`).and_return(error)
+  #  @sensors.list
+  #  @sensors.lastcall.includes?('-I lanplus')
+  #end
 
   it "cmd should be ipmi-sensors with four arguments" do
     @sensors.list
-    verify_ipmitool_command(@sensors, 5, "#{@path}/ipmitool", 'sensor')
+    verify_ipmitool_command(@sensors, 4, "#{@path}/ipmitool", 'sensor')
   end
 
   it "can return a list of sensors" do
@@ -66,6 +72,15 @@ describe :Sensors do
       sensor = @sensors.send(name)
       sensor.should be_an_instance_of(Rubyipmi::Ipmitool::Sensor)
     end
+  end
+
+  it "test should create new Sensor" do
+    Rubyipmi::Ipmitool::Sensor.new("fakesensor").should_not be nil
+  end
+
+  it 'should create and delete temporary file' do
+    @sensors.list
+    @lastcall
   end
 
 
