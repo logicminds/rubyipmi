@@ -11,6 +11,18 @@ module Rubyipmi::Freeipmi
         @list = {}
     end
 
+    def manufacturer
+      list[DEFAULT_FRU]['board_manufacturer']
+    end
+
+    def serial
+      list[DEFAULT_FRU]['board_serial']
+    end
+
+    def model
+      list[DEFAULT_FRU]['board_product_name']
+    end
+
     # method to retrieve the raw fru data
     def getfrus
       command

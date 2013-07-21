@@ -3,11 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe "Lan" do
 
   before :each do
-            user = ENV["ipmiuser"]
-            pass = ENV["ipmipass"]
-            host = ENV["ipmihost"]
-            provider = ENV["ipmiprovider"]
-            @conn = Rubyipmi.connect(user, pass, host, provider)
+    user ||= ENV["ipmiuser"] || "admin"
+    pass ||= ENV["ipmipass"] || "password"
+    host ||= ENV["ipmihost"] || "192.168.1.16"
+    provider ||= ENV["ipmiprovider"] || "ipmitool"
+    @conn = Rubyipmi.connect(user, pass, host, provider)
 
 
 
@@ -44,7 +44,9 @@ describe "Lan" do
 
   it "should set gateway address" do
     gw = @conn.bmc.lan.gateway
-    (@conn.bmc.lan.gateway = gw).should_not be nil
+    @conn.bmc.lan.gateway = gw
+   (@conn.bmc.lan.gateway = gw).should_not be nil
+
   end
 
   it "should set netmask" do

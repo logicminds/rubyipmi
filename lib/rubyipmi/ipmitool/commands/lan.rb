@@ -94,7 +94,7 @@ module Rubyipmi::Ipmitool
     end
 
     def gateway=(address)
-      @options["cmdargs"] = "lan set #{channel} defgw #{address}"
+      @options["cmdargs"] = "lan set #{channel} defgw ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
       return value

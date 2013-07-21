@@ -8,7 +8,7 @@ module Rubyipmi
 
 
     attr_reader :cmd
-    attr_accessor :options
+    attr_accessor :options, :passfile
     attr_reader :lastcall
 
     def makecommand
@@ -17,11 +17,10 @@ module Rubyipmi
 
     def setpass
       @passfile = Tempfile.new('')
-      @passfile.open
     end
 
     def removepass
-      @passfile.close!
+      @passfile.unlink
     end
 
     def dump_command
@@ -81,7 +80,7 @@ module Rubyipmi
     def findfix(result, args, debug, runmethod)
       if result
         # The errorcode code hash contains the fix
-        fix = ErrorCodes.code[result]
+        fix = ErrorCodes.search(result)
         if not fix
           raise "#{result}"
         else

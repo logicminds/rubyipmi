@@ -5,22 +5,20 @@ module Rubyipmi::Ipmitool
     def setpass
       super
       @options["f"] = @passfile.path
-      @passfile.puts "#{@options["P"]}"
+      @passfile.write "#{@options["P"]}"
+      @passfile.rewind
       @passfile.close
-
-
     end
 
     def makecommand
       args = ''
       # need to format the options to ipmitool format
       @options.each do  |k,v|
+        # must remove from command line as its handled via conf file
+        next if k == "P"
         next if k == "cmdargs"
         args << " -#{k} #{v}"
       end
-
-      # must remove from command line as its handled via conf file
-      args.delete("-P")
 
       # since ipmitool requires commands to be in specific order
 
@@ -36,9 +34,9 @@ module Rubyipmi::Ipmitool
     def findfix(result, args, debug, runmethod)
       if result
         # The errorcode code hash contains the fix
-        fix = Rubyipmi::Ipmitool::ErrorCodes.code[result]
-
-        if not fix
+        #fix = Rubyipmi::Ipmitool::ErrorCodes.search(result)
+        fix = nil
+        if fix.nil?
           raise "#{result}"
         else
           @options.merge_notify!(fix)
@@ -58,7 +56,7 @@ module Rubyipmi::Ipmitool
       # Find out what kind of error is happening, parse results
       # Check for authentication or connection issue
       #puts "ipmi call: #{@lastcall}"
-
+      #super
       if @result =~ /timeout|timed\ out/
         code = "ipmi call: #{@lastcall} timed out"
         raise code

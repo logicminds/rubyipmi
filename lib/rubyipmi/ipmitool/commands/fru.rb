@@ -7,7 +7,6 @@ module Rubyipmi::Ipmitool
     DEFAULT_FRU = 'builtin_fru_device'
 
 
-
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
       @list = {}
@@ -15,6 +14,18 @@ module Rubyipmi::Ipmitool
 
     def names
       list.keys
+    end
+
+    def manufacturer
+      list[DEFAULT_FRU]['product_manufacturer']
+    end
+
+    def serial
+      list[DEFAULT_FRU]['board_serial']
+    end
+
+    def model
+      list[DEFAULT_FRU]['product_manufacturer']
     end
 
     # return the list of fru information in a hash

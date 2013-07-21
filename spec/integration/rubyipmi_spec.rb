@@ -1,11 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "rubyipmi" do
-    before :each do
-        @user = ENV["ipmiuser"]
-        @pass = ENV["ipmipass"]
-        @host = ENV["ipmihost"]
-        @provider = ENV["ipmiprovider"]
+  before :each do
+    @user ||= ENV["ipmiuser"] || "admin"
+    @pass ||= ENV["ipmipass"] || "password"
+    @host ||= ENV["ipmihost"] || "192.168.1.16"
+    @provider ||= ENV["ipmiprovider"] || "ipmitool"
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider)
 
     end
   it "creates a connection object" do
@@ -51,10 +52,6 @@ describe "rubyipmi" do
 
   it "check to find any available installed providers" do
     Rubyipmi.providers_installed?.length.should be > 0
-  end
-
-  it "test printdiag report" do
-    Rubyipmi.printdiag(@user, @pass, @host).should be_true
   end
 
 

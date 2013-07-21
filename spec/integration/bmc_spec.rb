@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe "Bmc" do
 
   before :each do
-            user = ENV["ipmiuser"]
-            pass = ENV["ipmipass"]
-            host = ENV["ipmihost"]
-            provider = ENV["ipmiprovider"]
-            @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    user ||= ENV["ipmiuser"] || "admin"
+    pass ||= ENV["ipmipass"] || "password"
+    host ||= ENV["ipmihost"] || "192.168.1.16"
+    provider ||= ENV["ipmiprovider"] || "ipmitool"
+    @conn = Rubyipmi.connect(user, pass, host, provider)
 
   end
 
@@ -32,7 +32,7 @@ describe "Bmc" do
   end
 
   it "reset should fail when type is wrong" do
-    @conn.bmc.reset('freezing').should_be nil
+    expect{@conn.bmc.reset('freezing')}.to raise_exception
   end
 
   it "is able to retrieve the bmc info" do

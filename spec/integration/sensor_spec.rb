@@ -5,8 +5,8 @@ describe "Sensors" do
   attr_accessor :provider
   before :each do
     user = ENV["ipmiuser"] || 'admin'
-    pass = ENV["ipmipass"] || 'creative'
-    host = ENV["ipmihost"] || '192.168.1.41'
+    pass = ENV["ipmipass"] || 'password'
+    host = ENV["ipmihost"] || '192.168.1.16'
     provider = ENV["ipmiprovider"] || 'ipmitool'
     @conn = Rubyipmi.connect(user, pass, host, provider)
 
@@ -14,7 +14,6 @@ describe "Sensors" do
 
   it "test get all sensors" do
     @conn.sensors.list.count.should be > 1
-    puts @conn.sensors.names.inspect
   end
 
   it "test should refresh data" do
@@ -40,21 +39,6 @@ describe "Sensors" do
     @conn.sensors.templist.count.should be > 1
   end
 
-  it "test should create new Sensor" do
-    if provider == "ipmitool"
-      Rubyipmi::Ipmitool::Sensor.new("fakesensor").should_not be nil
-    else
-      Rubyipmi::Freeipmi::Sensor.new("fakesensor").should_not be nil
-    end
-  end
-
-  it "test missing method with known good method" do
-    @conn.sensors.fan_1.should_not be nil
-  end
-
-  it "test missing method with known bad method" do
-    expect {@conn.sensors.blah}.to raise_exception
-  end
 
 
 end

@@ -33,6 +33,8 @@ describe :Sensors do
     verify_freeipmi_command(@sensors, 7, "#{@path}/ipmi-sensors")
   end
 
+
+
   it "can return a list of sensors" do
    @sensors.list.should_not be_nil
   end
@@ -65,6 +67,10 @@ describe :Sensors do
       sensor.should be_an_instance_of(Rubyipmi::Freeipmi::Sensor)
       sensor[:name].should eq(name)
     end
+  end
+
+  it "test should create new Sensor" do
+      Rubyipmi::Freeipmi::Sensor.new("fakesensor").should_not be nil
   end
 
 

@@ -16,12 +16,20 @@ module Rubyipmi::Ipmitool
 
     # Turn on the system
     def on
-      command("on")
+      if off?
+        command("on")
+      else
+         return true
+      end
     end
 
     # Turn off the system
     def off
-      command("off")
+      if off?
+        return true
+      else
+        command("off")
+      end
     end
 
     # Power cycle the system
