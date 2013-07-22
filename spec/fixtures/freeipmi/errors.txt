@@ -1,0 +1,1 @@
+authentication type unavailable for attempted privilege level

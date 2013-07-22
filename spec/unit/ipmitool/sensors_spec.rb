@@ -34,9 +34,9 @@ describe :Sensors do
   #  @sensors.lastcall.includes?('-I lanplus')
   #end
 
-  it "cmd should be ipmi-sensors with four arguments" do
+  it "cmd should be ipmi-sensors with three arguments" do
     @sensors.list
-    verify_ipmitool_command(@sensors, 4, "#{@path}/ipmitool", 'sensor')
+    verify_ipmitool_command(@sensors, 3, "#{@path}/ipmitool", 'sensor')
   end
 
   it "can return a list of sensors" do
@@ -78,10 +78,17 @@ describe :Sensors do
     Rubyipmi::Ipmitool::Sensor.new("fakesensor").should_not be nil
   end
 
-  it 'should create and delete temporary file' do
+  it 'fix should be added to options after error occurs' do
+    error = nil
+    File.open("spec/fixtures/ipmitool/errors.txt",'r') do |file|
+      error = file.read
+    end
+    @sensors.stub(:`).and_return(error)
+    $?.stub(:success?).and_return(false)
     @sensors.list
-    @lastcall
+    after = @sensors.options.fetch('I', false).should_not be_false
   end
+
 
 
 end

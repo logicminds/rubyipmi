@@ -52,7 +52,11 @@ module Rubyipmi::Freeipmi
 
     def getsensors
       value = runcmd
-      @result
+      if value
+        return @result
+      else
+        return nil
+      end
     end
 
     private

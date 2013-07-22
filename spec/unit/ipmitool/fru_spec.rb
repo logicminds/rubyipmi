@@ -28,10 +28,9 @@ describe :Fru do
 
   end
 
-  it "cmd should be ipmi-sensors with four arguments" do
+  it "cmd should be ipmi-sensors with three arguments" do
     @fru.list
-    puts @fru.lastcall
-    verify_ipmitool_command(@fru, 4, "#{@path}/ipmitool", 'fru')
+    verify_ipmitool_command(@fru, 3, "#{@path}/ipmitool", 'fru')
   end
 
   it 'should return a list of unparsed frus' do

@@ -30,10 +30,8 @@ describe :Sensors do
 
   it "cmd should be ipmi-sensors with four arguments" do
     @sensors.list
-    verify_freeipmi_command(@sensors, 7, "#{@path}/ipmi-sensors")
+    verify_freeipmi_command(@sensors, 5, "#{@path}/ipmi-sensors")
   end
-
-
 
   it "can return a list of sensors" do
    @sensors.list.should_not be_nil
@@ -69,8 +67,15 @@ describe :Sensors do
     end
   end
 
-  it "test should create new Sensor" do
-      Rubyipmi::Freeipmi::Sensor.new("fakesensor").should_not be nil
+  it 'fix should be added to options after error occurs' do
+    error = nil
+    File.open("spec/fixtures/freeipmi/errors.txt",'r') do |file|
+      error = file.read
+    end
+    @sensors.stub(:`).and_return(error)
+    $?.stub(:success?).and_return(false)
+    @sensors.refresh
+    after = @sensors.options.fetch('driver-type', false).should_not be_false
   end
 
 
