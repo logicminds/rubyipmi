@@ -26,14 +26,14 @@ describe "Bmc" do
     $?.stub(:success?).and_return(true)
   end
 
-  it "cmd should be bmc-info with four arguments" do
+  it "cmd should be bmc-info with two arguments" do
     @bmcinfo.retrieve
-    verify_freeipmi_command(@bmcinfo, 4, "#{@path}/bmc-info")
+    verify_freeipmi_command(@bmcinfo, 2, "#{@path}/bmc-info")
   end
 
-  it "cmd should be bmc-info with four arguments" do
+  it "cmd should be bmc-info with three arguments" do
     @bmcinfo.guid
-    verify_freeipmi_command(@bmcinfo, 5, "#{@path}/bmc-info")
+    verify_freeipmi_command(@bmcinfo, 3, "#{@path}/bmc-info")
   end
 
 

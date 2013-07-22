@@ -27,46 +27,17 @@ module Rubyipmi::Ipmitool
       return "#{cmd} #{args.lstrip}"
     end
 
-
-    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
-    # If a fix is found it is applied to the options hash, and then the last run command is retried
-    # until all the fixes are exhausted or a error not defined in the errorcodes is found
-    def findfix(result, args, debug, runmethod)
+    def find_fix(result)
       if result
         # The errorcode code hash contains the fix
-        #fix = Rubyipmi::Ipmitool::ErrorCodes.search(result)
-        fix = nil
-        if fix.nil?
-          raise "#{result}"
-        else
+        begin
+          fix = ErrorCodes.search(result)
           @options.merge_notify!(fix)
-          # retry the last called method
-          # its quicker to explicitly call these commands than calling a command block
-          if runmethod == "runcmd"
-            runcmd(debug)
-          else
-            runcmd_without_opts(args, debug)
-          end
-
+        rescue
+          raise "#{result}"
         end
-
       end
     end
-    def throwError
-      # Find out what kind of error is happening, parse results
-      # Check for authentication or connection issue
-      #puts "ipmi call: #{@lastcall}"
-      #super
-      if @result =~ /timeout|timed\ out/
-        code = "ipmi call: #{@lastcall} timed out"
-        raise code
-      else
-        # ipmitool spits out many errors so for now we will just take the first error
-        code = @result.split(/\r\n/).first if not @result.empty?
-      end
-      throw :ipmierror, code
-    end
-
 
   end
 end
