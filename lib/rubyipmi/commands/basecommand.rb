@@ -6,7 +6,6 @@ module Rubyipmi
   class BaseCommand
     include Observable
 
-    MAX_RETRY_COUNT = 10
 
     attr_reader :cmd
     attr_accessor :options, :passfile
@@ -50,14 +49,6 @@ module Rubyipmi
       @success = run(debug)
     end
 
-    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
-    # If a fix is found it is applied to the options hash, and then the last run command is retried
-    # until all the fixes are exhausted or a error not defined in the errorcodes is found
-    def find_fix
-      # must override in subclass
-    end
-
-
     def run(debug=false)
       # we search for the command everytime just in case its removed during execution
       # we also don't want to add this to the initialize since mocking is difficult and we don't want to
@@ -84,7 +75,7 @@ module Rubyipmi
           retrycount = retrycount.next
           retry
         else
-          raise "Exhausted all auto fixes, cannot determine the problem is"
+          raise "Exhausted all auto fixes, cannot determine what the problem is"
         end
       ensure
         removepass
@@ -92,6 +83,21 @@ module Rubyipmi
 
       end
 
+    end
+
+    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
+    # If a fix is found it is applied to the options hash, and then the last run command is retried
+    # until all the fixes are exhausted or a error not defined in the errorcodes is found
+    def find_fix(result)
+      if result
+        # The errorcode code hash contains the fix
+        begin
+          fix = ErrorCodes.search(result)
+          @options.merge_notify!(fix)
+        rescue
+          raise "#{result}"
+        end
+      end
     end
 
     def update(opts)

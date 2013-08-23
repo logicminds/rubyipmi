@@ -4,6 +4,7 @@ module Rubyipmi::Ipmitool
 
     attr_accessor :info
     attr_accessor :channel
+    MAX_RETRY = 1
 
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
@@ -12,65 +13,57 @@ module Rubyipmi::Ipmitool
 
     end
 
+    # sets the info var to be empty causing the variable to repopulate upon the next call to info
+    def refresh
+      @info = {}
+    end
+
+    def channel=(num)
+      refresh
+      @channel = num
+    end
+
     def info
+      retrycount = 0
       if @info.length < 1
-        parse(print)
+        begin
+          parse(print)
+        rescue
+          # sometimes we need to get the info from channel 1, wait for error to occur then retry using channel 1
+          if retrycount < MAX_RETRY
+            @channel = 1
+            retry
+          end
+        end
       else
+        # return the cached info
         @info
       end
     end
 
-    def print
-      @options["cmdargs"] = "lan print"
-      value = runcmd
-      @options.delete_notify("cmdargs")
-      if value
-        @result
-      end
+    def snmp
+      info.fetch("snmp_community_string",nil)
     end
 
-  #  def snmp
-  #    if @info.length < 1
-  #      parse(print)
-  #    end
-  #    # Some systems do not report the snmp string
-  #    @info["snmp community string"]
-  #  end
-
     def ip
-      if @info.length < 1
-        parse(print)
-      end
-      @info["ip address"]
+      info.fetch("ip_address",nil)
     end
 
     def mac
-      if @info.length < 1
-        parse(print)
-      end
-      @info["mac address"]
+      info.fetch("mac_address",nil)
     end
 
     def netmask
-      if @info.length < 1
-        parse(print)
-      end
-      @info["subnet mask"]
+      info.fetch("subnet_mask",nil)
     end
 
     def gateway
-      if @info.length < 1
-        parse(print)
-      end
-      @info["default gateway ip"]
+      info.fetch("default_gateway_ip",nil)
     end
 
-  #  def vlanid
-  #    if @info.length < 1
-  #      parse(print)
-  #    end
-  #    @info["802.1q vlan id"]
-  #  end
+    def vlanid
+      info.fetch("802.1q_vlan_id",nil)
+    end
 
   #  def snmp=(community)
   #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
@@ -101,35 +94,36 @@ module Rubyipmi::Ipmitool
     end
 
     def dhcp?
-      if @info.length < 1
-        parse(print)
-      end
-      @info["ip address source"].match(/dhcp/i) != nil
+      info.fetch("ip_address_source",nil).match(/dhcp/i) != nil
     end
 
     def static?
-      if @info.length < 1
-        parse(print)
-      end
-      @info["ip address source"].match(/static/i) != nil
+      info.fetch("ip_address_source",nil).match(/static/i) != nil
     end
 
-  #  def vlanid=(vlan)
-  #    @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
-  #    value = runcmd
-  #    @options.delete_notify("cmdargs")
-  #    return value
-  #  end
+    def vlanid=(vlan)
+      @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
+      value = runcmd
+      @options.delete_notify("cmdargs")
+      return value
+    end
 
+   private
+
+    def print
+      @options["cmdargs"] = "lan print"
+      value = runcmd
+      @options.delete_notify("cmdargs")
+      if value
+        @result
+      end
+    end
 
     def parse(landata)
-      multikey = ""
-      multivalue = {}
-
       landata.lines.each do |line|
         # clean up the data from spaces
         item = line.split(':', 2)
-        key = item.first.strip.downcase
+        key = normalize(item.first.strip)
         value = item.last.strip
         @info[key] = value
 
@@ -137,26 +131,9 @@ module Rubyipmi::Ipmitool
       return @info
     end
 
-
-
+    def normalize(text)
+      text.gsub(/\ /, '_').gsub(/\./, '').downcase
+    end
 
   end
 end
-
-#Set in Progress         : Set Complete
-#Auth Type Support       :
-#Auth Type Enable        : Callback :
-#                        : User     : NONE MD2 MD5 PASSWORD OEM
-#                        : Operator : NONE MD2 MD5
-#                        : Admin    : MD2 MD5
-#                        : OEM      :
-#IP Address Source       : DHCP Address
-#IP Address              : 192.168.1.41
-#Subnet Mask             : 255.255.255.0
-#MAC Address             : 00:17:a4:49:ab:70
-#BMC ARP Control         : ARP Responses Enabled, Gratuitous ARP Disabled
-#Gratituous ARP Intrvl   : 0.0 seconds
-#Default Gateway IP      : 192.168.1.1
-#802.1q VLAN ID          : Disabled
-#802.1q VLAN Priority    : 0
-#Cipher Suite Priv Max   : Not Available

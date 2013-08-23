@@ -1,6 +1,11 @@
+require 'rubyipmi/ipmitool/errorcodes'
+
 module Rubyipmi::Ipmitool
 
   class BaseCommand < Rubyipmi::BaseCommand
+
+    MAX_RETRY_COUNT = ErrorCodes.length
+
 
     def setpass
       super
@@ -27,17 +32,7 @@ module Rubyipmi::Ipmitool
       return "#{cmd} #{args.lstrip}"
     end
 
-    def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          raise "#{result}"
-        end
-      end
-    end
-
   end
+
+
 end

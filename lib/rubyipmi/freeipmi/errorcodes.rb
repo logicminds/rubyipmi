@@ -7,6 +7,10 @@ module Rubyipmi::Freeipmi
 
     }
 
+    def self.length
+      @@codes.length
+    end
+
     def self.code
        @@codes
     end

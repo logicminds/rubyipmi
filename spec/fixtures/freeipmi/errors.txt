@@ -1,1 +1,2 @@
 authentication type unavailable for attempted privilege level
+RuntimeError: /usr/local/sbin/bmc-info: authentication type unavailable for attempted privilege level
