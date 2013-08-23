@@ -9,6 +9,9 @@ module Rubyipmi
 
 
       }
+      def self.length
+        @@codes.length
+      end
 
       def self.code
         @@codes
