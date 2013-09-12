@@ -64,7 +64,7 @@ module Rubyipmi::Ipmitool
           key = item.first.strip
           value = item.last.strip
           # if the following condition is met we have subvalues
-          if key == value and not subkey
+          if value.empty?
             subkey = key
             @bmcinfo[subkey] = []
           elsif key == value and subkey
