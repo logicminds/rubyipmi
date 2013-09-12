@@ -3,6 +3,10 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'rubyipmi'
 
+if RUBY_VERSION >= '1.9'
+  require 'simplecov'
+end
+
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 
@@ -39,4 +43,10 @@ end
 
 RSpec.configure do |config|
 
+end
+
+if RUBY_VERSION >= '1.9'
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
 end

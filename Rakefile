@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'bundler'
+require 'bundler/gem_tasks'
 
 
 begin
@@ -21,6 +22,13 @@ end
 
 RSpec::Core::RakeTask.new(:integration) do |spec|
   spec.pattern = FileList['spec/integration/**/*_spec.rb']
+end
+
+if RUBY_VERSION < "1.9"
+  RSpec::Core::RakeTask.new(:rcov) do |spec|
+    spec.pattern = 'spec/**/*_spec.rb'
+    spec.rcov = true
+  end
 end
 
 task :default => :unit

@@ -34,6 +34,6 @@ Gem::Specification.new do |s|
     # use simplecov with ruby19 and up
     s.add_development_dependency 'simplecov'
   else
-    s.add_development_dependency 'cov'
+    s.add_development_dependency 'rcov'
   end
 end
