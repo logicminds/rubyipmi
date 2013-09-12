@@ -11,6 +11,9 @@ module Rubyipmi
     attr_accessor :options, :passfile
     attr_reader :lastcall
 
+    # provider reader
+    attr_reader :provider
+
     def makecommand
       # override in subclass
     end
@@ -92,7 +95,9 @@ module Rubyipmi
       if result
         # The errorcode code hash contains the fix
         begin
-          fix = ErrorCodes.search(result)
+          # due to namespec limit, use the ugly eval to solve problem first
+          error_codes = eval "Rubyipmi::#{provider.capitalize}::ErrorCodes"
+          fix = error_codes.search(result)
           @options.merge_notify!(fix)
         rescue
           raise "#{result}"

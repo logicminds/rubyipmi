@@ -6,6 +6,11 @@ module Rubyipmi::Ipmitool
 
     MAX_RETRY_COUNT = ErrorCodes.length
 
+    def initialize(commandname, opts = ObservableHash.new)
+      super
+      @provider = 'ipmitool'
+    end
+
 
     def setpass
       super

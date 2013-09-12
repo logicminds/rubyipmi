@@ -87,6 +87,7 @@ describe Rubyipmi::Ipmitool::Sensors do
     @sensors.stub(:`).and_return(error)
     $?.stub(:success?).and_return(false)
     @sensors.list
+    @sensors.find_fix(@sensors.instance_variable_get(:@result))
     after = @sensors.options.fetch('I', false).should_not be_false
   end
 
