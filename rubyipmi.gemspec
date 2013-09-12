@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler', ">= 1.1.5"
   s.add_development_dependency 'highline'
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'pry'
 
   if RUBY_VERSION > "1.9"
     # use simplecov with ruby19 and up
