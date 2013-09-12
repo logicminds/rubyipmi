@@ -10,6 +10,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'rubyipmi'
+require 'pry'
 
 
 # Requires supporting files with custom matchers and macros, etc,
@@ -36,9 +37,10 @@ end
 
 def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   actual = cmdobj.lastcall
-  cmd_match = actual.scan(/(^#{Regexp.escape(expcmd)})/)
+  cmd_match = actual.scan(Regexp.new(expcmd))
   args_match = actual.scan(/(-\w\s[\w\d\S]*)/)
-  cmd_match.to_s.should eq(expcmd)
+  cmd_match.size.should eq(1)
+  cmd_match.first.to_s.should eq(expcmd)
   actual.include?(required_args).should be_true
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
