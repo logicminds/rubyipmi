@@ -1,11 +1,16 @@
+if RUBY_VERSION >= '1.9'
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/spec/'
+    add_group 'freeipmi', 'lib/rubyipmi/freeipmi'
+    add_group 'ipmitool', 'lib/rubyipmi/ipmitool'
+  end
+end
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'rubyipmi'
 
-if RUBY_VERSION >= '1.9'
-  require 'simplecov'
-end
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -43,10 +48,4 @@ end
 
 RSpec.configure do |config|
 
-end
-
-if RUBY_VERSION >= '1.9'
-  SimpleCov.start do
-    add_filter '/spec/'
-  end
 end
