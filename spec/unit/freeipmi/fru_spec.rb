@@ -28,8 +28,8 @@ describe :Fru do
   end
 
   it "cmd should be ipmi-fru with two arguments" do
-   @fru.list
-   verify_freeipmi_command(@fru, 2, "#{@path}/ipmi-fru")
+    @fru.list
+    verify_freeipmi_command(@fru, 3, "#{@path}/ipmi-fru")
   end
 
   it 'should list data' do

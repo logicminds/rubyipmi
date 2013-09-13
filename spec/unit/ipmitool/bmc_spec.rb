@@ -47,7 +47,7 @@ describe "Bmc" do
   end
 
   it "info should parse as expected" do
-    @bmc.info.should == RETRIEVE
+    @bmc.info.should eq(RETRIEVE)
   end
 
 end
