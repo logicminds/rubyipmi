@@ -27,9 +27,9 @@ describe Rubyipmi::Freeipmi::Fru do
     $?.stub(:success?).and_return(true)
   end
 
-  it "cmd should be ipmi-fru with two arguments" do
+  it "cmd should be ipmi-fru with two arguments: hostname, driver-type, config-file" do
    @fru.list
-   verify_freeipmi_command(@fru, 2, "#{@path}/ipmi-fru")
+   verify_freeipmi_command(@fru, 3, "#{@path}/ipmi-fru")
   end
 
   it 'should list data' do
