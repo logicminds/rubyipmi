@@ -28,10 +28,10 @@ describe :Sensors do
 
   end
 
-  it "cmd should be ipmi-sensors with four arguments" do
+ it "cmd should be ipmi-sensors with six arguments" do
     @sensors.list
-    verify_freeipmi_command(@sensors, 5, "#{@path}/ipmi-sensors")
-  end
+    verify_freeipmi_command(@sensors, 6, "#{@path}/ipmi-sensors")
+ end
 
   it "can return a list of sensors" do
    @sensors.list.should_not be_nil

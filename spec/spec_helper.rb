@@ -16,9 +16,10 @@ end
 
 def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)
   actual = cmdobj.lastcall
-  cmd_match = actual.scan(/(^#{Regexp.escape(expcmd)})/)
+  actual.scan(/(^#{Regexp.escape(expcmd)})/) do |cmd_match|
+    cmd_match.first.should eq(expcmd)
+  end
   args_match = actual.scan(/(\-{2}[\w-]*=?[-\w\/]*)/)
-  cmd_match.to_s.should eq(expcmd)
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
   args_match.count.should eq(exp_args_count)
@@ -27,9 +28,10 @@ end
 
 def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   actual = cmdobj.lastcall
-  cmd_match = actual.scan(/(^#{Regexp.escape(expcmd)})/)
+  actual.scan(/(^#{Regexp.escape(expcmd)})/) do |cmd_match|
+    cmd_match.first.should eq(expcmd)
+  end
   args_match = actual.scan(/(-\w\s[\w\d\S]*)/)
-  cmd_match.to_s.should eq(expcmd)
   actual.include?(required_args).should be_true
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
