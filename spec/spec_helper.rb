@@ -28,12 +28,13 @@ end
 
 def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)
   actual = cmdobj.lastcall
-  cmd_match = actual.scan(/(^#{Regexp.escape(expcmd)})/)
+  cmd_match = actual.scan(Regexp.new(expcmd))
   args_match = actual.scan(/(\-{2}[\w-]*=?[-\w\/]*)/)
-  cmd_match.to_s.should eq(expcmd)
+  expect(cmd_match).to have(1).item
+  expect(cmd_match.first.to_s).to eq(expcmd)
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
-  args_match.count.should eq(exp_args_count)
+  expect(args_match).to have(exp_args_count).items
 end
 
 
