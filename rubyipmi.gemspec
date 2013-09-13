@@ -24,7 +24,8 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
 
-  s.add_development_dependency 'rspec', ">= 2.8.0"
+  # use rspec expect syntax, needs >= 2.11
+  s.add_development_dependency 'rspec', ">= 2.11.0"
   s.add_development_dependency 'rdoc', "~> 3.12"
   s.add_development_dependency 'bundler', ">= 1.1.5"
   s.add_development_dependency 'highline'
