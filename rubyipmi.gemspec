@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'highline'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'coveralls'
 
   if RUBY_VERSION > "1.9"
     # use simplecov with ruby19 and up
