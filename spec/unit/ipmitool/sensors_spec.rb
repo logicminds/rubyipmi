@@ -1,5 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-describe :Sensors do
+require 'spec_helper'
+
+describe Rubyipmi::Ipmitool::Sensors do
   before :all do
     @path = '/usr/local/bin'
   end
@@ -86,6 +87,7 @@ describe :Sensors do
     @sensors.stub(:`).and_return(error)
     $?.stub(:success?).and_return(false)
     @sensors.list
+    @sensors.find_fix(@sensors.instance_variable_get(:@result))
     after = @sensors.options.fetch('I', false).should_not be_false
   end
 

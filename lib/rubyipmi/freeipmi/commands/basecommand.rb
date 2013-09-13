@@ -5,6 +5,11 @@ module Rubyipmi::Freeipmi
   class BaseCommand < Rubyipmi::BaseCommand
     MAX_RETRY_COUNT = ErrorCodes.length
 
+    def initialize(commandname, opts = ObservableHash.new)
+      super
+      @provider = 'freeipmi'
+    end
+
     def setpass
       super
       @options["config-file"] = @passfile.path

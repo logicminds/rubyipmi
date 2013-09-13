@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'bundler'
+require 'bundler/gem_tasks'
 
 
 begin
@@ -13,20 +14,6 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "rubyipmi"
-  gem.homepage = "http://github.com/logicminds/rubyipmi"
-  gem.license = "GPLv3"
-  gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
-  gem.description = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
-  gem.email = "corey@logicminds.biz"
-  gem.authors = ["Corey Osman"]
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
-
 require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:unit) do |spec|
@@ -37,9 +24,11 @@ RSpec::Core::RakeTask.new(:integration) do |spec|
   spec.pattern = FileList['spec/integration/**/*_spec.rb']
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
+if RUBY_VERSION < "1.9"
+  RSpec::Core::RakeTask.new(:rcov) do |spec|
+    spec.pattern = 'spec/**/*_spec.rb'
+    spec.rcov = true
+  end
 end
 
 task :default => :unit

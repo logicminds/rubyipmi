@@ -1,8 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
-
-
-describe "Bmc" do
+describe Rubyipmi::Freeipmi::BmcInfo do
   before :all do
     @path = '/usr/local/bin'
   end
@@ -26,14 +24,18 @@ describe "Bmc" do
     $?.stub(:success?).and_return(true)
   end
 
-  it "cmd should be bmc-info with two arguments" do
-    @bmcinfo.retrieve
-    verify_freeipmi_command(@bmcinfo, 2, "#{@path}/bmc-info")
+  describe '#retrieve' do
+    it "should be bmc-info with three arguments: hostname, driver-type, config-file" do
+      @bmcinfo.retrieve
+      verify_freeipmi_command(@bmcinfo, 3, "#{@path}/bmc-info")
+    end
   end
 
-  it "cmd should be bmc-info with three arguments" do
-    @bmcinfo.guid
-    verify_freeipmi_command(@bmcinfo, 3, "#{@path}/bmc-info")
+  describe '#guid' do
+    it "should be bmc-info with four arguments: hostname, driver-type, config-file, guid" do
+      @bmcinfo.guid
+      verify_freeipmi_command(@bmcinfo, 4, "#{@path}/bmc-info")
+    end
   end
 
 

@@ -1,9 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-#require 'rubyipmi/Freeipmi/errorcodes'
+require 'spec_helper'
 
 describe "Errorcodes" do
-
-
 
   it 'should return the length of fix hash' do
     Rubyipmi::Freeipmi::ErrorCodes.length.should be >= 1

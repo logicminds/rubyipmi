@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
-describe :Connection do
+describe Rubyipmi::Ipmitool::Connection do
 
   before :all do
     @path = '/usr/local/bin'
