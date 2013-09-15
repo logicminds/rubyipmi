@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class BmcConfig < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("bmc-config", opts)
       @sections = []
 
@@ -12,8 +12,8 @@ module Rubyipmi::Freeipmi
       @options["checkout"] = false
       @options["section"] = section
       value = runcmd
-      @options.delete_notify("checkout")
-      @options.delete_notify("section")
+      @options.delete("checkout")
+      @options.delete("section")
       return @result
     end
 
@@ -23,8 +23,8 @@ module Rubyipmi::Freeipmi
       if not keypair.empty?
         @options["key-pair"] = keypair
         value = runcmd
-        @options.delete_notify("commit")
-        @options.delete_notify("key-pair")
+        @options.delete("commit")
+        @options.delete("key-pair")
         return value
       end
       return false
@@ -35,7 +35,7 @@ module Rubyipmi::Freeipmi
     def configuration
       @options["checkout"] = false
       value = runcmd
-      @options.delete_notify("checkout")
+      @options.delete("checkout")
       @result
     end
 
@@ -44,7 +44,7 @@ module Rubyipmi::Freeipmi
       if @sections.length < 1
         @options["listsections"] = false
         value = runcmd
-        @options.delete_notify("listsections")
+        @options.delete("listsections")
         if value
           @sections = @result.split(/\n/)
         end

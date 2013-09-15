@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class BmcInfo < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("bmc-info", opts)
 
     end
@@ -11,7 +11,7 @@ module Rubyipmi::Freeipmi
     def guid
       options["get-device-guid"] = false
       status = runcmd
-      options.delete_notify("get-device-guid")
+      options.delete("get-device-guid")
       if not status
         raise @result
       else

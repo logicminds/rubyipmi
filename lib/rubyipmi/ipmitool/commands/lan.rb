@@ -6,7 +6,7 @@ module Rubyipmi::Ipmitool
     attr_accessor :channel
     MAX_RETRY = 1
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
       @info = {}
       @channel = 2
@@ -69,28 +69,28 @@ module Rubyipmi::Ipmitool
   #  def snmp=(community)
   #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
   #    value = runcmd
-  #    @options.delete_notify("cmdargs")
+  #    @options.delete("cmdargs")
   #    return value
   #  end
 
     def ip=(address)
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 
     def netmask=(mask)
       @options["cmdargs"] = "lan set #{channel} netmask #{mask}"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 
     def gateway=(address)
       @options["cmdargs"] = "lan set #{channel} defgw ipaddr #{address}"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 
@@ -105,7 +105,7 @@ module Rubyipmi::Ipmitool
     def vlanid=(vlan)
       @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 
@@ -114,7 +114,7 @@ module Rubyipmi::Ipmitool
     def print
       @options["cmdargs"] = "lan print"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       if value
         @result
       end
