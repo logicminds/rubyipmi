@@ -4,7 +4,7 @@ module Rubyipmi::Ipmitool
 
     attr_accessor :config
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
       @bmcinfo = {}
     end
@@ -26,7 +26,7 @@ module Rubyipmi::Ipmitool
       if ['cold', 'warm'].include?(type)
          @options["cmdargs"] = "bmc reset #{type}"
          value = runcmd()
-         @options.delete_notify("cmdargs")
+         @options.delete("cmdargs")
          return value
       else
         raise "reset type: #{type} is not a valid choice, use warm or cold"
@@ -37,7 +37,7 @@ module Rubyipmi::Ipmitool
     def guid
       @options["cmdargs"] = "bmc guid"
       value = runcmd()
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       if value
         @result.lines.each { | line |
           line.chomp
@@ -53,7 +53,7 @@ module Rubyipmi::Ipmitool
     def retrieve
       @options["cmdargs"] = "bmc info"
       status = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       subkey = nil
       if not status
         raise @result

@@ -2,7 +2,7 @@ module Rubyipmi::Ipmitool
 
   class Sensors < Rubyipmi::Ipmitool::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
     end
 
@@ -50,7 +50,7 @@ module Rubyipmi::Ipmitool
     def getsensors
       options["cmdargs"] = "sensor"
       value = runcmd
-      options.delete_notify("cmdargs")
+      options.delete("cmdargs")
       @result
     end
 

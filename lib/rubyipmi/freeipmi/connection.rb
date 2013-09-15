@@ -1,5 +1,4 @@
 require 'rubyipmi/freeipmi/errorcodes'
-require 'rubyipmi/observablehash'
 require 'rubyipmi/commands/basecommand'
 require 'rubyipmi/freeipmi/commands/basecommand'
 
@@ -15,7 +14,7 @@ module Rubyipmi
 
 
       def initialize(user, pass, host,debug=false)
-        @options = Rubyipmi::ObservableHash.new
+        @options = Hash.new
         raise("Must provide a host to connect to") unless host
         @options["hostname"] = host
         # Credentials can also be stored in the freeipmi configuration file

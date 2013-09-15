@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class BmcDevice < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("bmc-device", opts)
     end
 
@@ -10,7 +10,7 @@ module Rubyipmi::Freeipmi
     def command(opt)
       @options[opt] = false
       value = runcmd
-      @options.delete_notify(opt)
+      @options.delete(opt)
       return value
     end
 

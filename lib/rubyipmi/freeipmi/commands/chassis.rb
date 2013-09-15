@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class Chassis < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmi-chassis", opts)
 
     end
@@ -20,7 +20,7 @@ module Rubyipmi::Freeipmi
       end
       # Run the command
       value = runcmd
-      options.delete_notify("chassis-identify")
+      options.delete("chassis-identify")
       return value
     end
 
@@ -87,7 +87,7 @@ module Rubyipmi::Freeipmi
     def status
        options["get-status"] = false
        value = runcmd
-       options.delete_notify("get-status")
+       options.delete("get-status")
        if value
          return parsestatus
        else

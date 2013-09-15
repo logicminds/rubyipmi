@@ -6,7 +6,7 @@ module Rubyipmi::Freeipmi
 
     DEFAULT_FRU = 'default_fru_device'
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
         super("ipmi-fru", opts)
         @list = {}
     end

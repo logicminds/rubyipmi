@@ -2,7 +2,7 @@ module Rubyipmi::Ipmitool
 
   class ChassisConfig < Rubyipmi::Ipmitool::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
 
     end
@@ -21,7 +21,7 @@ module Rubyipmi::Ipmitool
         @options["cmdargs"] = "chassis bootparam set bootflag force_#{device}"
       end
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 
