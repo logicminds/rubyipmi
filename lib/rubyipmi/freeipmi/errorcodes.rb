@@ -19,7 +19,7 @@ module Rubyipmi::Freeipmi
       fix = @@codes.fetch(code,nil)
       if fix.nil?
         @@codes.each do | error, result |
-          if code =~ /^#{Regexp.escape(error)}.*/i
+          if error =~ /^#{Regexp.escape(code)}.*/i
             return result
           end
         end
