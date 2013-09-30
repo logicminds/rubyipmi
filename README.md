@@ -12,10 +12,10 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 ### General Usage
 
-   ` require 'rubyipmi' `
+   ``` require 'rubyipmi' ```
 
 #### Create a connection object
-   `conn = Rubyipmi.connect("username", "password", "hostname", "providertype) `
+   ```conn = Rubyipmi.connect("username", "password", "hostname", "providertype) ```
 
    Providertype: optional (ipmitool or freeipmi)
 
@@ -25,38 +25,38 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 
 #### Use power functions (not all listed)
-   `
+   ```
    conn.chassis.power.on
    conn.chassis.power.off
    conn.chassis.power.on?
    conn.chassis.power.off?
    conn.chassis.power.cycle
-   `
+   ```
 
 #### Boot to specific device
-  `
+  ```
    conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
    conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
 
-   `
+   ```
 
 
 #### Sensors
-    `
+    ```
     conn.sensors.names
     conn.sensors.list
     conn.sensors.<sensor name>
 
-    `
+    ```
 
 #### Fru
-    `
+    ```
     conn.fru.list
     conn.fru.serial
     conn.fru.manufacturer
     conn.fru.product
 
-    `
+    ```
 
 ## Testing
 There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
@@ -67,7 +67,8 @@ DO NOT PERFORM THESE TEST ON ANY PRODUCTION SYSTEM.  THESE TESTS WILL TURN OFF T
 
 1.  Install gem via source
 2.  bundle install
-3.  rake ipmiuser=ipmiuser ipmipass=ipmiuserpass ipmihost=192.168.1.22 ipmiprovider=freeipmi   (fill in your your details)
+3.  rake (runs unit tests, does not require a ipmi device) 
+3.  rake integration ipmiuser=ipmiuser ipmipass=ipmiuserpass ipmihost=192.168.1.22 ipmiprovider=freeipmi   (fill in your your details)
 4.  report any failures with your make/model/firmware revision to corey@logicminds.biz
 
 ## Security

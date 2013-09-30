@@ -16,13 +16,17 @@ module Rubyipmi::Freeipmi
     end
 
     def self.search(code)
-      @@codes.each do | error, fix |
-        if code =~ /^#{Regexp.escape(error)}/i
-          return fix
+      fix = @@codes.fetch(code,nil)
+      if fix.nil?
+        @@codes.each do | error, result |
+          if code =~ /^#{Regexp.escape(error)}.*/i
+            return result
+          end
         end
+      else
+        return fix
       end
-      raise "No Fix found"
-
+      raise "No Fix found" if fix.nil?
     end
 
   end

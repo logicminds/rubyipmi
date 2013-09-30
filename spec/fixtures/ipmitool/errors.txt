@@ -3,3 +3,8 @@ Authentication type NONE not supported
 Error: Unable to establish LAN session
 Get Device ID command failed
 Unable to open SDR for reading
+
+Authentication type NONE not supported
+Authentication type NONE not supported
+Error: Unable to establish LAN session
+Get Device ID command failed

@@ -3,9 +3,9 @@ module Rubyipmi
     class ErrorCodes
 
       @@codes = {
-          "Authentication type NONE not supported" => {"I" => "lanplus"},
-          "RuntimeError: Unable to establish LAN session" => {"I" => "lanplus"},
-          "Unable to establish LAN session" => {"I" => "lanplus"}
+          "Authentication type NONE not supported\nAuthentication type NONE not supported\n" +
+              "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
+          "Authentication type NONE not supported\n" => {"I" => "lanplus"}
 
 
       }
@@ -18,13 +18,17 @@ module Rubyipmi
       end
 
       def self.search(code)
-        @@codes.each do | error, fix |
-          if code =~ /^#{Regexp.escape(error)}/i
-            return fix
+        fix = @@codes.fetch(code,nil)
+        if fix.nil?
+          @@codes.each do | error, result |
+            if code =~ /^#{Regexp.escape(error)}.*/i
+              return result
+            end
           end
+        else
+          return fix
         end
-        raise "No Fix found"
-
+        raise "No Fix found" if fix.nil?
       end
 
 

@@ -6,13 +6,17 @@ describe "Fru" do
    before :each do
      user ||= ENV["ipmiuser"] || "admin"
      pass ||= ENV["ipmipass"] || "password"
-     host ||= ENV["ipmihost"] || "192.168.1.16"
+     host ||= ENV["ipmihost"] || "10.0.1.16"
      provider ||= ENV["ipmiprovider"] || "ipmitool"
      @conn = Rubyipmi.connect(user, pass, host, provider)
 
    end
 
-   it "test should return manufacturer" do
+  after(:each) do
+    puts "Last Call: #{@conn.fru.lastcall.inspect}"
+  end
+
+  it "test should return manufacturer" do
     @conn.fru.manufacturer.should_not be nil
 
    end

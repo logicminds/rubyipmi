@@ -27,7 +27,7 @@ describe :Fru do
     $?.stub(:success?).and_return(true)
   end
 
-  it "cmd should be ipmi-fru with two arguments" do
+  it "cmd should be ipmi-fru with correct number of arguments" do
     @fru.list
     verify_freeipmi_command(@fru, 3, "#{@path}/ipmi-fru")
   end
