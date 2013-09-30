@@ -33,6 +33,7 @@ RSpec::Core::RakeTask.new(:unit) do |spec|
   spec.pattern = FileList['spec/unit/**/*_spec.rb']
 end
 
+desc "Run integrations tests against real systems"
 RSpec::Core::RakeTask.new(:integration) do |spec|
   spec.pattern = FileList['spec/integration/**/*_spec.rb']
 end

@@ -76,7 +76,5 @@ module Rubyipmi::Ipmitool
       status == "off"
     end
 
-
-
   end
 end

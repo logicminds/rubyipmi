@@ -24,9 +24,9 @@ describe "Lan" do
     $?.stub(:success?).and_return(true)
   end
 
-  it "cmd should be lan with three arguments" do
-    #@lan.info
-    #verify_ipmitool_command(@lan, 3, "#{@path}/ipmitool", 'lan')
+  it "cmd should be lan with correct number of arguments" do
+    @lan.info
+    verify_ipmitool_command(@lan, 3, "#{@path}/ipmitool", 'lan')
   end
 
   it "can return a lan information" do

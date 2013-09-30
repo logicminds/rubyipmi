@@ -5,9 +5,7 @@ module Rubyipmi
 
   class BaseCommand
     include Observable
-
-
-    attr_reader :cmd
+    attr_reader :cmd, :max_retry_count
     attr_accessor :options, :passfile
     attr_reader :lastcall
 
@@ -67,10 +65,11 @@ module Rubyipmi
         command = makecommand
         @lastcall = "#{command}"
         @result = `#{command} 2>&1`
-        # sometimes the command tool does not return the correct result
+        # sometimes the command tool does not return the correct result so we have to validate it with additional
+        # code
         process_status = validate_status($?)
       rescue
-        if retrycount < MAX_RETRY_COUNT
+        if retrycount < max_retry_count
           find_fix(@result)
           retrycount = retrycount.next
           retry
@@ -88,21 +87,22 @@ module Rubyipmi
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
     # If a fix is found it is applied to the options hash, and then the last run command is retried
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
+    # this must be overrided in the subclass, as there are no generic errors that fit both providers
     def find_fix(result)
       if result
         # The errorcode code hash contains the fix
         begin
           fix = ErrorCodes.search(result)
           @options.merge_notify!(fix)
+
         rescue
-          raise "#{result}"
+          raise "Could not find fix for error code: \n#{result}"
         end
       end
     end
 
     def update(opts)
           @options.merge!(opts)
-          #puts "Options were updated: #{@options.inspect}"
     end
 
   # This method will check if the results are really valid as the exit code can be misleading and incorrect

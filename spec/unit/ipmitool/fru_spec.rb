@@ -28,7 +28,7 @@ describe :Fru do
 
   end
 
-  it "cmd should be ipmi-sensors with three arguments" do
+  it "cmd should be ipmi-sensors with correct number of arguments" do
     @fru.list
     verify_ipmitool_command(@fru, 3, "#{@path}/ipmitool", 'fru')
   end
