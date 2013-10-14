@@ -11,14 +11,7 @@ describe "Chassis" do
 
   end
 
-  after(:each) do
-    if ENV['rubyipmi_debug'] == 'true'
-      puts "Last Call: #{@conn.chassis.lastcall.inspect}" unless @conn.chassis.lastcall.nil?
-    end
-
-  end
-
-  it "test to turn uid light on for 10 seconds" do
+  it "test to turn uid light on for 5 seconds" do
     value = @conn.chassis.identify(true, 5)
     sleep(6)
     value.should == true

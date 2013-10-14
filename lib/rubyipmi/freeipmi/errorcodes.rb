@@ -4,6 +4,8 @@ module Rubyipmi::Freeipmi
 
     @@codes = {
         "authentication type unavailable for attempted privilege level" => {"driver-type" => "LAN_2_0"},
+        "authentication type unavailable for attempted privilege level\n" => {"driver-type" => "LAN_2_0"},
+
     }
 
     def self.length
@@ -23,13 +25,12 @@ module Rubyipmi::Freeipmi
       if fix.nil?
         @@codes.each do | error, result |
           if code =~ /.*#{error}.*/i
-            return result
+            fix = result
           end
         end
-      else
-        return fix
       end
       raise "No Fix found" if fix.nil?
+      return fix
     end
 
   end

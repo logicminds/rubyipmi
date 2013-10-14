@@ -34,23 +34,24 @@ module Rubyipmi::Freeipmi
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-
       case @cmdname
         when "ipmipower"
           # until ipmipower returns the correct exit status this is a hack
           # essentially any result greater than 23 characters is an error
           if @result.length > 23
-            raise "Error occured"
+            raise "Error occurred"
           end
         when "bmc-config"
           if @result.length > 100
             return true
+          else
+            raise "Error occurred"
           end
         else
           if exitstatus.success?
             return true
           else
-            raise "Error occured"
+            raise "Error occurred"
           end
 
       end

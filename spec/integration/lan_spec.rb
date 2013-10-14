@@ -13,12 +13,6 @@ describe "Lan" do
 
   end
 
-  after(:each) do
-    if ENV['rubyipmi_debug'] == 'true'
-      puts "Last Call: #{@conn.bmc.lan.lastcall.inspect}" unless @conn.bmc.lan.lastcall.nil?
-    end
-  end
-
   it "get ip address" do
       @conn.bmc.lan.ip.should_not be nil
   end

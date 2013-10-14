@@ -9,12 +9,12 @@ module Rubyipmi::Freeipmi
     end
 
     def section(section)
-       @options["checkout"] = false
-       @options["section"] = section
-       value = runcmd
-       @options.delete_notify("checkout")
-       @options.delete_notify("section")
-       @result
+      @options["checkout"] = false
+      @options["section"] = section
+      value = runcmd
+      @options.delete_notify("checkout")
+      @options.delete_notify("section")
+      return @result
     end
 
     def setsection(section, key, value)

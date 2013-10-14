@@ -29,7 +29,8 @@ module Rubyipmi::Ipmitool
         begin
           parse(print)
         rescue
-          # sometimes we need to get the info from channel 1, wait for error to occur then retry using channel 1
+          # sometimes we need to get the info from channel 1,
+          # wait for error to occur then retry using channel 1
           if retrycount < MAX_RETRY
             @channel = 1
             retry

@@ -12,12 +12,6 @@ describe "Sensors" do
 
   end
 
-  after(:each) do
-    if ENV['rubyipmi_debug'] == 'true'
-      puts "Last Call: #{@conn.sensors.lastcall.inspect}" unless @conn.sensors.lastcall.nil?
-    end
-  end
-
   it "test get all sensors" do
     @conn.sensors.list.count.should be > 1
   end
