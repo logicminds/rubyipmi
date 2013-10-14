@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'bundler'
+@base_dir = File.dirname(__FILE__)
 
 
 begin
@@ -29,13 +30,32 @@ Jeweler::RubygemsDotOrgTasks.new
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
+
+desc "run unit tests"
 RSpec::Core::RakeTask.new(:unit) do |spec|
   spec.pattern = FileList['spec/unit/**/*_spec.rb']
 end
 
+desc "Run integrations tests against real systems using a vagrant box"
+task :vintegration, :user, :pass, :host do |task, args|
+  vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
+  ipmiprovider="freeipmi"
+  puts `cd #{@base_dir}/spec && vagrant up`
+  puts `cd #{@base_dir}/spec && vagrant provision`
+  puts `vagrant ssh \"/rubyipmi/rake integration #{vars}\"`
+end
+
 desc "Run integrations tests against real systems"
-RSpec::Core::RakeTask.new(:integration) do |spec|
-  spec.pattern = FileList['spec/integration/**/*_spec.rb']
+RSpec::Core::RakeTask.new :integration do |spec|
+  ENV['ipmiuser'] = 'admin'
+  ENV['ipmipass'] = 'password'
+  ENV['ipmihost'] = '10.0.1.16'
+  providers ||=  ENV['ipmiprovider'].to_a || ['freeipmi', 'ipmitool']
+
+  providers.each do | provider |
+    ENV['ipmiprovider'] = provider
+    spec.pattern = FileList['spec/integration/**/*_spec.rb']
+  end
 end
 
 RSpec::Core::RakeTask.new(:rcov) do |spec|

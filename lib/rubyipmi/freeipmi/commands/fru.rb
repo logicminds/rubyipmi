@@ -11,21 +11,36 @@ module Rubyipmi::Freeipmi
         @list = {}
     end
 
+    def get_from_list(key)
+      if list.has_key?(DEFAULT_FRU)
+        if list[DEFAULT_FRU].has_key?(key)
+           list[DEFAULT_FRU][key]
+         else
+           nil
+         end
+      end
+    end
+
+
     def manufacturer
-      list[DEFAULT_FRU]['board_manufacturer']
+      get_from_list('board_manufacturer')
+    end
+
+    def board_serial
+      get_from_list('board_serial_number')
     end
 
     def serial
-      list[DEFAULT_FRU]['board_serial']
+      get_from_list('board_serial_number')
     end
 
     def model
-      list[DEFAULT_FRU]['board_product_name']
+      get_from_list('board_product_name')
     end
 
     # method to retrieve the raw fru data
     def getfrus
-      command
+      result = command
     end
 
     def names
@@ -61,7 +76,7 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information
     def parse(data)
-      if ! data.nil?
+      if ! data.nil? and ! data.empty?
         parsed_data = []
         data.lines.each do |line|
           if line =~ /^FRU.*/
@@ -84,6 +99,7 @@ module Rubyipmi::Freeipmi
           @list[new_fru[:name]] = new_fru
         end
       end
+      return @list
     end
 
     # run the command and return result

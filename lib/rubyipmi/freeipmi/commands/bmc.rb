@@ -1,12 +1,12 @@
 module Rubyipmi::Freeipmi
 
-  class Bmc
+  class Bmc < Rubyipmi::Freeipmi::BaseCommand
 
-    attr_accessor :options
+    #attr_accessor :options
     attr_accessor :config
 
     def initialize(opts = ObservableHash.new)
-      @options = opts
+      super("bmc-device", opts)
       @bmcinfo = {}
     end
 

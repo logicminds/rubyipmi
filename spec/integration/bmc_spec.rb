@@ -10,10 +10,6 @@ describe "Bmc" do
 
   end
 
-  after(:each) do
-    puts "Last Call: #{@conn.bmc.lastcall.inspect}"
-  end
-
   it "creates a bmc object" do
     @conn.bmc.should_not be_nil
 
@@ -32,22 +28,27 @@ describe "Bmc" do
 
   it "should reset the bmc device" do
     @conn.bmc.reset('cold').should_not be_nil
+    #puts "Last Call: #{@conn.bmc.device.lastcall.inspect}"
   end
 
   it "should reset the bmc device warmly" do
     @conn.bmc.reset('warm').should_not be_nil
+    #puts "Last Call: #{@conn.bmc.device.lastcall.inspect}"
   end
 
   it "reset should fail when type is wrong" do
     expect{@conn.bmc.reset('freezing')}.to raise_exception
+    #puts "Last Call: #{@conn.bmc.device.lastcall.inspect}"
   end
 
   it "is able to retrieve the bmc info" do
     @conn.bmc.info.should_not be_nil
+    #puts "Last Call: #{@conn.bmc.information.lastcall.inspect}"
   end
 
   it "is able to retrieve the guid" do
     @conn.bmc.guid.should_not be_nil
+    #puts "Last Call: #{@conn.bmc.information.lastcall.inspect}"
   end
 
 end

@@ -1,0 +1,45 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "centos6.4"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
+  config.ssh.private_key_path = "vagrant"
+  config.vm.provider :virtualbox do |vb, override|
+    #vb.gui = true
+  end
+  config.vm.provider :vmware_fusion do |vf, override|
+    override.vm.box_url = "https://dl.dropbox.com/u/5721940/vagrant-boxes/vagrant-centos-6.4-x86_64-vmware_fusion.box"
+    #vf.gui = true
+  end
+
+  # Boot with a GUI so you can see the screen. (Default is headless)
+  #config.vm.boot_mode = :gui
+
+  # Enable provisioning with Puppet stand alone.  Puppet manifests
+  # are contained in a directory path relative to this Vagrantfile.
+  # You will need to create the manifests directory and a manifest in
+  # the file centos.pp in the manifests_path directory.
+  #
+  config.vm.synced_folder "../", "/rubyipmi"
+  (1..1).each do |i|
+    vmname = "testnode#{i}"
+    config.vm.define vmname.to_sym do |web_conf|
+      web_conf.vm.hostname = vmname
+      web_conf.vm.provision :shell,
+                            :inline => "hostname #{vmname}.company.corp"
+      web_conf.vm.provision :puppet do |puppet|
+        puppet.module_path = "puppetmodules"
+        puppet.manifests_path = "manifests"
+        puppet.manifest_file  = "default.pp"
+        puppet.facter = { }
+      end
+    end
+  end
+end
+
+

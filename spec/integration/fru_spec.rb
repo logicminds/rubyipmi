@@ -13,7 +13,9 @@ describe "Fru" do
    end
 
   after(:each) do
-    puts "Last Call: #{@conn.fru.lastcall.inspect}"
+    if ENV['rubyipmi_debug'] == 'true'
+      puts "Last Call: #{@conn.fru.lastcall.inspect}" unless @conn.fru.lastcall.nil?
+    end
   end
 
   it "test should return manufacturer" do

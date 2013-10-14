@@ -9,9 +9,9 @@ module Rubyipmi::Freeipmi
 
 
     def guid
-      options["guid"] = false
+      options["get-device-guid"] = false
       status = runcmd
-      options.delete_notify("guid")
+      options.delete_notify("get-device-guid")
       if not status
         raise @result
       else
