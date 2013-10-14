@@ -4,12 +4,11 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-<<<<<<< HEAD
   s.name = "rubyipmi"
   s.version = "0.7.0"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Osman"]
-  s.date = "2013-09-13"
+  s.date = "2013-10-14"
   s.description = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
@@ -55,6 +54,7 @@ Gem::Specification.new do |s|
     "lib/rubyipmi/ipmitool/errorcodes.rb",
     "lib/rubyipmi/observablehash.rb",
     "rubyipmi.gemspec",
+    "spec/Vagrantfile",
     "spec/fixtures/freeipmi/bmc_config.txt",
     "spec/fixtures/freeipmi/bmc_config_lan_conf.txt",
     "spec/fixtures/freeipmi/bmc_info.txt",
@@ -75,6 +75,16 @@ Gem::Specification.new do |s|
     "spec/integration/power_spec.rb",
     "spec/integration/rubyipmi_spec.rb",
     "spec/integration/sensor_spec.rb",
+    "spec/manifests/default.pp",
+    "spec/puppetmodules/archive/LICENSE-2.0.txt",
+    "spec/puppetmodules/archive/Modulefile",
+    "spec/puppetmodules/archive/README.md",
+    "spec/puppetmodules/archive/manifests/download.pp",
+    "spec/puppetmodules/archive/manifests/extract.pp",
+    "spec/puppetmodules/archive/manifests/init.pp",
+    "spec/puppetmodules/archive/manifests/tar-gz.pp",
+    "spec/puppetmodules/archive/manifests/zip.pp",
+    "spec/puppetmodules/archive/metadata.json",
     "spec/spec_helper.rb",
     "spec/unit/freeipmi/bmc-info_spec.rb",
     "spec/unit/freeipmi/bmc_spec.rb",
@@ -89,20 +99,21 @@ Gem::Specification.new do |s|
     "spec/unit/ipmitool/fru_spec.rb",
     "spec/unit/ipmitool/lan_spec.rb",
     "spec/unit/ipmitool/sensors_spec.rb",
-    "spec/unit/rubyipmi_spec.rb"
+    "spec/unit/rubyipmi_spec.rb",
+    "spec/vagrant",
+    "spec/vagrant.pub"
   ]
-  s.homepage = %q{http://github.com/logicminds/rubyipmi}
+  s.homepage = "http://github.com/logicminds/rubyipmi"
   s.licenses = ["GPLv3"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
+  s.rubygems_version = "2.0.7"
+  s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
+    s.specification_version = 4
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_development_dependency(%q<rspec>, ["<= 2.8.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
