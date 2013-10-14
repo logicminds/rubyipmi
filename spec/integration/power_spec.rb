@@ -12,12 +12,6 @@ describe "Power" do
     sleep(1)
   end
 
-  after(:each) do
-    if ENV['rubyipmi_debug'] == 'true'
-      puts "Last Call: #{@conn.chassis.power.lastcall.inspect}" unless @conn.chassis.power.lastcall.nil?
-    end
-  end
-
   it "test to turn power on" do
     @conn.chassis.power.on.should be_true
     sleep(2)

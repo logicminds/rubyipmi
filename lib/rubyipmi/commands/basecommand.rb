@@ -45,6 +45,10 @@ module Rubyipmi
     def runcmd(debug=false)
       @success = false
       @success = run(debug)
+      if ENV['rubyipmi_debug'] == 'true'
+        puts @lastcall.inspect unless @lastcall.nil?
+      end
+      return @success
     end
 
     def run(debug=false)
@@ -109,7 +113,7 @@ module Rubyipmi
     def validate_status(exitstatus)
       # override in child class if needed
       if ! exitstatus.success?
-         raise "Error occured"
+         raise "Error occurred"
       else
         return true
       end

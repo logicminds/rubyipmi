@@ -11,12 +11,6 @@ describe "Chassis Config" do
 
   end
 
-  after(:each) do
-    if ENV['rubyipmi_debug'] == 'true'
-      puts "Last Call: #{@conn.chassis.config.lastcall.inspect}" unless @conn.chassis.config.lastcall.nil?
-    end
-  end
-
   it "test to set booting from PXE" do
     @conn.chassis.config.bootpxe.should == true
   end

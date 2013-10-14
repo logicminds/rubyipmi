@@ -40,7 +40,8 @@ module Rubyipmi::Freeipmi
 
     # method to retrieve the raw fru data
     def getfrus
-      result = command
+      command
+      return @result
     end
 
     def names

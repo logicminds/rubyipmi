@@ -8,6 +8,7 @@ module Rubyipmi::Ipmitool
     end
 
     # Turn the led light on / off or with a delay
+    # status means to enable or disable the blinking
     def identify(status=false, delay=0)
       if status
         if not delay.between?(1,255)
