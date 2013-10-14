@@ -7,7 +7,7 @@ module Rubyipmi
     include Observable
     attr_reader :cmd, :max_retry_count
     attr_accessor :options, :passfile
-    attr_reader :lastcall
+    attr_reader :lastcall, :result
 
     def makecommand
       # override in subclass
