@@ -1,0 +1,26 @@
+{
+  "name": "jproyo-archive",
+  "version": "0.0.4",
+  "source": "https://github.com/mxhero/puppet-modules/tree/master/modules/archive",
+  "author": "Juan Pablo Royo",
+  "license": "Apache 2.0",
+  "summary": "Archive download and extractor to manage tar, zip, tarballs, etc.",
+  "description": "Archive download and extractor to manage tar, zip, tarballs, etc.",
+  "project_page": "https://github.com/mxhero/puppet-modules/tree/master/modules/archive",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "LICENSE-2.0.txt": "3b83ef96387f14655fc854ddc3c6bd57",
+    "Modulefile": "a76a4c40cc1d9f180cc939b25ffef2d7",
+    "README.md": "4d073a0b89325bec1043077da735d2b6",
+    "manifests/download.pp": "4534c4e36c4c66709d6c7c2b81c0bb4d",
+    "manifests/extract.pp": "b71cf3b77a20be26f2955e16c4ddf322",
+    "manifests/init.pp": "7736371f5930f37ba1eadde4b3015c83",
+    "manifests/tar-gz.pp": "b5be6abbf6117ced47a607c44cb32bba",
+    "manifests/zip.pp": "6acec396618df9c492a576c1fb372b6c"
+  }
+}

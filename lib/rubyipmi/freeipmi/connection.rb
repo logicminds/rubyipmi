@@ -22,7 +22,7 @@ module Rubyipmi
         # So they are not required
         @options["username"] = user if user
         @options["password"] = pass if pass
-        @options["driver-type"] = 'LAN_2_0'
+        #@options["driver-type"] = 'LAN_2_0'
         #getWorkArounds
       end
 

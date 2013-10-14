@@ -7,10 +7,10 @@ module Rubyipmi::Freeipmi
     def setpass
       super
       @options["config-file"] = @passfile.path
+      @passfile.write "username #{@options["username"]}\n"
       @passfile.write "password #{@options["password"]}\n"
-      @passfile.write "username #{@options["username"]}"
-
       @passfile.close
+
     end
 
     def max_retry_count

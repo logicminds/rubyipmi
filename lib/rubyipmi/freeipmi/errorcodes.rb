@@ -4,7 +4,6 @@ module Rubyipmi::Freeipmi
 
     @@codes = {
         "authentication type unavailable for attempted privilege level" => {"driver-type" => "LAN_2_0"},
-
     }
 
     def self.length
@@ -16,10 +15,14 @@ module Rubyipmi::Freeipmi
     end
 
     def self.search(code)
+      # example error code:
+      # "/usr/local/sbin/bmc-info: authentication type unavailable for attempted privilege level\n"
+      code.chomp!  # clean up newline
+      code = code.split(':').last.strip  # clean up left hand side and strip white space from sides
       fix = @@codes.fetch(code,nil)
       if fix.nil?
         @@codes.each do | error, result |
-          if error =~ /^#{Regexp.escape(code)}.*/i
+          if code =~ /.*#{error}.*/i
             return result
           end
         end

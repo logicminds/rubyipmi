@@ -5,7 +5,7 @@ module Rubyipmi
       @@codes = {
           "Authentication type NONE not supported\nAuthentication type NONE not supported\n" +
               "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
-          "Authentication type NONE not supported\n" => {"I" => "lanplus"}
+         "Authentication type NONE not supported" => {"I" => "lanplus"}
 
 
       }
@@ -21,7 +21,8 @@ module Rubyipmi
         fix = @@codes.fetch(code,nil)
         if fix.nil?
           @@codes.each do | error, result |
-            if error =~ /.*#{Regexp.escape(code)}.*/i
+            # the error should be a subset of the actual erorr
+            if code =~ /.*#{error}.*/i
               return result
             end
           end
