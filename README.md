@@ -2,6 +2,8 @@
 This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
 It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
 
+[![Build Status](https://travis-ci.org/logicminds/rubyipmi.png)](https://travis-ci.org/logicminds/rubyipmi)
+
 ## Using the library in your code
 
 ### Install
@@ -156,14 +158,21 @@ end
 ```
 
 ### How to get the results of the command
-After running a command it may be desirable to get the results for further processing.  To get the results, follow the example below:
+After running a command it may be desirable to get the results for further processing.
+Note that there are two kinds of results.
+1. the text returned from the shell command, this is stored in @results
+2. the status value returned from the shell command (true or false only) this is returned from runcmd.
+
+To get the results:
 
 Example:
 
 ```
     def status
-      command("--stat")
-      @result.split(":").last.chomp.trim
+      value = command("--stat")
+      if value == true
+         @result.split(":").last.chomp.trim
+      end
     end
 
     def command(opt)
