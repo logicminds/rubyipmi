@@ -24,6 +24,14 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
   gem.email = "corey@logicminds.biz"
   gem.authors = ["Corey Osman"]
+  gem.files.exclude '.travis.yml'
+  gem.files.exclude 'Gemfile.lock'
+  gem.files.exclude '.rspec'
+  gem.files.exclude '.gitignore'
+  gem.files.exclude '.document'
+  gem.files.exclude 'coverage/'
+
+
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
