@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/logicminds/rubyipmi"
   gem.license = "GPLv3"
   gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
-  gem.description = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
+  gem.description = %Q{Provides a library for controlling IPMI devices using pure ruby code}
   gem.email = "corey@logicminds.biz"
   gem.authors = ["Corey Osman"]
   gem.files.exclude '.travis.yml'
