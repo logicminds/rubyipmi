@@ -3,7 +3,7 @@ This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
 It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
 
 [![Build Status](https://travis-ci.org/logicminds/rubyipmi.png)](https://travis-ci.org/logicminds/rubyipmi)
-
+[![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
 ## Using the library in your code
 
 ### Install
