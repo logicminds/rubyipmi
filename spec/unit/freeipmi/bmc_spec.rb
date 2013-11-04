@@ -1,8 +1,7 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
+describe Rubyipmi::Freeipmi::Bmc do
 
-
-describe "Bmc" do
   before :all do
     @path = '/usr/local/bin'
   end
