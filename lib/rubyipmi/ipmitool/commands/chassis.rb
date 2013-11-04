@@ -2,7 +2,7 @@ module Rubyipmi::Ipmitool
 
   class Chassis < Rubyipmi::Ipmitool::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
 
     end
@@ -21,7 +21,7 @@ module Rubyipmi::Ipmitool
       end
       # Run the command
       value = runcmd
-      options.delete_notify("cmdargs")
+      options.delete("cmdargs")
       return value
     end
 
@@ -92,7 +92,7 @@ module Rubyipmi::Ipmitool
     def status
        options["cmdargs"] = "chassis status"
        value = runcmd
-       options.delete_notify("cmdargs")
+       options.delete("cmdargs")
        return { :result => @result, :value => value }
     end
 
@@ -100,7 +100,7 @@ module Rubyipmi::Ipmitool
     def identifystatus
       options["cmdargs"] = "chassis identify status"
       value = runcmd
-      options.delete_notify("cmdargs")
+      options.delete("cmdargs")
       if value
         @result.chomp.split(":").last.strip
       end

@@ -7,7 +7,7 @@ module Rubyipmi::Ipmitool
     DEFAULT_FRU = 'builtin_fru_device'
 
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
       @list = {}
     end
@@ -93,7 +93,7 @@ module Rubyipmi::Ipmitool
     def command
       @options["cmdargs"] = "fru"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       if value
         return @result
       end

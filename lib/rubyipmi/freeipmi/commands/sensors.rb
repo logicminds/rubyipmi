@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class Sensors < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmi-sensors", opts)
       @options["no-header-output"] = false
       @options["output-sensor-state"] = false
