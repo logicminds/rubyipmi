@@ -1,7 +1,7 @@
 module Rubyipmi::Freeipmi
   class Power < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmipower", opts)
     end
 
@@ -9,7 +9,7 @@ module Rubyipmi::Freeipmi
     def command(opt)
       @options[opt] = false
       value = runcmd
-      @options.delete_notify(opt)
+      @options.delete(opt)
       return @result
     end
 
