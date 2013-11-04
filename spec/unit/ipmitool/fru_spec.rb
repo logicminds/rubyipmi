@@ -23,9 +23,11 @@ describe Rubyipmi::Ipmitool::Fru do
     end
 
     @fru.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @fru.stub(:`).and_return(data)
     $?.stub(:success?).and_return(true)
 
+    # stub the real command, and set the current @result
+    Open3.stub(:popen2e) { @fru.instance_variable_set(:@result, data) }
+    @fru.stub(:validate_status).and_return(true)
   end
 
   it "cmd should be ipmi-sensors with correct number of arguments" do

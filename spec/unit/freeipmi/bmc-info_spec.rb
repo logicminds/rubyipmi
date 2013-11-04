@@ -20,8 +20,11 @@ describe Rubyipmi::Freeipmi::BmcInfo do
       data = file.read
     end
     @bmcinfo.stub(:locate_command).with('bmc-info').and_return("#{@path}/bmc-info")
-    @bmcinfo.stub(:`).and_return(data)
     $?.stub(:success?).and_return(true)
+
+    # stub the real command, and set the current @result
+    Open3.stub(:popen2e) { @bmcinfo.instance_variable_set(:@result, data) }
+    @bmcinfo.stub(:validate_status).and_return(true)
   end
 
  it "cmd should be bmc-info with correct number of arguments" do

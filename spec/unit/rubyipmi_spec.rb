@@ -26,6 +26,17 @@ describe :Rubyipmi do
     expect{Rubyipmi.is_provider_installed?('bad_provider')}.to raise_error
   end
 
+  describe Rubyipmi::BaseCommand,:focus do
+
+    it 'should raise IpmiTimeout' do
+      @ipmi = Rubyipmi::BaseCommand.new("ipmitool")
+      @ipmi.timeout = 0.1
+      expect(@ipmi).to receive(:locate_command)
+      expect(@ipmi).to receive(:setpass)
+      expect(@ipmi).to receive(:removepass)
+      expect(@ipmi).to receive(:makecommand).and_return('sleep 2')
+      expect{@ipmi.run}.to raise_error(Rubyipmi::IpmiTimeout)
+    end
+
+  end
 end
-
-
