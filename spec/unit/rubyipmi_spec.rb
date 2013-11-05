@@ -26,7 +26,7 @@ describe :Rubyipmi do
     expect{Rubyipmi.is_provider_installed?('bad_provider')}.to raise_error
   end
 
-  describe Rubyipmi::BaseCommand,:focus do
+  describe Rubyipmi::BaseCommand do
 
     it 'should raise IpmiTimeout' do
       @ipmi = Rubyipmi::BaseCommand.new("ipmitool")

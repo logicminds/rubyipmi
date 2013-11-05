@@ -75,7 +75,7 @@ module Rubyipmi
       begin
         command = makecommand
         @lastcall = "#{command}"
-        Open3.popen2e(command, pgroup: true) do |i,o,thr|
+        Open3.popen2e(command, :pgroup => true) do |i,o,thr|
           begin
             Timeout.timeout(@timeout) do
               # wait for thread
