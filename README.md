@@ -14,16 +14,17 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 ### General Usage
 
-   ```
+   ```Ruby
    require 'rubyipmi'
 
    ```
 
 #### Create a connection object
-   ```
+
+   ```Ruby
    conn = Rubyipmi.connect("username", "password", "hostname", "providertype)
 
-   ```
+   ```Ruby
 
    Providertype: optional (ipmitool or freeipmi)
 
@@ -33,6 +34,7 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 
 #### Use power functions (not all listed)
+
    ```Ruby
 
    conn.chassis.power.on
@@ -44,29 +46,35 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
    ```
 
 #### Boot to specific device
+
   ```Ruby
+
    conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
    conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
 
-   ```
+  ```
 
 
 #### Sensors
-    ```Ruby
+
+  ```Ruby
+
     conn.sensors.names
     conn.sensors.list
     conn.sensors.<sensor name>
 
-    ```
+  ```
 
 #### Fru
-    ```Ruby
+
+  ```Ruby
+
     conn.fru.list
     conn.fru.serial
     conn.fru.manufacturer
     conn.fru.product
 
-    ```
+  ```
 
 ## Testing
 There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
