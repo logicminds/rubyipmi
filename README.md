@@ -3,7 +3,7 @@ This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
 It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
 
 [![Build Status](https://travis-ci.org/logicminds/rubyipmi.png)](https://travis-ci.org/logicminds/rubyipmi)
-
+[![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
 ## Using the library in your code
 
 ### Install
@@ -14,10 +14,19 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 ### General Usage
 
-   ``` require 'rubyipmi' ```
+   ```Ruby
+
+   require 'rubyipmi'
+
+   ```
 
 #### Create a connection object
-   ```conn = Rubyipmi.connect("username", "password", "hostname", "providertype) ```
+
+   ```Ruby
+
+   conn = Rubyipmi.connect("username", "password", "hostname", "providertype)
+
+   ```
 
    Providertype: optional (ipmitool or freeipmi)
 
@@ -27,38 +36,47 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 
 #### Use power functions (not all listed)
-   ```
+
+   ```Ruby
+
    conn.chassis.power.on
    conn.chassis.power.off
    conn.chassis.power.on?
    conn.chassis.power.off?
    conn.chassis.power.cycle
+
    ```
 
 #### Boot to specific device
-  ```
+
+  ```Ruby
+
    conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
    conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
 
-   ```
+  ```
 
 
 #### Sensors
-    ```
+
+  ```Ruby
+
     conn.sensors.names
     conn.sensors.list
     conn.sensors.<sensor name>
 
-    ```
+  ```
 
 #### Fru
-    ```
+
+  ```Ruby
+
     conn.fru.list
     conn.fru.serial
     conn.fru.manufacturer
     conn.fru.product
 
-    ```
+  ```
 
 ## Testing
 There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
@@ -95,7 +113,7 @@ Creating a new command is actually quite simple.  Follow these steps to wrap a f
 1.  Create a new subclass of BaseCommand
 2.  define the initialize function like so, and pass in the name of the command line tool to the super constructor.
 
-    ```
+    ```Ruby
     def initialize(opts = {})
       @options = opts
       super("bmc-info", opts)
@@ -103,13 +121,13 @@ Creating a new command is actually quite simple.  Follow these steps to wrap a f
 
     ```
 
-     ```
-        def initialize(opts = {})
-          @options = opts
-          super("ipmitool", opts)
-        end
+    ```Ruby
+    def initialize(opts = {})
+      @options = opts
+      super("ipmitool", opts)
+    end
 
-     ```
+    ```
 3.  Thats it.  The rest of the class is related to running the command and interperting the results
 
 ### Writing a function for running a command
@@ -138,7 +156,7 @@ the runcmd command.  Failure to do so will add previous options to subsequent ru
 
 Example:
 
-```
+```Ruby
 def ledlight(status=false, delay=300)
       if status
         if delay <= 0
@@ -167,7 +185,8 @@ To get the results:
 
 Example:
 
-```
+```Ruby
+
     def status
       value = command("--stat")
       if value == true
@@ -193,7 +212,8 @@ Although its not necessary to implement the command function it may be desirable
   Additionally, should this gem ever become out of date one could call the command function and pass in any
   arguments that have not already been implemented in the rest of the class.
 
-```
+```Ruby
+
  def command(opt)
       status = runcmd([opt])
       return status
