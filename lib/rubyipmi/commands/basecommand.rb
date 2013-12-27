@@ -25,11 +25,10 @@ module Rubyipmi
       makecommand
     end
 
-    def initialize(commandname, opts = ObservableHash.new)
+    def initialize(commandname, opts = Hash.new)
       # This will locate the command path or raise an error if not found
       @cmdname = commandname
       @options = opts
-      @options.add_observer(self)
     end
 
     def locate_command(commandname)

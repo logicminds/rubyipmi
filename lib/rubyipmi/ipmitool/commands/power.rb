@@ -2,7 +2,7 @@ module Rubyipmi::Ipmitool
 
   class Power < Rubyipmi::Ipmitool::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmitool", opts)
     end
 
@@ -10,7 +10,7 @@ module Rubyipmi::Ipmitool
     def command(opt)
       @options["cmdargs"] = "power #{opt}"
       value = runcmd
-      @options.delete_notify("cmdargs")
+      @options.delete("cmdargs")
       return value
     end
 

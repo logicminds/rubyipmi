@@ -2,7 +2,7 @@ module Rubyipmi::Freeipmi
 
   class ChassisConfig < Rubyipmi::Freeipmi::BaseCommand
 
-    def initialize(opts = ObservableHash.new)
+    def initialize(opts = Hash.new)
       super("ipmi-chassis-config", opts)
 
     end
@@ -11,7 +11,7 @@ module Rubyipmi::Freeipmi
     def commit
       @options["commit"] = false
       value = runcmd
-      @options.delete_notify("commit")
+      @options.delete("commit")
       return value
     end
 
@@ -23,9 +23,9 @@ module Rubyipmi::Freeipmi
         @options["section"] = section
       end
       value = runcmd
-      @options.delete_notify("checkout")
+      @options.delete("checkout")
       if section
-        @options.delete_notify("section")
+        @options.delete("section")
       end
       return value
     end
@@ -58,7 +58,7 @@ module Rubyipmi::Freeipmi
       end
       @options["key-pair"] = "\"#{flag}\""
       value = commit
-      @options.delete_notify("key-pair")
+      @options.delete("key-pair")
       return value
     end
 
@@ -89,7 +89,7 @@ module Rubyipmi::Freeipmi
     def setBootFlag(key,flag, persistent)
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
-      @options.delete_notify("key-pair")
+      @options.delete("key-pair")
       return value
     end
   end
