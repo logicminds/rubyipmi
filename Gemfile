@@ -13,5 +13,7 @@ group :development do
   gem 'simplecov'
   gem "highline"
   gem "rake"
+  gem "coveralls"
+  gem 'pry'
 end
 
