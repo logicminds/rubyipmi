@@ -21,8 +21,11 @@ describe Rubyipmi::Ipmitool::Lan do
     end
 
     @lan.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @lan.stub(:`).and_return(data)
     $?.stub(:success?).and_return(true)
+
+    # stub the real command, and set the current @result
+    Open3.stub(:popen2e) { @lan.instance_variable_set(:@result, data) }
+    @lan.stub(:validate_status).and_return(true)
   end
 
   it "cmd should be lan with correct number of arguments" do

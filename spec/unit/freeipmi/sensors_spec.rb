@@ -24,9 +24,11 @@ describe Rubyipmi::Freeipmi::Sensors do
     @sensors.stub(:locate_command).with('ipmi-sensors').and_return('/usr/local/bin/ipmi-sensors')
 
     # these stubs allow us to run the command and return the fixtures
-    @sensors.stub(:`).and_return(data)
     $?.stub(:success?).and_return(true)
 
+    # stub the real command, and set the current @result
+    Open3.stub(:popen2e) { @sensors.instance_variable_set(:@result, data) }
+    @sensors.stub(:validate_status).and_return(true)
   end
 
  it "cmd should be ipmi-sensors with six arguments" do

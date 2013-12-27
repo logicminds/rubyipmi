@@ -21,11 +21,13 @@ describe Rubyipmi::Ipmitool::Bmc do
     end
 
     @bmc.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @bmc.stub(:`).and_return(data)
     $?.stub(:success?).and_return(true)
 
     @bmc.stub(:guid).and_return("guid")
 
+    # stub the real command, and set the current @result
+    Open3.stub(:popen2e) { @bmc.instance_variable_set(:@result, data) }
+    @bmc.stub(:validate_status).and_return(true)
   end
 
   it "bmc should not be nil" do

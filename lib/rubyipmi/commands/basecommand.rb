@@ -1,12 +1,17 @@
 require "observer"
 require 'tempfile'
+require 'open3'
+require 'timeout'
 
 module Rubyipmi
+  class IpmiTimeout < StandardError; end
+  class InvalidExitStatus < StandardError; end
+  class AutoFixFailed < StandardError; end
 
   class BaseCommand
     include Observable
     attr_reader :cmd, :max_retry_count
-    attr_accessor :options, :passfile
+    attr_accessor :options, :passfile, :timeout
     attr_reader :lastcall, :result
 
     def makecommand
@@ -25,11 +30,12 @@ module Rubyipmi
       makecommand
     end
 
-    def initialize(commandname, opts = ObservableHash.new)
+    def initialize(commandname, opts = ObservableHash.new, timeout=5)
       # This will locate the command path or raise an error if not found
       @cmdname = commandname
       @options = opts
       @options.add_observer(self)
+      @timeout = timeout
     end
 
     def locate_command(commandname)
@@ -60,6 +66,7 @@ module Rubyipmi
       @cmd = locate_command(@cmdname)
       setpass
       @result = nil
+      @exit_status = nil
       if debug
         # Log error
         return makecommand
@@ -68,22 +75,36 @@ module Rubyipmi
       begin
         command = makecommand
         @lastcall = "#{command}"
-        @result = `#{command} 2>&1`
-        # sometimes the command tool does not return the correct result so we have to validate it with additional
-        # code
-        process_status = validate_status($?)
-      rescue
+        Open3.popen2e(command, :pgroup => true) do |i,o,thr|
+          begin
+            Timeout.timeout(@timeout) do
+              # wait for thread
+              thr.join
+              @result = o.read
+            end
+          rescue Timeout::Error
+            # kill process group
+            Process.kill('TERM', -Process.getpgid(thr.pid))
+            raise IpmiTimeout.new(@lastcall)
+          ensure
+            @exit_status = thr.value
+          end
+        end
+
+        # sometimes the command tool does not return the correct result
+        process_status = validate_status(@exit_status)
+      rescue InvalidExitStatus
         if retrycount < max_retry_count
           find_fix(@result)
           retrycount = retrycount.next
           retry
         else
-          raise "Exhausted all auto fixes, cannot determine what the problem is"
+          raise AutoFixFailed,
+            "Exhausted all auto fixes, cannot determine what the problem is"
         end
       ensure
         removepass
-        return process_status
-
+        process_status
       end
 
     end
@@ -113,7 +134,7 @@ module Rubyipmi
     def validate_status(exitstatus)
       # override in child class if needed
       if ! exitstatus.success?
-         raise "Error occurred"
+         raise InvalidExitStatus, "Error occured"
       else
         return true
       end
