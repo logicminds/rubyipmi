@@ -15,6 +15,7 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 ### General Usage
 
    ```Ruby
+
    require 'rubyipmi'
 
    ```
@@ -22,9 +23,10 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 #### Create a connection object
 
    ```Ruby
+
    conn = Rubyipmi.connect("username", "password", "hostname", "providertype)
 
-   ```Ruby
+   ```
 
    Providertype: optional (ipmitool or freeipmi)
 
@@ -119,13 +121,13 @@ Creating a new command is actually quite simple.  Follow these steps to wrap a f
 
     ```
 
-     ```Ruby
-        def initialize(opts = {})
-          @options = opts
-          super("ipmitool", opts)
-        end
+    ```Ruby
+    def initialize(opts = {})
+      @options = opts
+      super("ipmitool", opts)
+    end
 
-     ```
+    ```
 3.  Thats it.  The rest of the class is related to running the command and interperting the results
 
 ### Writing a function for running a command
