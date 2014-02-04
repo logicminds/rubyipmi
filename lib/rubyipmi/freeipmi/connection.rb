@@ -14,7 +14,7 @@ module Rubyipmi
       attr_accessor :options
 
 
-      def initialize(user, pass, host,debug=false)
+      def initialize(user, pass, host, debug=false, opts)
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["hostname"] = host
@@ -22,7 +22,10 @@ module Rubyipmi
         # So they are not required
         @options["username"] = user if user
         @options["password"] = pass if pass
-        #@options["driver-type"] = 'LAN_2_0'
+        @options["driver-type"] = 'LAN'      if opts[:driver] == "lan15"
+        @options["driver-type"] = 'LAN_2_0'  if opts[:driver] == "lan20"
+        @options["driver-type"] = 'OPENIPMI' if opts[:driver] == "open"
+
         #getWorkArounds
       end
 
