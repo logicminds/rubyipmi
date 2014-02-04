@@ -8,10 +8,34 @@ module Rubyipmi
   # The connect method will create a connection object based the provider type passed in
   # If provider is left blank the function will use the first available provider
 
-    def self.connect(user, pass, host, provider="any",debug=false)
+    def self.connect(user, pass, host, provider="any", debug=false, opts={:driver => "default", :provider => "any", :debug => false})
 
       # use this variable to reduce cmd calls
       installed = false
+
+      # Mantain backwards compatibility while
+      # detecting if the opts hash is passed in the provider field
+      if provider.is_a?(Hash)
+        opts = provider
+      end
+
+      if opts[:provider]
+        provider = opts[:provider]
+      else
+        provider = "any"
+      end
+
+      if opts[:driver]
+        driver = opts[:driver]
+      else
+        driver = "default"
+      end
+
+      if opts[:debug]
+        debug = opts[:debug]
+      else
+        debug = false
+      end
 
       # use the first available provider
       if provider == "any"
@@ -26,12 +50,18 @@ module Rubyipmi
         end
       end
 
+      # Support multiple drivers
+      drivers = ["default", "lan15", "lan20", "open"]
+      unless drivers.include?(driver)
+          raise "You must specify a valid driver: #{drivers}"
+      end
+
       # If the provider is available create a connection object
       if installed or is_provider_installed?(provider)
         if provider == "freeipmi"
-          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, debug)
+          @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, debug, opts)
         elsif provider == "ipmitool"
-          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, debug)
+          @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, debug, opts)
         else
           raise "Incorrect provider given, must use freeipmi or ipmitool"
         end

@@ -16,7 +16,7 @@ module Rubyipmi
       attr_reader :debug
 
 
-      def initialize(user, pass, host,debug_value=false)
+      def initialize(user, pass, host, debug_value=false, opts)
         @debug = debug_value
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
@@ -27,7 +27,9 @@ module Rubyipmi
         @options["P"] = pass if pass
         # default to IPMI 2.0 communication, this means that older devices will not work
         # Those old servers should be recycled by now, as the 1.0, 1.5 spec came out in 2005ish and is 2013.
-        #@options["I"] = "lanplus"
+        @options["I"] = "lan"     if opts[:driver] == "lan15"
+        @options["I"] = "lanplus" if opts[:driver] == "lan20"
+        @options["I"] = "open"    if opts[:driver] == "open"
 
         #getWorkArounds
       end
