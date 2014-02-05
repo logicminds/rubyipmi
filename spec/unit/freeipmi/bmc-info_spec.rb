@@ -15,7 +15,7 @@ describe "Bmc" do
     host = "ipmihost"
     Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
-    @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @bmcinfo = @conn.bmc.information
     data = nil
     File.open("spec/fixtures/#{provider}/bmc_info.txt",'r') do |file|
@@ -26,17 +26,14 @@ describe "Bmc" do
     $?.stub(:success?).and_return(true)
   end
 
- it "cmd should be bmc-info with correct number of arguments" do
+  it "cmd should be bmc-info with correct number of arguments" do
     @bmcinfo.retrieve
     verify_freeipmi_command(@bmcinfo, 2, "#{@path}/bmc-info")
- end
+  end
 
- it "cmd should be bmc-info with correct number of arguments" do
+  it "cmd should be bmc-info with correct number of arguments" do
     @bmcinfo.guid
     verify_freeipmi_command(@bmcinfo, 3, "#{@path}/bmc-info")
- end
-
-
-
+  end
 
 end

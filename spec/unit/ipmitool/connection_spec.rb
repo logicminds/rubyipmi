@@ -4,15 +4,16 @@ describe :Connection do
 
   before :all do
     @path = '/usr/local/bin'
+    @provider = "ipmitool"
+    @user = "ipmiuser"
+    @pass = "impipass"
+    @host = "ipmihost"
   end
 
   before :each do
-    provider = "ipmitool"
-    user = "ipmiuser"
-    pass = "impipass"
-    host = "ipmihost"
+
     Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true})
 
   end
 
@@ -53,6 +54,32 @@ describe :Connection do
     @conn.debug.should be_true
   end
 
+  it 'object should have driver set to auto if not specified' do
+    @conn.options.has_key?('driver-type').should be_false
+  end
 
+  it 'object should have driver set to auto if not specified' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+    @conn.options.has_key?('I').should be_false
+  end
+
+  it 'should raise exception if invalid driver type' do
+    expect{Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'foo'})}.to raise_error(RuntimeError)
+  end
+
+  it 'object should have driver set to lanplus' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'lan20'})
+    @conn.options['I'].should eq('lanplus')
+  end
+
+  it 'object should have driver set to lanplus' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'lan15'})
+    @conn.options['I'].should eq('lan')
+  end
+
+  it 'object should have driver set to open' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'open'})
+    @conn.options['I'].should eq('open')
+  end
 
 end

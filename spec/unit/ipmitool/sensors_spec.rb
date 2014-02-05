@@ -14,7 +14,7 @@ describe :Sensors do
     host = "ipmihost"
     Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
 
-    @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @sensors = @conn.sensors
     File.open("spec/fixtures/#{provider}/sensors.txt",'r') do |file|
       data = file.read

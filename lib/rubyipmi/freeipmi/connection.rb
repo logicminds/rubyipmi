@@ -11,10 +11,11 @@ module Rubyipmi
 
     class Connection
 
-      attr_accessor :options
+      attr_accessor :options, :debug
 
 
-      def initialize(user, pass, host, debug=false, opts)
+      def initialize(user, pass, host, opts)
+        @debug = opts[:debug]
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["hostname"] = host
@@ -22,15 +23,21 @@ module Rubyipmi
         # So they are not required
         @options["username"] = user if user
         @options["password"] = pass if pass
-        @options["driver-type"] = 'LAN'      if opts[:driver] == "lan15"
-        @options["driver-type"] = 'LAN_2_0'  if opts[:driver] == "lan20"
-        @options["driver-type"] = 'OPENIPMI' if opts[:driver] == "open"
+        # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
+        #       the user really wants to.
+        @options['driver-type'] = drivers_map[opts[:driver]] unless drivers_map[opts[:driver]].nil?
+      end
 
-        #getWorkArounds
+      def drivers_map
+        {
+          'lan15' => 'LAN',
+          'lan20' => 'LAN_2_0',
+          'open'  => 'OPENIPMI'
+        }
       end
 
       def provider
-        return "freeipmi"
+        'freeipmi'
       end
 
       def fru
@@ -66,3 +73,4 @@ module Rubyipmi
     end
   end
 end
+

@@ -14,7 +14,7 @@ describe :Sensors do
     # this stub allows us to mock the command that would be used to verify provider installation
     Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
-    @conn = Rubyipmi.connect(user, pass, host, provider, true)
+    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @sensors = @conn.sensors
     File.open("spec/fixtures/#{provider}/sensors.txt",'r') do |file|
       data = file.read

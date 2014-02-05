@@ -13,11 +13,10 @@ module Rubyipmi
     class Connection
 
       attr_accessor :options, :debug
-      attr_reader :debug
 
 
-      def initialize(user, pass, host, debug_value=false, opts)
-        @debug = debug_value
+      def initialize(user, pass, host, opts)
+        @debug = opts[:debug]
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["H"] = host
@@ -25,13 +24,17 @@ module Rubyipmi
         # So they are not required
         @options["U"] = user if user
         @options["P"] = pass if pass
-        # default to IPMI 2.0 communication, this means that older devices will not work
-        # Those old servers should be recycled by now, as the 1.0, 1.5 spec came out in 2005ish and is 2013.
-        @options["I"] = "lan"     if opts[:driver] == "lan15"
-        @options["I"] = "lanplus" if opts[:driver] == "lan20"
-        @options["I"] = "open"    if opts[:driver] == "open"
+        # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
+        #  the user really wants to.
+        @options['I'] = drivers_map[opts[:driver]] unless drivers_map[opts[:driver]].nil?
+      end
 
-        #getWorkArounds
+      def drivers_map
+        {
+          'lan15' => 'lan',
+          'lan20' => 'lanplus',
+          'open'  => 'open'
+        }
       end
 
       def fru
@@ -39,7 +42,7 @@ module Rubyipmi
       end
 
       def provider
-        return "ipmitool"
+        'ipmitool'
       end
 
       def bmc
