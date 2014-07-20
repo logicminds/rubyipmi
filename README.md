@@ -24,7 +24,7 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
    ```Ruby
 
-   conn = Rubyipmi.connect("username", "password", "hostname", "providertype)
+   conn = Rubyipmi.connect("username", "password", "hostname", "providertype")
 
    ```
 
