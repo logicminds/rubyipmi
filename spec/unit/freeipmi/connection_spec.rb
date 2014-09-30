@@ -66,6 +66,20 @@ describe "Bmc" do
     @conn.options.has_key?('driver-type').should be_false
   end
 
+  it 'object should have priv type set to ADMINISTRATOR if not specified' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+    @conn.options.has_key?('privilege-level').should be_false
+  end
+
+  it 'object should have priv type set to USER ' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'USER', :debug => true, :driver => 'auto'})
+    @conn.options.fetch('privilege-level').should eq('USER')
+  end
+
+  it 'should raise exception if invalid privilege type' do
+    expect{Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'BLAH',:debug => true, :driver => 'auto'})}.to raise_error(RuntimeError)
+  end
+
   it 'should raise exception if invalid driver type' do
     expect{Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'foo'})}.to raise_error(RuntimeError)
   end

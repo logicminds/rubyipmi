@@ -1,9 +1,28 @@
+# Copyright (C) 2014 Corey Osman
+#
+#     This library is free software; you can redistribute it and/or
+#     modify it under the terms of the GNU Lesser General Public
+#     License as published by the Free Software Foundation; either
+#     version 2.1 of the License, or (at your option) any later version.
+#
+#     This library is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#     Lesser General Public License for more details.
+#
+#     You should have received a copy of the GNU Lesser General Public
+#     License along with this library; if not, write to the Free Software
+#     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+#     USA
+#
+
+
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
 
 
 module Rubyipmi
-
+  PRIV_TYPES = ['CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR']
 
   def self.valid_drivers
     ['auto', "lan15", "lan20", "open"]
@@ -12,7 +31,8 @@ module Rubyipmi
   # The connect method will create a connection object based the provider type passed in
   # If provider is left blank the function will use the first available provider
 
-  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default', :debug => false})
+  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto',
+                                                           :timeout => 'default', :debug => false})
 
     # use this variable to reduce cmd calls
     installed = false
@@ -23,9 +43,15 @@ module Rubyipmi
     end
 
     # Verify options just in case user passed in a incomplete hash
-    opts[:driver]  = 'auto' if opts[:driver].nil?
-    opts[:timeout] = 'default' if opts[:timeout].nil?
+    opts[:driver]  ||= 'auto'
+    opts[:timeout] ||= 'default'
     opts[:debug]   = false if opts[:debug] != true
+
+    if ! opts[:privilege].nil?
+      if ! supported_privilege_type?(opts[:privilege])
+        raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
+      end
+    end
 
     # use the first available provider
     if provider == 'any'
@@ -60,6 +86,11 @@ module Rubyipmi
       raise "The IPMI provider: #{provider} is not installed"
 
     end
+  end
+
+  # returns boolean true if privilege type is valid
+  def self.supported_privilege_type?(type)
+     PRIV_TYPES.include?(type)
   end
 
   def self.connection

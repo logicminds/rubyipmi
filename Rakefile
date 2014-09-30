@@ -58,7 +58,7 @@ RSpec::Core::RakeTask.new :integration do |spec|
   ENV['ipmiuser'] = 'admin'
   ENV['ipmipass'] = 'password'
   ENV['ipmihost'] = '10.0.1.16'
-  providers ||=  ENV['ipmiprovider'].to_a || ['freeipmi', 'ipmitool']
+  providers ||=  Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
 
   providers.each do | provider |
     ENV['ipmiprovider'] = provider

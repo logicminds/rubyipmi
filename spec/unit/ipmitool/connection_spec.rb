@@ -67,6 +67,20 @@ describe :Connection do
     expect{Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'foo'})}.to raise_error(RuntimeError)
   end
 
+  it 'object should have priv type set to ADMINISTRATOR if not specified' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+    @conn.options.has_key?('L').should be_false
+  end
+
+  it 'object should have priv type set to USER ' do
+    @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'USER', :debug => true, :driver => 'auto'})
+    @conn.options.fetch('L').should eq('USER')
+  end
+
+  it 'should raise exception if invalid privilege type' do
+    expect{Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'BLAH',:debug => true, :driver => 'auto'})}.to raise_error(RuntimeError)
+  end
+
   it 'object should have driver set to lanplus' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'lan20'})
     @conn.options['I'].should eq('lanplus')
