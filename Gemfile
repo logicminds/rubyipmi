@@ -10,7 +10,7 @@ group :development do
   gem "rdoc", "~> 3.12"
   gem "bundler", ">= 1.1.5"
   gem "jeweler", "~> 1.8.4"
-  gem "rcov", "< 1.0.0"
+#  gem "rcov", "< 1.0.0"
   gem "highline"
   gem "rake"
 end

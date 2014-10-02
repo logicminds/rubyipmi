@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rubyipmi"
-  s.version = "0.7.0"
+  s.version = "0.8.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Corey Osman"]
-  s.date = "2013-10-17"
+  s.date = "2014-10-02"
   s.description = "Provides a library for controlling IPMI devices using pure ruby code"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "README.rdoc",
+    "RELEASE_NOTES.md",
     "Rakefile",
     "VERSION",
     "lib/rubyipmi.rb",
