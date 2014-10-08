@@ -12,4 +12,5 @@ group :development do
   gem "jeweler", "~> 2.0.1"
   gem "highline"
   gem "rake"
+  gem 'coveralls', require: false
 end

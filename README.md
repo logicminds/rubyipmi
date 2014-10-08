@@ -4,6 +4,8 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 [![Build Status](https://travis-ci.org/logicminds/rubyipmi.png)](https://travis-ci.org/logicminds/rubyipmi)
 [![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
+[![Coverage Status](https://coveralls.io/repos/logicminds/rubyipmi/badge.png)](https://coveralls.io/r/logicminds/rubyipmi)
+
 ## Using the library in your code
 
 ### Install
