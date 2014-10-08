@@ -8,7 +8,7 @@ rdoc
 # yard generated
 doc
 .yardoc
-
+Gemfile.lock
 # bundler
 .bundle
 Gemfile.lock
