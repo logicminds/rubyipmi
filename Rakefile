@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rubyipmi"
   gem.homepage = "http://github.com/logicminds/rubyipmi"
-  gem.license = "GPLv3"
+  gem.license = "LGPLv2.1"
   gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
   gem.description = %Q{Provides a library for controlling IPMI devices using pure ruby code}
   gem.email = "corey@logicminds.biz"
@@ -64,11 +64,6 @@ RSpec::Core::RakeTask.new :integration do |spec|
     ENV['ipmiprovider'] = provider
     spec.pattern = FileList['spec/integration/**/*_spec.rb']
   end
-end
-
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
 
 task :default => :unit

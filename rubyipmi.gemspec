@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Corey Osman"]
-  s.date = "2014-10-02"
+  s.date = "2014-10-08"
   s.description = "Provides a library for controlling IPMI devices using pure ruby code"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
@@ -104,7 +104,7 @@ Gem::Specification.new do |s|
     "spec/vagrant.pub"
   ]
   s.homepage = "http://github.com/logicminds/rubyipmi"
-  s.licenses = ["GPLv3"]
+  s.licenses = ["LGPLv2.1"]
   s.rubygems_version = "2.2.1"
   s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
 
@@ -115,14 +115,14 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["<= 2.8.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_development_dependency(%q<jeweler>, ["~> 2.0.1"])
       s.add_development_dependency(%q<highline>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, ["<= 2.8.0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
       s.add_dependency(%q<bundler>, [">= 1.1.5"])
-      s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_dependency(%q<jeweler>, ["~> 2.0.1"])
       s.add_dependency(%q<highline>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
     end
@@ -130,7 +130,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["<= 2.8.0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
     s.add_dependency(%q<bundler>, [">= 1.1.5"])
-    s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+    s.add_dependency(%q<jeweler>, ["~> 2.0.1"])
     s.add_dependency(%q<highline>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
   end
