@@ -19,6 +19,9 @@ Users of older IPMI devices will now need to pass the specified driver type.
 * fix freeipmi lan issue with auto driver type not being loaded
 * refactor get_diag function to be useful
 * remove 1.9.2 support from travis matrix
+* gh-24 allow openipmi to be used
+* refactored some tests
+* refactored connection and connect
 
 ### 0.8.1
 * switch to LGPL license
@@ -26,4 +29,4 @@ Users of older IPMI devices will now need to pass the specified driver type.
 
 ### 0.8.0
 * changed License from GPL to LGPL
-* added option to specify privilge-level
+* added option to specify privilege-level
