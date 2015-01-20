@@ -118,4 +118,19 @@ describe "Bmc" do
       expect(conn.connection_works?).to eq false
     end
   end
+
+  describe 'use openipmi' do
+    it 'should raise error when openipmi is not found' do
+      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(false)
+      allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
+      allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
+      expect{Rubyipmi::Freeipmi::Connection.new}.to raise_error(RuntimeError)
+    end
+
+    it 'should create an object using defaults' do
+      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(true)
+      expect(Rubyipmi::Freeipmi::Connection.new.class).to eq(Rubyipmi::Freeipmi::Connection)
+      expect(Rubyipmi::Freeipmi::Connection.new.options).to eq({"driver-type"=>"OPENIPMI"})
+    end
+  end
 end

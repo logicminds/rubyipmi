@@ -118,5 +118,19 @@ describe :Connection do
     end
   end
 
+  describe 'use openipmi' do
 
+    it 'should raise error when openipmi is not found' do
+      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(false)
+      allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
+      allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
+      expect{Rubyipmi::Ipmitool::Connection.new}.to raise_error(RuntimeError)
+    end
+
+    it 'should create an object using defaults' do
+      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(true)
+      expect(Rubyipmi::Ipmitool::Connection.new.class).to eq(Rubyipmi::Ipmitool::Connection)
+      expect(Rubyipmi::Ipmitool::Connection.new.options).to eq({"I"=>"open"})
+    end
+  end
 end
