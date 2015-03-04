@@ -1,4 +1,4 @@
-# rubyipmi
+# Rubyipmi
 This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
 It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
 
@@ -6,26 +6,24 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 [![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
 [![Coverage Status](https://coveralls.io/repos/logicminds/rubyipmi/badge.png)](https://coveralls.io/r/logicminds/rubyipmi)
 
+## Projects that use Rubyipmi
+* https://github.com/sensu/sensu-community-plugins/blob/master/plugins/ipmi/check-sensor.rb
+* https://github.com/theforeman/smart-proxy
+* https://github.com/logicminds/ipmispec
+
+Don't see your project listed? Create a PR with your project listed here.
 ## Using the library in your code
 
-### Install
+### Requirements
 
 
    1. Install the freeipmi from source (http://www.gnu.org/software/freeipmi/) or ipmitool
-   2. gem install rubyipmi
-
-### General Usage
-
-   ```Ruby
-
-   require 'rubyipmi'
-
-   ```
+   2. `gem install rubyipmi`
 
 #### Create a connection object
 
-   ```Ruby
-
+   ```ruby
+   require 'rubyipmi'
    conn = Rubyipmi.connect("username", "password", "hostname", "providertype")
 
    ```
@@ -36,11 +34,29 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
    is installed and load the first tool found.  If you specify the provider type rubyipmi will only use that specific
    provider.
 
+   Additionally, if your using [openipmi](http://openipmi.sourceforge.net) and will be using rubyipmi to connect to the
+   localhost you can utilize the openipmi driver and not have to pass in any connection parameters. Openipmi works
+   by installing a driver and makes it available to the host.  Freeipmi/Ipmitool will then try to use this driver to
+   automatically use the openipmi if no host is given.  The one caveat here is that you cannot control remote hosts using
+   openipmi.  The rubyipmi code must be executed on the host you want to control.  The upside is that you don't need
+   any credentials.  Some commands may require root privileges to run when using openipmi.
+
+   ```ruby
+      conn = Rubyipmi.connect
+      conn.power.status
+   ```
+
+   Should you need to specify some additional options or the provider type
+   ```ruby
+      conn = Rubyipmi.connect(nil,nil,nil, 'freeipmi', {:privilege  =>'USER'})
+   ```
+
 
 #### Use power functions (not all listed)
 
-   ```Ruby
-
+   ```ruby
+   require 'rubyipmi'
+   conn = Rubyipmi.connect("username", "password", "hostname")
    conn.chassis.power.on
    conn.chassis.power.off
    conn.chassis.power.on?
@@ -51,8 +67,9 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 #### Boot to specific device
 
-  ```Ruby
-
+  ```ruby
+   require 'rubyipmi'
+   conn = Rubyipmi.connect("username", "password", "hostname")
    conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
    conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
 
@@ -61,8 +78,9 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 #### Sensors
 
-  ```Ruby
-
+  ```ruby
+    require 'rubyipmi'
+    conn = Rubyipmi.connect("username", "password", "hostname")
     conn.sensors.names
     conn.sensors.list
     conn.sensors.<sensor name>
@@ -71,8 +89,9 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 
 #### Fru
 
-  ```Ruby
-
+  ```ruby
+    require 'rubyipmi'
+    conn = Rubyipmi.connect("username", "password", "hostname")
     conn.fru.list
     conn.fru.serial
     conn.fru.manufacturer
@@ -115,7 +134,7 @@ Creating a new command is actually quite simple.  Follow these steps to wrap a f
 1.  Create a new subclass of BaseCommand
 2.  define the initialize function like so, and pass in the name of the command line tool to the super constructor.
 
-    ```Ruby
+    ```ruby
     def initialize(opts = {})
       @options = opts
       super("bmc-info", opts)
@@ -123,7 +142,7 @@ Creating a new command is actually quite simple.  Follow these steps to wrap a f
 
     ```
 
-    ```Ruby
+    ```ruby
     def initialize(opts = {})
       @options = opts
       super("ipmitool", opts)
@@ -158,7 +177,7 @@ the runcmd command.  Failure to do so will add previous options to subsequent ru
 
 Example:
 
-```Ruby
+```ruby
 def ledlight(status=false, delay=300)
       if status
         if delay <= 0
@@ -187,7 +206,7 @@ To get the results:
 
 Example:
 
-```Ruby
+```ruby
 
     def status
       value = command("--stat")
@@ -214,7 +233,7 @@ Although its not necessary to implement the command function it may be desirable
   Additionally, should this gem ever become out of date one could call the command function and pass in any
   arguments that have not already been implemented in the rest of the class.
 
-```Ruby
+```ruby
 
  def command(opt)
       status = runcmd([opt])
@@ -270,7 +289,7 @@ In order to overcome ipmi non-compliance there will be some workarounds built in
 
 ## Copyright
 
-Copyright (c) 2012 Corey Osman. See LICENSE.txt for
+Copyright (c) 2015 Corey Osman. See LICENSE.txt for
 further details.
 
 

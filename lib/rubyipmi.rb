@@ -28,18 +28,23 @@ module Rubyipmi
     ['auto', "lan15", "lan20", "open"]
   end
 
+  def self.valid_providers
+    ['auto', 'ipmitool', 'freeipmi']
+  end
   # The connect method will create a connection object based the provider type passed in
   # If provider is left blank the function will use the first available provider
-
-  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto',
-                                                           :timeout => 'default', :debug => false})
-
+  # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
+  # the lan20 driver, but in order to support a wide use case we default to auto.
+  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default', :debug => false})
     # use this variable to reduce cmd calls
     installed = false
 
+    # allow the user to specify an options hash instead of the provider
+    # in the future I would stop using the provider and use the opts hash instead to get the provider
+    # This allows us to be a little more flexible if the user is doesn't supply us what we need.
     if provider.is_a?(Hash)
       opts = provider
-      provider = 'any'
+      provider = opts[:provider] ||= 'any'
     end
 
     # Verify options just in case user passed in a incomplete hash
@@ -47,10 +52,8 @@ module Rubyipmi
     opts[:timeout] ||= 'default'
     opts[:debug]   = false if opts[:debug] != true
 
-    if ! opts[:privilege].nil?
-      if ! supported_privilege_type?(opts[:privilege])
-        raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
-      end
+    if opts[:privilege] and not supported_privilege_type?(opts[:privilege])
+      raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
     end
 
     # use the first available provider
@@ -79,12 +82,11 @@ module Rubyipmi
       elsif provider == "ipmitool"
         @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, opts)
       else
-        raise "Incorrect provider given, must use freeipmi or ipmitool"
+        raise "Incorrect provider given, must use one of #{valid_providers.join(', ')}"
       end
     else
       # Can't find the provider command line tool, maybe try other provider?
       raise "The IPMI provider: #{provider} is not installed"
-
     end
   end
 
