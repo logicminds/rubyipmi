@@ -64,7 +64,6 @@ module Rubyipmi
         # Log error
         return makecommand
       end
-
       begin
         command = makecommand
         @lastcall = "#{command}"

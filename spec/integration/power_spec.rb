@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe "Power" do
 
   before :each do
@@ -12,13 +13,13 @@ describe "Power" do
   end
 
   it "test to turn power on" do
-    @conn.chassis.power.on.should be_true
+    expect(@conn.chassis.power.on).to be_truthy
     sleep(2)
-    @conn.chassis.power.status.should eq('on')
+    expect(@conn.chassis.power.status).to eq('on')
   end
 
   it "test power status" do
-    @conn.chassis.power.status.should eq('off')
+    expect(@conn.chassis.power.status).to eq('off')
 
   end
 
@@ -33,7 +34,7 @@ describe "Power" do
         max_count = max_count - 1
       end
     end
-    @conn.chassis.power.off?.should be_true
+    expect(@conn.chassis.power.off?).to be true
   end
 
 end
