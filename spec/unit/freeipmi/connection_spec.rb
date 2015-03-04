@@ -51,21 +51,21 @@ describe "Bmc" do
   end
 
   it 'object should have debug set to true' do
-    @conn.debug.should be_true
+    @conn.debug.should eq true
   end
 
   it 'object should have driver set to auto if not specified' do
-    @conn.options.has_key?('driver-type').should be_false
+    @conn.options.has_key?('driver-type').should eq false
   end
 
   it 'object should have driver set to auto if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
-    @conn.options.has_key?('driver-type').should be_false
+    @conn.options.has_key?('driver-type').should eq false
   end
 
   it 'object should have priv type set to ADMINISTRATOR if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
-    @conn.options.has_key?('privilege-level').should be_false
+    @conn.options.has_key?('privilege-level').should eq false
   end
 
   it 'object should have priv type set to USER ' do
@@ -96,4 +96,29 @@ describe "Bmc" do
     @conn.options['driver-type'].should eq('OPENIPMI')
   end
 
+  describe 'test' do
+    it 'should retrun boolean on test connection when result is not a hash' do
+      conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+      bmc = double()
+      allow(bmc).to receive(:info).and_return('')
+      allow(conn).to receive(:bmc).and_return(bmc)
+      expect(conn.connection_works?).to eq false
+    end
+
+    it 'should retrun boolean on test connection when result is a hash' do
+      conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+      bmc = double()
+      allow(bmc).to receive(:info).and_return({:test => true})
+      allow(conn).to receive(:bmc).and_return(bmc)
+      expect(conn.connection_works?).to eq true
+    end
+
+    it 'should retrun boolean on test connection when nil' do
+      conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
+      bmc = double()
+      allow(bmc).to receive(:info).and_return(nil)
+      allow(conn).to receive(:bmc).and_return(bmc)
+      expect(conn.connection_works?).to eq false
+    end
+  end
 end

@@ -5,7 +5,8 @@ module Rubyipmi
       @@codes = {
           "Authentication type NONE not supported\nAuthentication type NONE not supported\n" +
               "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
-         "Authentication type NONE not supported" => {"I" => "lanplus"}
+         "Authentication type NONE not supported" => {"I" => "lanplus"},
+          "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"}
 
 
       }

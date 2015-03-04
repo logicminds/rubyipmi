@@ -64,11 +64,11 @@ describe "Lan" do
   end
 
   it 'dhcp should return true' do
-    @lan.dhcp?.should be_true
+    @lan.dhcp?.should eq true
   end
 
   it 'static should return false' do
-    @lan.static?.should be_false
+    @lan.static?.should eq false
   end
 
   #it 'should attempt to apply fix and fail, then switch to channel 1' do

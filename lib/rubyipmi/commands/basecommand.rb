@@ -83,9 +83,7 @@ module Rubyipmi
       ensure
         removepass
         return process_status
-
       end
-
     end
 
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
@@ -98,7 +96,6 @@ module Rubyipmi
         begin
           fix = ErrorCodes.search(result)
           @options.merge_notify!(fix)
-
         rescue
           raise "Could not find fix for error code: \n#{result}"
         end
@@ -118,7 +115,5 @@ module Rubyipmi
         return true
       end
     end
-
-
   end
 end

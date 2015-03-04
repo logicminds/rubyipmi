@@ -9,7 +9,7 @@ describe :Rubyipmi do
 
   it 'is provider installed should return ipmitool true' do
     Rubyipmi.stub(:locate_command).with('ipmitool').and_return('/usr/local/bin/ipmitool')
-    Rubyipmi.is_provider_installed?('ipmitool').should be_true
+    Rubyipmi.is_provider_installed?('ipmitool').should eq true
   end
 
   it 'is locate command should return command in /usr/local/bin' do
@@ -19,7 +19,7 @@ describe :Rubyipmi do
 
   it 'is provider installed should return freeipmi true' do
     Rubyipmi.stub(:locate_command).with('ipmipower').and_return('/usr/local/bin/ipmipower')
-    Rubyipmi.is_provider_installed?('freeipmi').should be_true
+    Rubyipmi.is_provider_installed?('freeipmi').should eq true
   end
 
   it 'is provider installed should return error with ipmitool' do

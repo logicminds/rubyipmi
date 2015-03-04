@@ -32,6 +32,11 @@ module Rubyipmi
         @options['I'] = drivers_map[opts[:driver]] unless drivers_map[opts[:driver]].nil?
       end
 
+      # test the connection to ensure we can at least make a single call
+      def connection_works?
+         status = ! (bmc.info.nil? || bmc.info.empty? )
+      end
+
       def drivers_map
         {
           'lan15' => 'lan',

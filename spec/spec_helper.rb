@@ -33,7 +33,7 @@ def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
     cmd_match.first.should eq(expcmd)
   end
   args_match = actual.scan(/(-\w\s[\w\d\S]*)/)
-  actual.include?(required_args).should be_true
+  actual.include?(required_args).should eq true
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
   args_match.count.should eq(exp_args_count)
@@ -41,5 +41,7 @@ end
 
 
 RSpec.configure do |config|
-
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end

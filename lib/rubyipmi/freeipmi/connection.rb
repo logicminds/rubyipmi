@@ -27,8 +27,13 @@ module Rubyipmi
           @options["privilege-level"] = opts[:privilege]        # privilege type
         end
         # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
-        #       the user really wants to.
+        #       the user really wants to
         @options['driver-type'] = drivers_map[opts[:driver]] unless drivers_map[opts[:driver]].nil?
+      end
+
+      # test the connection to ensure we can at least make a single call
+      def connection_works?
+        status = ! (bmc.info.nil? || bmc.info.empty? )
       end
 
       def drivers_map

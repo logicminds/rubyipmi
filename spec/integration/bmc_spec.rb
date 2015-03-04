@@ -13,7 +13,6 @@ describe "Bmc" do
 
   it "creates a bmc object" do
     @conn.bmc.should_not be_nil
-
   end
 
   it "options should change after calling info" do
@@ -46,5 +45,4 @@ describe "Bmc" do
   it "is able to retrieve the guid" do
     @conn.bmc.guid.should_not be_nil
   end
-
 end
