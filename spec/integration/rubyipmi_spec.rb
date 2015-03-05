@@ -53,7 +53,12 @@ describe "rubyipmi" do
     Rubyipmi.providers_installed?.length.should be > 0
   end
 
-
+  it 'can get diag info' do
+    # must have both freeipmi and ipmitool for this to pass
+    Rubyipmi.get_diag(@user,@pass,@host)
+    expect(File.exists?('/tmp/rubyipmi_diag_data.txt')).to be true
+    File.rm('/tmp/rubyipmi_diag_data.txt')
+  end
 
 end
 

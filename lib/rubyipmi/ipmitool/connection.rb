@@ -67,18 +67,13 @@ module Rubyipmi
 
       def get_diag
         data = {}
-        data['provider'] = provider
-        if @fru
-          data['frus'] = @fru.getfrus
-        end
-        if @sensors
-          data['sensors'] = @sensors.getsensors
-        end
-        if @bmc
-          data['bmc_info'] = @bmc.info
-        end
+        data[:provider] = provider
+        data[:frus]     = fru.getfrus
+        data[:sensors]  = sensors.getsensors
+        data[:bmc_info] = bmc.info
+        data[:version]  = bmc.version
+        data
       end
-
     end
   end
 end

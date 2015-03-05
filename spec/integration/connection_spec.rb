@@ -11,18 +11,26 @@ describe "Connection" do
   end
 
   it "creates a new object" do
-     @conn.should_not be_nil
+     expect(@conn).to be_truthy
   end
 
   it 'creates a bmc object' do
-    @conn.bmc.should_not be_nil
+    expect(@conn.bmc).to be_truthy
   end
 
   it 'creates a chassis object' do
-    @conn.chassis.should_not be_nil
+    expect(@conn.chassis).to be_truthy
   end
 
   it 'can test the connection' do
     expect(@conn.connection_works?).to eq true
+  end
+
+  it 'can get diag info' do
+    expect(@conn.get_diag.keys).to eq([:provider, :frus, :sensors, :bmc_info, :version])
+  end
+
+  it 'can get version info' do
+    expect(@conn.bmc.version).to match(/[\d\.]{3,4}/)
   end
 end

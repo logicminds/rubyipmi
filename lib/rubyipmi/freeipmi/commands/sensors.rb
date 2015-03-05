@@ -4,9 +4,6 @@ module Rubyipmi::Freeipmi
 
     def initialize(opts = ObservableHash.new)
       super("ipmi-sensors", opts)
-      @options["no-header-output"] = false
-      @options["output-sensor-state"] = false
-      @options["entity-sensor-names"] = false
     end
 
     def refresh
@@ -51,8 +48,14 @@ module Rubyipmi::Freeipmi
     end
 
     def getsensors
+      @options["no-header-output"] = false
+      @options["output-sensor-state"] = false
+      @options["entity-sensor-names"] = false
       value = runcmd
-      return @result
+      @options.delete_notify('no-header-output')
+      @options.delete_notify('output-sensor-state')
+      @options.delete_notify('entity-sensor-names')
+      @result
     end
 
     private

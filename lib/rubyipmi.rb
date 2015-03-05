@@ -143,24 +143,23 @@ module Rubyipmi
   end
 
   # gets data from the bmc device and puts in a hash for diagnostics
-  def self.get_diag(user, pass, host)
+  def self.get_diag(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default', :debug => false})
     data = {}
-
     if Rubyipmi.is_provider_installed?('freeipmi')
-      @freeconn = Rubyipmi::connect(user, pass, host, 'freeipmi')
-      if @freeconn
+      freeconn = Rubyipmi.connect(user, pass, host, 'freeipmi', opts)
+      if freeconn
         puts "Retrieving freeipmi data"
-        data['freeipmi'] = @freeconn.get_diag
+        data[:freeipmi] = freeconn.get_diag
       end
     end
     if Rubyipmi.is_provider_installed?('ipmitool')
-      @ipmiconn = Rubyipmi::connect(user, pass, host, 'ipmitool')
-      if @ipmiconn
+      ipmiconn = Rubyipmi.connect(user, pass, host, 'ipmitool', opts)
+      if ipmiconn
         puts "Retrieving ipmitool data"
-        data['ipmitool'] = @ipmiconn.get_diag
+        data[:ipmitool] = ipmiconn.get_diag
       end
     end
-    return data
+    File.open('/tmp/rubyipmi_diag_data.txt', 'w') {|f| f.write(data)}
+    puts "Created file /tmp/rubyipmi_diag_data.txt"
   end
-
 end

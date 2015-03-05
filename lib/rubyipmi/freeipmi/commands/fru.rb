@@ -21,7 +21,6 @@ module Rubyipmi::Freeipmi
       end
     end
 
-
     def manufacturer
       get_from_list('board_manufacturer')
     end

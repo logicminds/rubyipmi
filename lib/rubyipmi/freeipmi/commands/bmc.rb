@@ -10,6 +10,13 @@ module Rubyipmi::Freeipmi
       @bmcinfo = {}
     end
 
+    def version
+      @options['version'] = false
+      value = runcmd
+      @options.delete_notify('version')
+      @result.slice(/\d\.\d.\d/)
+    end
+
     def info
       if @bmcinfo.length > 0
         @bmcinfo

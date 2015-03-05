@@ -8,7 +8,6 @@ module Rubyipmi::Freeipmi
 
     def initialize(opts)
       @config = Rubyipmi::Freeipmi::BmcConfig.new(opts)
-
       @info = {}
       @channel = 2
     end
@@ -102,5 +101,3 @@ module Rubyipmi::Freeipmi
     end
   end
 end
-
-
