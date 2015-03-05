@@ -12,7 +12,7 @@ describe "Lan" do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @lan = @conn.bmc.lan
     data = nil
@@ -20,9 +20,9 @@ describe "Lan" do
       data = file.read
     end
 
-    @lan.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @lan.stub(:`).and_return(data)
-    $?.stub(:success?).and_return(true)
+    allow(@lan).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(@lan).to receive(:`).and_return(data)
+    allow($?).to receive(:success?).and_return(true)
   end
 
   it "cmd should be lan with correct number of arguments" do
@@ -31,44 +31,44 @@ describe "Lan" do
   end
 
   it "can return a lan information" do
-    @lan.info.should_not be_nil
+    expect(@lan.info).not_to be_nil
   end
 
   it "can print valid lan info" do
-    @lan.info.length.should > 1
+    expect(@lan.info.length).to be > 1
   end
 
   it 'should print valid ip address' do
-    @lan.ip.should eq('192.168.1.41')
+    expect(@lan.ip).to eq('192.168.1.41')
   end
 
   it 'should print valid snmp string' do
-    @lan.snmp.should be_nil
+    expect(@lan.snmp).to be_nil
 
   end
 
   it 'should print correct mac address' do
-    @lan.mac.should eq('00:17:a4:49:ab:70')
+    expect(@lan.mac).to eq('00:17:a4:49:ab:70')
   end
 
   it 'should print correct netmask' do
-    @lan.netmask.should eq('255.255.255.0')
+    expect(@lan.netmask).to eq('255.255.255.0')
   end
 
   it 'should print correct gateway' do
-    @lan.gateway.should eq('192.168.1.1')
+    expect(@lan.gateway).to eq('192.168.1.1')
   end
 
   it 'should print vlanid' do
-    @lan.vlanid.should be_nil
+    expect(@lan.vlanid).to be_nil
   end
 
   it 'dhcp should return true' do
-    @lan.dhcp?.should eq true
+    expect(@lan.dhcp?).to eq true
   end
 
   it 'static should return false' do
-    @lan.static?.should eq false
+    expect(@lan.static?).to eq false
   end
 
   #it 'should attempt to apply fix and fail, then switch to channel 1' do

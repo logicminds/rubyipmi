@@ -13,7 +13,7 @@ describe "Bmc" do
  before :each do
 
 
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true})
 
@@ -21,56 +21,56 @@ describe "Bmc" do
   end
 
   it "connection should not be nil" do
-    @conn.should_not be_nil
+    expect(@conn).not_to be_nil
   end
 
   it "fru should not be nil" do
-    @conn.fru.should_not be_nil
+    expect(@conn.fru).not_to be_nil
   end
 
   it "provider should not be nil" do
-    @conn.provider.should_not be_nil
+    expect(@conn.provider).not_to be_nil
   end
 
   it "provider should be freeipmi" do
-    @conn.provider.should == "freeipmi"
+    expect(@conn.provider).to eq("freeipmi")
   end
 
   it "bmc should not be nil" do
-    @conn.bmc.should_not be_nil
+    expect(@conn.bmc).not_to be_nil
   end
 
   it "sensors should not be nil" do
-    @conn.sensors.should_not be_nil
+    expect(@conn.sensors).not_to be_nil
 
   end
 
   it "chassis should not be nill" do
-    @conn.chassis.should_not be_nil
+    expect(@conn.chassis).not_to be_nil
 
   end
 
   it 'object should have debug set to true' do
-    @conn.debug.should eq true
+    expect(@conn.debug).to eq true
   end
 
   it 'object should have driver set to auto if not specified' do
-    @conn.options.has_key?('driver-type').should eq false
+    expect(@conn.options.has_key?('driver-type')).to eq false
   end
 
   it 'object should have driver set to auto if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
-    @conn.options.has_key?('driver-type').should eq false
+    expect(@conn.options.has_key?('driver-type')).to eq false
   end
 
   it 'object should have priv type set to ADMINISTRATOR if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
-    @conn.options.has_key?('privilege-level').should eq false
+    expect(@conn.options.has_key?('privilege-level')).to eq false
   end
 
   it 'object should have priv type set to USER ' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'USER', :debug => true, :driver => 'auto'})
-    @conn.options.fetch('privilege-level').should eq('USER')
+    expect(@conn.options.fetch('privilege-level')).to eq('USER')
   end
 
   it 'should raise exception if invalid privilege type' do
@@ -83,17 +83,17 @@ describe "Bmc" do
 
   it 'object should have driver set to lan_2_0' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'lan20'})
-    @conn.options['driver-type'].should eq('LAN_2_0')
+    expect(@conn.options['driver-type']).to eq('LAN_2_0')
   end
 
   it 'object should have driver set to lan' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'lan15'})
-    @conn.options['driver-type'].should eq('LAN')
+    expect(@conn.options['driver-type']).to eq('LAN')
   end
 
   it 'object should have driver set to openipmi' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'open'})
-    @conn.options['driver-type'].should eq('OPENIPMI')
+    expect(@conn.options['driver-type']).to eq('OPENIPMI')
   end
 
   describe 'test' do

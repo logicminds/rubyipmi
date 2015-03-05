@@ -13,7 +13,7 @@ describe :Fru do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @fru = @conn.fru
@@ -21,9 +21,9 @@ describe :Fru do
       data = file.read
     end
 
-    @fru.stub(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
-    @fru.stub(:`).and_return(data)
-    $?.stub(:success?).and_return(true)
+    allow(@fru).to receive(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
+    allow(@fru).to receive(:`).and_return(data)
+    allow($?).to receive(:success?).and_return(true)
   end
 
   it "cmd should be ipmi-fru with correct number of arguments" do
@@ -32,43 +32,43 @@ describe :Fru do
   end
 
   it 'should list data' do
-    @fru.names.count.should eq(1)
+    expect(@fru.names.count).to eq(1)
   end
 
   it 'should return a list of unparsed frus' do
-    @fru.getfrus.should_not be_nil
+    expect(@fru.getfrus).not_to be_nil
   end
 
 
   it "should return a list of parsed frus" do
-    @fru.list.count.should eq(1)
+    expect(@fru.list.count).to eq(1)
   end
 
   it 'should return a manufacturer' do
-    @fru.board_manufacturer.should eq('HP')
+    expect(@fru.board_manufacturer).to eq('HP')
   end
 
   it 'should return a product' do
-    @fru.board_product_name.should eq('ProLiant DL380 G5')
+    expect(@fru.board_product_name).to eq('ProLiant DL380 G5')
   end
 
   it 'should return a chassis serial' do
-    @fru.chassis_serial_number.should eq('2UX64201U2')
+    expect(@fru.chassis_serial_number).to eq('2UX64201U2')
   end
 
   it 'should return a board serial' do
-    @fru.board_serial_number.should eq('2UX64201U2')
+    expect(@fru.board_serial_number).to eq('2UX64201U2')
   end
 
   it 'should return a list of fru names' do
-    @fru.names.count.should eq(1)
+    expect(@fru.names.count).to eq(1)
   end
 
   it 'should return a fru using method missing' do
     @fru.names.each do |name|
       fru = @fru.send(name)
-      fru.should be_an_instance_of(Rubyipmi::Freeipmi::FruData)
-      fru[:name].should eq(name)
+      expect(fru).to be_an_instance_of(Rubyipmi::Freeipmi::FruData)
+      expect(fru[:name]).to eq(name)
 
     end
   end

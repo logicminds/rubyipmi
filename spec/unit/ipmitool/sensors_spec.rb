@@ -13,18 +13,18 @@ describe :Sensors do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
 
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @sensors = @conn.sensors
     File.open("spec/fixtures/#{provider}/sensors.txt",'r') do |file|
       data = file.read
     end
-    @sensors.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @sensors.stub(:`).and_return(data)
+    allow(@sensors).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(@sensors).to receive(:`).and_return(data)
 
     # this is causing an error: An expectation of :success? was set on nil
-    $?.stub(:success?).and_return(true)
+    allow($?).to receive(:success?).and_return(true)
 
   end
 
@@ -41,42 +41,42 @@ describe :Sensors do
   #end
 
   it "can return a list of sensors" do
-   @sensors.list.should_not be_nil
+   expect(@sensors.list).not_to be_nil
   end
 
   it "should return a count of sensors" do
-    @sensors.count.should eq(99)
+    expect(@sensors.count).to eq(99)
   end
 
   it "should return a list of fan names" do
-    @sensors.fanlist.count.should eq(17)
+    expect(@sensors.fanlist.count).to eq(17)
   end
 
   it 'should return a list of temp names' do
-    @sensors.templist.count.should.should eq(43)
+    expect(@sensors.templist.count).to eq(43)
     @sensors.templist.each do | temp |
     end
   end
 
   it 'should return a list of sensor names as an array' do
-    @sensors.names.should be_an_instance_of(Array)
-    @sensors.names.count.should eq(99)
+    expect(@sensors.names).to be_an_instance_of(Array)
+    expect(@sensors.names.count).to eq(99)
   end
 
   it 'should return an empty list if no data exists' do
-    @sensors.stub(:getsensors).and_return(nil)
-    @sensors.names.count.should eq(0)
+    allow(@sensors).to receive(:getsensors).and_return(nil)
+    expect(@sensors.names.count).to eq(0)
   end
 
   it 'should return a sensor using method missing' do
     @sensors.names.each do |name|
       sensor = @sensors.send(name)
-      sensor.should be_an_instance_of(Rubyipmi::Ipmitool::Sensor)
+      expect(sensor).to be_an_instance_of(Rubyipmi::Ipmitool::Sensor)
     end
   end
 
   it "test should create new Sensor" do
-    Rubyipmi::Ipmitool::Sensor.new("fakesensor").should_not be nil
+    expect(Rubyipmi::Ipmitool::Sensor.new("fakesensor")).not_to be nil
   end
 
   #it 'fix should be added to options after error occurs' do

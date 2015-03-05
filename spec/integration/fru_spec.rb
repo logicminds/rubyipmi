@@ -12,24 +12,24 @@ describe "Fru" do
    end
 
   it "test should return manufacturer" do
-    @conn.fru.manufacturer.should_not be nil
+    expect(@conn.fru.manufacturer).not_to be nil
 
    end
 
    it "test should return serial" do
-     @conn.fru.board_serial.should_not be nil
+     expect(@conn.fru.board_serial).not_to be nil
    end
 
    it "test should return product name" do
-     @conn.fru.model.should_not be nil
+     expect(@conn.fru.model).not_to be nil
    end
 
    it "test should return fru list" do
-     @conn.fru.list.length.should be >= 1
+     expect(@conn.fru.list.length).to be >= 1
    end
 
    it "test missing method with known good method" do
-     @conn.fru.chassis_type.should_not be nil
+     expect(@conn.fru.chassis_type).not_to be nil
    end
 
    it "test missing method with known bad method" do

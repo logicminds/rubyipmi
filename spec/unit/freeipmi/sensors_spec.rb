@@ -14,7 +14,7 @@ describe :Sensors do
     pass = "impipass"
     host = "ipmihost"
     # this stub allows us to mock the command that would be used to verify provider installation
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @sensors = @conn.sensors
@@ -22,11 +22,11 @@ describe :Sensors do
       data = file.read
     end
     # this stub allows us to mock the command that is used with this test case
-    @sensors.stub(:locate_command).with('ipmi-sensors').and_return('/usr/local/bin/ipmi-sensors')
+    allow(@sensors).to receive(:locate_command).with('ipmi-sensors').and_return('/usr/local/bin/ipmi-sensors')
 
     # these stubs allow us to run the command and return the fixtures
-    @sensors.stub(:`).and_return(data)
-    $?.stub(:success?).and_return(true)
+    allow(@sensors).to receive(:`).and_return(data)
+    allow($?).to receive(:success?).and_return(true)
 
   end
 
@@ -36,36 +36,36 @@ describe :Sensors do
  end
 
   it "can return a list of sensors" do
-   @sensors.list.should_not be_nil
+   expect(@sensors.list).not_to be_nil
   end
 
   it "should return a count of sensors" do
-    @sensors.count.should eq(29)
+    expect(@sensors.count).to eq(29)
   end
 
   it "should return a list of fan names" do
-    @sensors.fanlist.count.should eq(13)
+    expect(@sensors.fanlist.count).to eq(13)
   end
 
   it 'should return a list of temp names' do
-    @sensors.templist.count.should.should eq(7)
+    expect(@sensors.templist.count).to eq(7)
   end
 
   it 'should return a list of sensor names as an array' do
-    @sensors.names.should be_an_instance_of(Array)
-    @sensors.names.count.should eq(29)
+    expect(@sensors.names).to be_an_instance_of(Array)
+    expect(@sensors.names.count).to eq(29)
   end
 
   it 'should return an empty list if no data exists' do
-    @sensors.stub(:getsensors).and_return(nil)
-    @sensors.names.count.should eq(0)
+    allow(@sensors).to receive(:getsensors).and_return(nil)
+    expect(@sensors.names.count).to eq(0)
   end
 
   it 'should return a sensor using method missing' do
     @sensors.names.each do |name|
       sensor = @sensors.send(name)
-      sensor.should be_an_instance_of(Rubyipmi::Freeipmi::Sensor)
-      sensor[:name].should eq(name)
+      expect(sensor).to be_an_instance_of(Rubyipmi::Freeipmi::Sensor)
+      expect(sensor[:name]).to eq(name)
     end
   end
 

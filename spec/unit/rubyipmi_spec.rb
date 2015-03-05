@@ -8,18 +8,18 @@ describe :Rubyipmi do
   end
 
   it 'is provider installed should return ipmitool true' do
-    Rubyipmi.stub(:locate_command).with('ipmitool').and_return('/usr/local/bin/ipmitool')
-    Rubyipmi.is_provider_installed?('ipmitool').should eq true
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return('/usr/local/bin/ipmitool')
+    expect(Rubyipmi.is_provider_installed?('ipmitool')).to eq true
   end
 
   it 'is locate command should return command in /usr/local/bin' do
-    Rubyipmi.stub(:locate_command).with('ipmitool').and_return('/usr/local/bin/ipmitool')
-    Rubyipmi.locate_command('ipmitool').should eq('/usr/local/bin/ipmitool')
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return('/usr/local/bin/ipmitool')
+    expect(Rubyipmi.locate_command('ipmitool')).to eq('/usr/local/bin/ipmitool')
   end
 
   it 'is provider installed should return freeipmi true' do
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return('/usr/local/bin/ipmipower')
-    Rubyipmi.is_provider_installed?('freeipmi').should eq true
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return('/usr/local/bin/ipmipower')
+    expect(Rubyipmi.is_provider_installed?('freeipmi')).to eq true
   end
 
   it 'is provider installed should return error with ipmitool' do

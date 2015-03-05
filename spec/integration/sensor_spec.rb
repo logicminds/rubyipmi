@@ -12,30 +12,30 @@ describe "Sensors" do
   end
 
   it "test get all sensors" do
-    @conn.sensors.list.count.should be > 1
+    expect(@conn.sensors.list.count).to be > 1
   end
 
   it "test should refresh data" do
     old = @conn.sensors.list
     @conn.sensors.refresh
     new = @conn.sensors.list
-    old.should_not equal(new)
+    expect(old).not_to equal(new)
   end
 
   it "test should return count greater than 1" do
-    @conn.sensors.count.should be > 1
+    expect(@conn.sensors.count).to be > 1
   end
 
   it "test should return names" do
-    @conn.sensors.names.count.should be > 1
+    expect(@conn.sensors.names.count).to be > 1
   end
 
   it "test should return list of fans" do
-    @conn.sensors.fanlist.count.should be > 1
+    expect(@conn.sensors.fanlist.count).to be > 1
   end
 
   it "test should return list of temps" do
-    @conn.sensors.templist.count.should be > 1
+    expect(@conn.sensors.templist.count).to be > 1
   end
 
 

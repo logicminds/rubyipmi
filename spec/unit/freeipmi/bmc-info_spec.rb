@@ -12,7 +12,7 @@ describe "Bmc" do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @bmcinfo = @conn.bmc.information
@@ -20,9 +20,9 @@ describe "Bmc" do
     File.open("spec/fixtures/#{provider}/bmc_info.txt",'r') do |file|
       data = file.read
     end
-    @bmcinfo.stub(:locate_command).with('bmc-info').and_return("#{@path}/bmc-info")
-    @bmcinfo.stub(:`).and_return(data)
-    $?.stub(:success?).and_return(true)
+    allow(@bmcinfo).to receive(:locate_command).with('bmc-info').and_return("#{@path}/bmc-info")
+    allow(@bmcinfo).to receive(:`).and_return(data)
+    allow($?).to receive(:success?).and_return(true)
   end
 
   it "cmd should be bmc-info with correct number of arguments" do

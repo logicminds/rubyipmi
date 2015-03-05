@@ -18,30 +18,30 @@ end
 def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)
   actual = cmdobj.lastcall
   actual.scan(/(^#{Regexp.escape(expcmd)})/) do |cmd_match|
-    cmd_match.first.should eq(expcmd)
+    expect(cmd_match.first).to eq(expcmd)
   end
   args_match = actual.scan(/(\-{2}[\w-]*=?[-\w\/]*)/)
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
-  args_match.count.should eq(exp_args_count)
+  expect(args_match.count).to eq(exp_args_count)
 end
 
 
 def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   actual = cmdobj.lastcall
   actual.scan(/(^#{Regexp.escape(expcmd)})/) do |cmd_match|
-    cmd_match.first.should eq(expcmd)
+    expect(cmd_match.first).to eq(expcmd)
   end
   args_match = actual.scan(/(-\w\s[\w\d\S]*)/)
-  actual.include?(required_args).should eq true
+  expect(actual.include?(required_args)).to eq true
   # not sure how to exactly test for arguments since they could vary, so we will need to use count for now
   #args_match.should =~ exp_args
-  args_match.count.should eq(exp_args_count)
+  expect(args_match.count).to eq(exp_args_count)
 end
 
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
-    c.syntax = [:should, :expect]
+    c.syntax = [:expect]
   end
 end

@@ -12,26 +12,26 @@ describe "Bmc" do
   end
 
   it "creates a bmc object" do
-    @conn.bmc.should_not be_nil
+    expect(@conn.bmc).not_to be_nil
   end
 
   it "options should change after calling info" do
     before = @conn.bmc.options.clone
     info = @conn.bmc.info
     after = @conn.bmc.options.clone
-    before.length.should be < after.length
+    expect(before.length).to be < after.length
   end
 
   it 'should retrun a max retry count' do
-    @conn.bmc.max_retry_count.should > 0
+    expect(@conn.bmc.max_retry_count).to be > 0
   end
 
   it "should reset the bmc device" do
-    @conn.bmc.reset('cold').should_not be_nil
+    expect(@conn.bmc.reset('cold')).not_to be_nil
   end
 
   it "should reset the bmc device warmly" do
-    @conn.bmc.reset('warm').should_not be_nil
+    expect(@conn.bmc.reset('warm')).not_to be_nil
   end
 
   it "reset should fail when type is wrong" do
@@ -39,10 +39,10 @@ describe "Bmc" do
   end
 
   it "is able to retrieve the bmc info" do
-    @conn.bmc.info.should_not be_nil
+    expect(@conn.bmc.info).not_to be_nil
   end
 
   it "is able to retrieve the guid" do
-    @conn.bmc.guid.should_not be_nil
+    expect(@conn.bmc.guid).not_to be_nil
   end
 end

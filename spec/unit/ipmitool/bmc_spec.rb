@@ -13,7 +13,7 @@ describe "Bmc" do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @bmc = @conn.bmc
     data = nil
@@ -21,32 +21,32 @@ describe "Bmc" do
       data = file.read
     end
 
-    @bmc.stub(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @bmc.stub(:`).and_return(data)
-    $?.stub(:success?).and_return(true)
+    allow(@bmc).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
+    allow(@bmc).to receive(:`).and_return(data)
+    allow($?).to receive(:success?).and_return(true)
 
-    @bmc.stub(:guid).and_return("guid")
+    allow(@bmc).to receive(:guid).and_return("guid")
 
   end
 
   it "bmc should not be nil" do
-    @bmc.should_not be nil
+    expect(@bmc).not_to be nil
   end
 
   it "lan should not be nil" do
-    @bmc.lan.should_not be_nil
+    expect(@bmc.lan).not_to be_nil
   end
 
   it "guid should not be nil" do
-     @bmc.guid.should_not be_nil
+     expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nil" do
-    @bmc.info.should_not be_nil
+    expect(@bmc.info).not_to be_nil
   end
 
   it "info should parse as expected" do
-    @bmc.info.should eq(RETRIEVE)
+    expect(@bmc.info).to eq(RETRIEVE)
   end
 
 end

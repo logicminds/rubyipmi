@@ -12,7 +12,7 @@ describe "Bmc" do
     user = "ipmiuser"
     pass = "impipass"
     host = "ipmihost"
-    Rubyipmi.stub(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
+    allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
     @conn = Rubyipmi.connect(user, pass, host, provider,{:debug => true})
     @bmc = @conn.bmc
@@ -20,24 +20,24 @@ describe "Bmc" do
     File.open("spec/fixtures/#{provider}/bmc_info.txt",'r') do |file|
       data = file.read
     end
-    @bmc.stub(:guid).and_return("guid")
-    @bmc.stub(:info).and_return("info")
+    allow(@bmc).to receive(:guid).and_return("guid")
+    allow(@bmc).to receive(:info).and_return("info")
   end
 
   it "bmc should not be nil" do
-    @bmc.should_not be nil
+    expect(@bmc).not_to be nil
   end
 
   it "lan should not be nil" do
-    @bmc.lan.should_not be_nil
+    expect(@bmc.lan).not_to be_nil
   end
 
   it "guid should not be nil" do
-     @bmc.guid.should_not be_nil
+     expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nill" do
-    @bmc.info.should_not be_nil
+    expect(@bmc.info).not_to be_nil
   end
 
 end

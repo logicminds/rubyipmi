@@ -14,13 +14,13 @@ describe "Chassis" do
   it "test to turn uid light on for 5 seconds" do
     value = @conn.chassis.identify(true, 5)
     sleep(6)
-    value.should == true
+    expect(value).to eq(true)
   end
 
   it "test to turn uid light on then off" do
     @conn.chassis.identify(true)
     sleep(2)
-    @conn.chassis.identify(false).should == true
+    expect(@conn.chassis.identify(false)).to eq(true)
   end
 
 end

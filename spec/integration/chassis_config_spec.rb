@@ -13,19 +13,19 @@ describe "Chassis Config" do
   end
 
   it "test to set booting from PXE" do
-    @conn.chassis.config.bootpxe.should == true
+    expect(@conn.chassis.config.bootpxe).to eq(true)
   end
 
   it "test to set booting from Disk" do
-      @conn.chassis.config.bootdisk.should == true
+      expect(@conn.chassis.config.bootdisk).to eq(true)
   end
 
   it "test to set booting from Cdrom" do
-      @conn.chassis.config.bootcdrom.should == true
+      expect(@conn.chassis.config.bootcdrom).to eq(true)
   end
 
   it "test to set booting from bios" do
-      @conn.chassis.config.bootbios.should == true
+      expect(@conn.chassis.config.bootbios).to eq(true)
   end
 
   it "test to set boot persistent value" do
@@ -35,7 +35,4 @@ describe "Chassis Config" do
   it "test to checkout the entire chassis config" do
 
   end
-
-
-
 end
