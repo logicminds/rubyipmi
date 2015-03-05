@@ -7,7 +7,6 @@ module Rubyipmi::Freeipmi
 
     end
 
-
     def guid
       options["get-device-guid"] = false
       status = runcmd

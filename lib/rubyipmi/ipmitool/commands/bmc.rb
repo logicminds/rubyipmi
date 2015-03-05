@@ -21,6 +21,13 @@ module Rubyipmi::Ipmitool
       end
     end
 
+    def version
+      @options['V'] = nil
+      value = runcmd
+      @options.delete_notify('V')
+      @result.slice(/\d\.\d.\d/)
+    end
+
     # reset the bmc device, useful for troubleshooting
     def reset(type='cold')
       if ['cold', 'warm'].include?(type)

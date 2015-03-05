@@ -62,8 +62,6 @@ module Rubyipmi::Freeipmi
       return value
     end
 
-
-
     # shortcut to set boot device to pxe
     def bootpxe(persistent=true)
       bootdevice("PXE",persistent)

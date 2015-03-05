@@ -6,7 +6,6 @@ module Rubyipmi::Ipmitool
 
     DEFAULT_FRU = 'builtin_fru_device'
 
-
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
       @list = {}
@@ -101,9 +100,6 @@ module Rubyipmi::Ipmitool
 
   end
 
-
-
-
   class FruData < Hash
 
     def name
@@ -138,8 +134,5 @@ module Rubyipmi::Ipmitool
     def method_missing(method, *args, &block)
       self.fetch(method.to_s, nil)
     end
-
   end
-
-
 end
