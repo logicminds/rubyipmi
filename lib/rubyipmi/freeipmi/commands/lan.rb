@@ -12,13 +12,13 @@ module Rubyipmi::Freeipmi
       @channel = 2
     end
 
-
     def info
       if @info.length < 1
+        @config.verbose(true)
         parse(@config.section("Lan_Conf"))
-      else
-        @info
+        @config.verbose(false)
       end
+      @info
     end
 
     def dhcp?
@@ -45,17 +45,20 @@ module Rubyipmi::Freeipmi
       info.fetch("default_gateway_ip_address", nil)
     end
 
-  #  def snmp
-  #
-  #  end
+    #  def snmp
+    #
+    #  end
 
-  #  def vlanid
-  #
-  #  end
+    def vlanid
+      info.fetch("vlan_id", nil)
+      # some other vlan configuration that might also be useful
+      # "vlan_id_enable"
+      # "vlan_priority"
+    end
 
-  #  def snmp=(community)
-  #
-  #  end
+    #  def snmp=(community)
+    #
+    #  end
 
     # validates that the address, returns true/false
     def validaddr?(source)
@@ -68,20 +71,20 @@ module Rubyipmi::Freeipmi
     end
 
     def ip=(address)
-        @config.setsection("Lan_Conf", "IP_Address", address) if validaddr?(address)
+      @config.setsection("Lan_Conf", "IP_Address", address) if validaddr?(address)
     end
 
     def netmask=(netmask)
-        @config.setsection("Lan_Conf", "Subnet_Mask", netmask) if validaddr?(netmask)
+      @config.setsection("Lan_Conf", "Subnet_Mask", netmask) if validaddr?(netmask)
     end
 
     def gateway=(address)
       @config.setsection("Lan_Conf", "Default_Gateway_IP_Address", address) if validaddr?(address)
     end
 
-  #  def vlanid=(vlan)
-  #
-  #  end
+    #  def vlanid=(vlan)
+    #
+    #  end
 
     def parse(landata)
       if ! landata.nil? and ! landata.empty?
@@ -94,10 +97,9 @@ module Rubyipmi::Freeipmi
           key = item.first.strip.downcase
           value = item.last.strip
           @info[key] = value
-
         end
       end
-      return @info
+      @info
     end
   end
 end

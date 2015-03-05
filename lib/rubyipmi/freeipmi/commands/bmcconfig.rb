@@ -8,6 +8,14 @@ module Rubyipmi::Freeipmi
 
     end
 
+    def verbose(on=false)
+      if on
+        @options['verbose'] = false
+      else
+        @options.delete_notify('verbose')
+      end
+    end
+
     def section(section)
       @options["checkout"] = false
       @options["section"] = section
@@ -33,6 +41,8 @@ module Rubyipmi::Freeipmi
 
     # returns the entire bmc-config configuration, can take a while to execute
     def configuration
+      require 'pry'
+      binding.pry
       @options["checkout"] = false
       value = runcmd
       @options.delete_notify("checkout")

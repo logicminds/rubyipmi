@@ -33,6 +33,7 @@ module Rubyipmi::Freeipmi
     end
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
+    # this is required because freeipmi in older version always returned 0 even if an error occured
     def validate_status(exitstatus)
       case @cmdname
         when "ipmipower"
@@ -42,7 +43,7 @@ module Rubyipmi::Freeipmi
             raise "Error occurred"
           end
         when "bmc-config"
-          if @result.length > 100
+          if @result.length > 100 and exitstatus.success?
             return true
           else
             raise "Error occurred"
