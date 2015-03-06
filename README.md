@@ -303,8 +303,8 @@ If you want to setup a custom logger (not required) you can also pass in a logge
 ### Diagnostics Function
 Running IPMI commands can be frustrating sometimes and with the addition of this library you are bound to find edge
 cases.  If you do find an edge case there is a easy function that will generate a diagnostics file that you can
-review and optionally create an issue with for us to work.  Without this information its really hard to help because
-every server is different. The following code will generate a file in /tmp/rubyipmi_diag_data.txt that we can use to
+review and optionally create an issue with us to work with.  Without this information its really hard to help because
+every server is different. The following code will generate a file in /tmp/rubyipmi_diag_data.txt that we can use
 as test cases.  Please look over the file for any sensitive data you don't want to share like ip/mac address.
 
 ```ruby
