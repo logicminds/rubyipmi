@@ -48,8 +48,5 @@ module Rubyipmi::Ipmitool
         end
       end
     end
-
   end
-
-
 end

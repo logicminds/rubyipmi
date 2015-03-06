@@ -109,6 +109,4 @@ module Rubyipmi::Freeipmi
       end
     end
   end
-
 end
-

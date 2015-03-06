@@ -10,7 +10,6 @@ module Rubyipmi::Freeipmi
       @passfile.write "username #{@options["username"]}\n"
       @passfile.write "password #{@options["password"]}\n"
       @passfile.close
-
     end
 
     def max_retry_count
@@ -54,7 +53,6 @@ module Rubyipmi::Freeipmi
           else
             raise "Error occurred"
           end
-
       end
     end
 
@@ -67,7 +65,6 @@ module Rubyipmi::Freeipmi
         begin
           fix = ErrorCodes.search(result)
           @options.merge_notify!(fix)
-
         rescue
           raise "Could not find fix for error code: \n#{result}"
         end

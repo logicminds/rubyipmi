@@ -50,10 +50,6 @@ describe "Bmc" do
 
   end
 
-  it 'object should have debug set to true' do
-    expect(@conn.debug).to eq true
-  end
-
   it 'object should have driver set to auto if not specified' do
     expect(@conn.options.has_key?('driver-type')).to eq false
   end

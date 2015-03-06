@@ -47,8 +47,6 @@ module Rubyipmi::Freeipmi
         return bmcinfo
       end
     end
-
-
   end
 end
 

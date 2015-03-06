@@ -20,6 +20,7 @@ module Rubyipmi::Freeipmi
         key = "#{type}-reset"
         command(key)
       else
+        logger.error("reset type: #{type} is not a valid choice, use warm or cold") if logger
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
     end

@@ -50,10 +50,6 @@ describe :Connection do
     expect(@conn.provider).to eq("ipmitool")
   end
 
-  it "debug value should be true" do
-    expect(@conn.debug).to eq true
-  end
-
   it 'object should have driver set to auto if not specified' do
     expect(@conn.options.has_key?('driver-type')).to eq false
   end

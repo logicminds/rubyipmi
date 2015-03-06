@@ -275,7 +275,51 @@ Although its not necessary to implement the command function it may be desirable
 IPMI is great for a vendor neutral management interface.  However, not all servers are 100% compatible with the specifications.
 In order to overcome ipmi non-compliance there will be some workarounds built into this library
 
+## Troubleshooting
 
+### Log files
+Rubyipmi has a built in logging system for debugging purposes.  By default logging is disabled.  The logger is a class instance
+variable and will stay in memory for as long as your program or interpreter is loaded. In order to enable logging
+you need to do the following.
+
+```ruby
+    require 'rubyipmi'
+    require 'logger'
+    Rubyipmi.log_level = Logger::DEBUG
+```
+This will create a log file in /tmp/rubyipmi.log which you can use to trace the commands Rubyipmi generates and runs.
+
+If you want to setup a custom logger (not required) you can also pass in a logger instance as well.
+
+```ruby
+   require 'rubyipmi'
+   require 'logger'
+   custom_logger = Logger.new('/var/log/rubyipmi_custom.log')
+   custom_logger.progname = 'Rubyipmi'
+   custom_logger.level = Logger::DEBUG
+   Rubyipmi.logger = custom_logger
+```
+
+### Diagnostics Function
+Running IPMI commands can be frustrating sometimes and with the addition of this library you are bound to find edge
+cases.  If you do find an edge case there is a easy function that will generate a diagnostics file that you can
+review and optionally create an issue with for us to work.  Without this information its really hard to help because
+every server is different. The following code will generate a file in /tmp/rubyipmi_diag_data.txt that we can use to
+as test cases.  Please look over the file for any sensitive data you don't want to share like ip/mac address.
+
+```ruby
+   require 'rubyipmi'
+   Rubyipmi.get_diag(user, pass, host)
+```
+
+You can couple this with the logger and also generate a log file of all the commands get_diag uses as well.
+
+```ruby
+   require 'rubyipmi'
+   require 'logger'
+   Rubyipmi.log_level = Logger::DEBUG
+   Rubyipmi.get_diag(user, pass, host)
+```
 
 ## Contributing to rubyipmi
 

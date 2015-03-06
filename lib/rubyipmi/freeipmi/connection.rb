@@ -8,14 +8,10 @@ Dir[File.dirname(__FILE__) + '/commands/*.rb'].each do |file|
 end
 module Rubyipmi
   module Freeipmi
-
     class Connection
-
-      attr_accessor :options, :debug
-
+      attr_accessor :options
 
       def initialize(user, pass, host, opts)
-        @debug = opts[:debug]
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
         @options["hostname"] = host
@@ -76,4 +72,3 @@ module Rubyipmi
     end
   end
 end
-

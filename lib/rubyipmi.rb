@@ -19,10 +19,48 @@
 
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
+require 'logger'
 
+class NullLogger < Logger
+  def initialize(*args)
+  end
+
+  def add(*args, &block)
+  end
+end
 
 module Rubyipmi
   PRIV_TYPES = ['CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR']
+  attr_accessor :logger, :log_level
+
+  # set a logger instance yourself to customize where the logs should go
+  # you will need to set the log level yourself
+  def self.logger=(log)
+    @logger = log
+  end
+
+  # sets the log level, this should be called first if logging to a file is desired
+  # if you wish to customize the logging options, set the logger yourself with logger=
+  # valid levels are of the type Logger::INFO, Logger::DEBUG, Logger::ERROR, ...
+  def self.log_level=(level)
+    @log_level = level
+  end
+
+  # this is an read only method that only creates a real logger if the log_level is set
+  # if the log_level is not setup it creates a null logger which logs nothing
+  def self.logger
+    # by default the log will be set to info
+    unless @logger
+      if @log_level and @log_level >= 0
+        @logger = Logger.new('/tmp/rubyipmi.log')
+        @logger.progname = 'Rubyipmi'
+        @logger.level = @log_level
+      else
+        @logger = NullLogger.new
+      end
+    end
+    @logger
+  end
 
   def self.valid_drivers
     ['auto', "lan15", "lan20", "open"]
@@ -35,7 +73,7 @@ module Rubyipmi
   # If provider is left blank the function will use the first available provider
   # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
   # the lan20 driver, but in order to support a wide use case we default to auto.
-  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default', :debug => false})
+  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default'})
     # use this variable to reduce cmd calls
     installed = false
 
@@ -50,9 +88,9 @@ module Rubyipmi
     # Verify options just in case user passed in a incomplete hash
     opts[:driver]  ||= 'auto'
     opts[:timeout] ||= 'default'
-    opts[:debug]   = false if opts[:debug] != true
 
     if opts[:privilege] and not supported_privilege_type?(opts[:privilege])
+      logger.error("Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}") if logger
       raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
     end
 
@@ -65,6 +103,7 @@ module Rubyipmi
         provider = "ipmitool"
         installed = true
       else
+        logger.error("No IPMI provider is installed, please install freeipmi or ipmitool")
         raise "No IPMI provider is installed, please install freeipmi or ipmitool"
       end
     end
@@ -72,20 +111,23 @@ module Rubyipmi
     # Support multiple drivers
     # Note: these are just generic names of drivers that need to be specified for each provider
     unless valid_drivers.include?(opts[:driver])
+      logger.debug("You must specify a valid driver: #{valid_drivers.join(',')}") if logger
       raise "You must specify a valid driver: #{valid_drivers.join(',')}"
     end
 
     # If the provider is available create a connection object
     if installed or is_provider_installed?(provider)
       if provider == "freeipmi"
-        @conn = Rubyipmi::Freeipmi::Connection.new(user, pass, host, opts)
+        Rubyipmi::Freeipmi::Connection.new(user, pass, host, opts)
       elsif provider == "ipmitool"
-        @conn = Rubyipmi::Ipmitool::Connection.new(user,pass,host, opts)
+        Rubyipmi::Ipmitool::Connection.new(user,pass,host, opts)
       else
+        logger.error("Incorrect provider given, must use one of #{valid_providers.join(', ')}") if logger
         raise "Incorrect provider given, must use one of #{valid_providers.join(', ')}"
       end
     else
       # Can't find the provider command line tool, maybe try other provider?
+      logger.error("The IPMI provider: #{provider} is not installed") if logger
       raise "The IPMI provider: #{provider} is not installed"
     end
   end
@@ -95,18 +137,13 @@ module Rubyipmi
      PRIV_TYPES.include?(type)
   end
 
-  def self.connection
-    return @conn if @conn
-    raise "No Connection available, please use the connect method"
-  end
-
   # method used to find the command which also makes it easier to mock with
   def self.locate_command(commandname)
     location = `which #{commandname}`.strip
     if not $?.success?
       location = nil
     end
-    return location
+    location
   end
 
   # Return true or false if the provider is available
@@ -117,6 +154,7 @@ module Rubyipmi
       when "ipmitool"
         cmdpath = locate_command('ipmitool')
       else
+        logger.error("Invalid BMC provider type") if logger
         raise "Invalid BMC provider type"
     end
     # return false if command was not found
@@ -143,7 +181,7 @@ module Rubyipmi
   end
 
   # gets data from the bmc device and puts in a hash for diagnostics
-  def self.get_diag(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default', :debug => false})
+  def self.get_diag(user, pass, host, opts={:driver => 'auto', :timeout => 'default'})
     data = {}
     if Rubyipmi.is_provider_installed?('freeipmi')
       freeconn = Rubyipmi.connect(user, pass, host, 'freeipmi', opts)

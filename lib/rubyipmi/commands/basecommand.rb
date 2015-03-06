@@ -1,5 +1,6 @@
 require "observer"
 require 'tempfile'
+require 'rubyipmi'
 
 module Rubyipmi
 
@@ -8,6 +9,10 @@ module Rubyipmi
     attr_reader :cmd, :max_retry_count
     attr_accessor :options, :passfile
     attr_reader :lastcall, :result
+
+    def logger
+      Rubyipmi.logger
+    end
 
     def makecommand
       # override in subclass
@@ -35,23 +40,23 @@ module Rubyipmi
     def locate_command(commandname)
       location = `which #{commandname}`.strip
       if not $?.success?
+        logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
-      return location
+      location
     end
 
     # Use this function to run the command line tool, it will inherently use the options hash for all options
     # That need to be specified on the command line
-    def runcmd(debug=false)
+    def runcmd
       @success = false
-      @success = run(debug)
-      if ENV['rubyipmi_debug'] == 'true'
-        puts @lastcall.inspect unless @lastcall.nil?
-      end
-      return @success
+      @success = run
+      logger.debug(@lastcall.inspect) unless @lastcall.nil? if logger
+      logger.debug(@result) unless @result.nil? if logger
+      @success
     end
 
-    def run(debug=false)
+    def run
       # we search for the command everytime just in case its removed during execution
       # we also don't want to add this to the initialize since mocking is difficult and we don't want to
       # throw errors upon object creation
@@ -60,10 +65,7 @@ module Rubyipmi
       @cmd = locate_command(@cmdname)
       setpass
       @result = nil
-      if debug
-        # Log error
-        return makecommand
-      end
+      logger.debug(makecommand) if logger
       begin
         command = makecommand
         @lastcall = "#{command}"
@@ -77,6 +79,7 @@ module Rubyipmi
           retrycount = retrycount.next
           retry
         else
+          logger.error("Exhausted all auto fixes, cannot determine what the problem is") if logger
           raise "Exhausted all auto fixes, cannot determine what the problem is"
         end
       ensure
@@ -96,6 +99,7 @@ module Rubyipmi
           fix = ErrorCodes.search(result)
           @options.merge_notify!(fix)
         rescue
+          Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
           raise "Could not find fix for error code: \n#{result}"
         end
       end
