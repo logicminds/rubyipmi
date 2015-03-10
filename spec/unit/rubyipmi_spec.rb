@@ -101,21 +101,42 @@ describe :Rubyipmi do
     end
   end
 
-  describe '#openipmi_available?' do
-    it 'when /dev/ipmi0 is found' do
-      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(true)
-      allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
-      allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
-      expect(Rubyipmi.openipmi_available?).to eq(true)
+  describe 'openipmi' do
+    before :each do
+      allow(Rubyipmi).to receive(:is_provider_installed?).with("ipmitool").and_return(true)
+      allow(Rubyipmi).to receive(:is_provider_installed?).with("freeipmi").and_return(false)
     end
 
-    it 'when /dev/ipmi0 is not found' do
-      allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(false)
-      allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
-      allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
-      expect(Rubyipmi.openipmi_available?).to eq(false)
+    describe 'available' do
+      before :each do
+        allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(true)
+        allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
+        allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
+      end
+
+      it 'when /dev/ipmi0 is found' do
+        expect(Rubyipmi.openipmi_available?).to eq(true)
+      end
+
+      it 'creates a connection object' do
+        conn = Rubyipmi.connect
+        expect(conn).to be_a Rubyipmi::Ipmitool::Connection
+      end
+
+    end
+
+    describe 'not available' do
+      before :each do
+        allow(File).to receive(:exists?).with('/dev/ipmi0').and_return(false)
+        allow(File).to receive(:exists?).with('/dev/ipmi/0').and_return(false)
+        allow(File).to receive(:exists?).with('/dev/ipmidev/0').and_return(false)
+      end
+      it 'when /dev/ipmi0 is not found' do
+        expect(Rubyipmi.openipmi_available?).to eq(false)
+      end
     end
   end
+
 
   describe '#validate_host' do
     it 'returs true when openipmi is available' do

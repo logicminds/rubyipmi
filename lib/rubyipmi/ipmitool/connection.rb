@@ -15,13 +15,12 @@ module Rubyipmi
       attr_accessor :options
 
       def initialize(user=nil, pass=nil, host=nil, opts={})
-        @options = Rubyipmi::ObservableHash.new
-        if Rubyipmi.validate_host(host)
-          unless host.nil?
-            @options["H"] = host
-          else
-            opts[:driver] = 'open'
-          end
+      @options = Rubyipmi::ObservableHash.new
+        unless host.nil?
+          Rubyipmi.validate_host(host)
+          @options["H"] = host
+        else
+          opts[:driver] = 'open'
         end
         # Credentials can also be stored in the freeipmi configuration file
         # So they are not required

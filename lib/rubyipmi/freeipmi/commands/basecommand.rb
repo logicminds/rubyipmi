@@ -6,10 +6,12 @@ module Rubyipmi::Freeipmi
 
     def setpass
       super
-      @options["config-file"] = @passfile.path
-      @passfile.write "username #{@options["username"]}\n"
-      @passfile.write "password #{@options["password"]}\n"
-      @passfile.close
+      unless @options["driver-type"] == 'OPENIPMI'
+        @options["config-file"] = @passfile.path
+        @passfile.write "username #{@options["username"]}\n"
+        @passfile.write "password #{@options["password"]}\n"
+        @passfile.close
+      end
     end
 
     def max_retry_count

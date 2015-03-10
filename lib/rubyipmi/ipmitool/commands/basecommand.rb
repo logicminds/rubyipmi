@@ -6,10 +6,12 @@ module Rubyipmi::Ipmitool
 
     def setpass
       super
-      @options["f"] = @passfile.path
-      @passfile.write "#{@options["P"]}"
-      @passfile.rewind
-      @passfile.close
+      unless @options["I"] == 'open'
+        @options["f"] = @passfile.path
+        @passfile.write "#{@options["P"]}"
+        @passfile.rewind
+        @passfile.close
+      end
     end
 
     def max_retry_count

@@ -109,7 +109,7 @@ module Rubyipmi
 
   # validate the privilege unless nil is specified
   def self.validate_privilege(privilege_type)
-    if ! privilege_type.nil?
+    if privilege_type
       privilege_type = privilege_type.upcase
       unless supported_privilege_type?(privilege_type)
         logger.debug("Invalid privilege type :#{privilege_type}, must be one of: #{PRIV_TYPES.join("\n")}") if logger
@@ -122,8 +122,12 @@ module Rubyipmi
   #validate existence of host or validate openipmi is installed when nil
   def self.validate_host(host)
     if host.nil?
-      logger.debug('No host was provided and openipmi is unavailable on this machine') if logger
-      raise 'No host was provided and openipmi is unavailable on this machine' unless openipmi_available?
+      if openipmi_available?
+        logger.debug('No host was provided using openipmi') if logger
+      else
+        logger.debug('No host was provided and openipmi is unavailable on this machine') if logger
+        raise 'No host was provided and openipmi is unavailable on this machine'
+      end
     end
     true
   end
@@ -154,7 +158,7 @@ module Rubyipmi
   # If provider is left blank the function will use the first available provider
   # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
   # the lan20 driver, but in order to support a wide use case we default to auto.
-  def self.connect(user=nil, pass=nil, host=nil, provider='any', opts={:driver => 'lan20', :privilege  =>nil,:timeout => 'default'})
+  def self.connect(user=nil, pass=nil, host=nil, provider='any', opts={:driver => 'lan20', :privilege  =>'ADMINISTRATOR',:timeout => 'default'})
     # use this variable to reduce cmd calls
     installed = false
 
