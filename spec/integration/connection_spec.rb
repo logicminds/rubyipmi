@@ -26,6 +26,15 @@ describe "Connection" do
     expect(@conn.connection_works?).to eq true
   end
 
+  it 'can test the connection when credentials are wrong' do
+    user ||= ENV["ipmiuser"] || "admin"
+    pass = "wrong_password"
+    host ||= ENV["ipmihost"] || "192.168.1.16"
+    provider ||= ENV["ipmiprovider"] || "ipmitool"
+    conn = Rubyipmi.connect(user, pass, host, provider)
+    expect(conn.connection_works?).to eq false
+  end
+
   it 'can get diag info' do
     expect(@conn.get_diag.keys).to eq([:provider, :frus, :sensors, :bmc_info, :version])
   end
