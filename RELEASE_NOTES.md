@@ -1,3 +1,6 @@
+### 0.9.1
+* fixes an issue with connection_works? api call when command raises an error
+
 ### 0.9.0
 * move to rspec3 syntax
 * added logging capabilities

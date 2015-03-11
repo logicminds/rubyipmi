@@ -321,6 +321,16 @@ You can couple this with the logger and also generate a log file of all the comm
    Rubyipmi.get_diag(user, pass, host)
 ```
 
+### Test Function
+If you need to test if the bmc device and run a basic call there is now a function that retruns boolean true when
+the connection attempt was successful.
+
+```ruby
+   require 'rubyipmi'
+   conn = Rubyipmi.connect(user, pass, host)
+   conn.connection_works?  => true|false
+```
+
 ## Contributing to rubyipmi
 
 * Check out the latest code to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
