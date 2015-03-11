@@ -1,3 +1,36 @@
+Table of Contents
+=================
+
+  * [Rubyipmi](#rubyipmi)
+    * [Projects that use Rubyipmi](#projects-that-use-rubyipmi)
+    * [Support](#support)
+    * [Using the library in your code](#using-the-library-in-your-code)
+      * [Requirements](#requirements)
+      * [Create a connection object](#create-a-connection-object)
+      * [Use power functions (not all listed)](#use-power-functions-not-all-listed)
+      * [Boot to specific device](#boot-to-specific-device)
+      * [Sensors](#sensors)
+      * [Fru](#fru)
+    * [Testing](#testing)
+    * [Security](#security)
+    * [How the library works](#how-the-library-works)
+      * [Creating a new command](#creating-a-new-command)
+      * [Writing a function for running a command](#writing-a-function-for-running-a-command)
+      * [Running the cmd](#running-the-cmd)
+      * [The Options hash](#the-options-hash)
+      * [How to get the results of the command](#how-to-get-the-results-of-the-command)
+      * [The command function](#the-command-function)
+    * [The following are tools bundled with freeipmi](#the-following-are-tools-bundled-with-freeipmi)
+    * [To contrast ipmitool has one command with many options](#to-contrast-ipmitool-has-one-command-with-many-options)
+    * [Auto Detect workarounds](#auto-detect-workarounds)
+    * [Troubleshooting](#troubleshooting)
+      * [Log files](#log-files)
+      * [Diagnostics Function](#diagnostics-function)
+      * [Test Function](#test-function)
+    * [Contributing to rubyipmi](#contributing-to-rubyipmi)
+    * [Copyright](#copyright)
+    * [Freeipmi Documented Workarounds](#freeipmi-documented-workarounds)
+
 # Rubyipmi
 This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
 It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
@@ -6,12 +39,37 @@ It provides a ruby implementation of ipmi commands that will make it simple to c
 [![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
 [![Coverage Status](https://coveralls.io/repos/logicminds/rubyipmi/badge.png)](https://coveralls.io/r/logicminds/rubyipmi)
 
+Rubyipmi was built because I wanted an object oriented way to get data from BMC devices.  I also wanted it easy to use
+and if any IPMI hacks/workarounds were required I wanted to build those into the library to make life easier.
+
 ## Projects that use Rubyipmi
 * https://github.com/sensu/sensu-community-plugins/blob/master/plugins/ipmi/check-sensor.rb
-* https://github.com/theforeman/smart-proxy
-* https://github.com/logicminds/ipmispec
+* https://github.com/theforeman/smart-proxy  (Turns Rubyipmi into a Remote Web API Proxy server)
+* https://github.com/logicminds/ipmispec (just started)
 
 Don't see your project listed? Create a PR with your project listed here.
+
+## Support
+General support is offered via github issues and whenever I have time I will try to resolve any issues.  I do offer
+professional paid support through my [company](http://www.logicminds.biz) and can be contracted to work directly with your organization
+on Rubyipmi or other related automation/devops projects that you might have.
+
+At this time I only have one test server (HP DL380 G5) which I used to perform tests against.  While I try to keep the code
+generic in nature there may be newer devices that do not work correctly and its an issue I cannot troubleshoot directly.  If you would
+like to see newer/other devices be part of my test suite and you have extra servers lying around. I would encourage you to donate
+server equipment so that I can extend my test suite against this newer equipment.
+
+Servers I have never tested against.
+
+* Dell
+* IBM
+* HP server with ilo3+
+* Super Micro
+* Cisco
+
+IPMI is designed to support any equipment that implements the standard.  But there are always problems with people deviating
+from the standard.  In general this library should work will all servers.
+
 ## Using the library in your code
 
 ### Requirements
@@ -48,11 +106,11 @@ Don't see your project listed? Create a PR with your project listed here.
 
    Should you need to specify some additional options or the provider type
    ```ruby
-      conn = Rubyipmi.connect(nil,nil,nil, 'freeipmi', {:privilege  =>'USER'})
+      conn = Rubyipmi.connect("username", "password", "hostname", 'freeipmi', {:privilege  =>'USER'})
    ```
 
 
-#### Use power functions (not all listed)
+#### power functions
 
    ```ruby
    require 'rubyipmi'
