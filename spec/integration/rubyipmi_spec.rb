@@ -48,12 +48,12 @@ describe "rubyipmi" do
     begin
       conn = Rubyipmi.connect(@user, @pass, @host, "bogus")
     rescue Exception => e
-        expect(e.message).to match(/Invalid/)
+        expect(e.message).to match(/The IPMI provider: bogus is not installed/)
     end
   end
 
   it "check to find any available installed providers" do
-    expect(Rubyipmi.providers_installed?.length).to be > 0
+    expect(Rubyipmi.providers_installed.length).to be > 0
   end
 
   it 'can get diag info' do

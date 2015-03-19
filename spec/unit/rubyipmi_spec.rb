@@ -22,8 +22,9 @@ describe :Rubyipmi do
     expect(Rubyipmi.is_provider_installed?('freeipmi')).to eq true
   end
 
-  it 'is provider installed should return error with ipmitool' do
-    expect{Rubyipmi.is_provider_installed?('bad_provider')}.to raise_error
+  it 'is provider installed should return false when bad provider' do
+    expect{Rubyipmi.is_provider_installed?('bad_provider')}.to_not raise_error
+    expect(Rubyipmi.is_provider_installed?('bad_provider')).to be_falsey
   end
 
 end

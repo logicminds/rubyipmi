@@ -154,8 +154,8 @@ module Rubyipmi
       when "ipmitool"
         cmdpath = locate_command('ipmitool')
       else
-        logger.error("Invalid BMC provider type") if logger
-        raise "Invalid BMC provider type"
+        logger.error("Invalid BMC provider type #{provider}") if logger
+        false
     end
     # return false if command was not found
     return ! cmdpath.nil?
@@ -167,10 +167,10 @@ module Rubyipmi
 
   # returns true if any of the providers are installed
   def self.provider_installed?
-    providers_installed?.length > 0
+    providers_installed.length > 0
   end
 
-  def self.providers_installed?
+  def self.providers_installed
     available = []
     providers.each do |prov|
       if is_provider_installed?(prov)
