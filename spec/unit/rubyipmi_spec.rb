@@ -5,6 +5,7 @@ describe :Rubyipmi do
 
   before :each do
 
+    allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
   end
 
   it 'is provider installed should return ipmitool true' do
@@ -27,6 +28,23 @@ describe :Rubyipmi do
     expect(Rubyipmi.is_provider_installed?('bad_provider')).to be_falsey
   end
 
+  it 'converts string to symbols' do
+    user = "ipmiuser"
+    pass = "impipass"
+    host = "ipmihost"
+    provider = "ipmitool"
+    conn = Rubyipmi.connect(user, pass, host, provider, {'driver' => 'lan15'})
+    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+  end
+
+  it 'does not error when converting strings to symbols' do
+    user = "ipmiuser"
+    pass = "impipass"
+    host = "ipmihost"
+    provider = "ipmitool"
+    conn = Rubyipmi.connect(user, pass, host, provider, {:driver => 'lan15'})
+    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+  end
 end
 
 

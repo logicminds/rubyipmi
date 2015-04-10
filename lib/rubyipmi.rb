@@ -77,6 +77,14 @@ module Rubyipmi
     # use this variable to reduce cmd calls
     installed = false
 
+    # if the user supplied nil, we want to fix this automatically
+    opts = {:driver => 'auto', :timeout => 'default'} if opts.nil?
+
+    # convert all keys to symbols for opts, we can't assume the user will use symbols
+    opts.keys.each do |key|
+      opts[(key.to_sym rescue key) || key] = opts.delete(key)
+    end
+
     # allow the user to specify an options hash instead of the provider
     # in the future I would stop using the provider and use the opts hash instead to get the provider
     # This allows us to be a little more flexible if the user is doesn't supply us what we need.
