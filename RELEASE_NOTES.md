@@ -1,4 +1,4 @@
-### 0.1.0
+### 0.10.0
 * gh-26 - make the driver default to lan20
 
 Users of older IPMI devices will now need to pass the specified driver type.
