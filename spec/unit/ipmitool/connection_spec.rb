@@ -51,7 +51,8 @@ describe :Connection do
   end
 
   it 'object should have driver set to auto if not specified' do
-    expect(@conn.options.has_key?('driver-type')).to eq false
+    expect(@conn.options['I']).to eq 'lanplus'
+
   end
 
   it 'object should have driver set to auto if not specified' do

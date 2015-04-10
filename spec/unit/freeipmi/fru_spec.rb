@@ -28,7 +28,7 @@ describe :Fru do
 
   it "cmd should be ipmi-fru with correct number of arguments" do
     @fru.list
-    verify_freeipmi_command(@fru, 2, "#{@path}/ipmi-fru")
+    verify_freeipmi_command(@fru, 3, "#{@path}/ipmi-fru")
   end
 
   it 'should list data' do

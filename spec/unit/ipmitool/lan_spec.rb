@@ -27,7 +27,7 @@ describe "Lan" do
 
   it "cmd should be lan with correct number of arguments" do
     @lan.info
-    verify_ipmitool_command(@lan, 3, "#{@path}/ipmitool", 'lan')
+    verify_ipmitool_command(@lan, 4, "#{@path}/ipmitool", 'lanplus')
   end
 
   it "can return a lan information" do

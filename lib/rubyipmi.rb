@@ -73,12 +73,12 @@ module Rubyipmi
   # If provider is left blank the function will use the first available provider
   # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
   # the lan20 driver, but in order to support a wide use case we default to auto.
-  def self.connect(user, pass, host, provider='any', opts={:driver => 'auto', :timeout => 'default'})
+  def self.connect(user, pass, host, provider='any', opts={:driver => 'lan20', :timeout => 'default'})
     # use this variable to reduce cmd calls
     installed = false
 
     # if the user supplied nil, we want to fix this automatically
-    opts = {:driver => 'auto', :timeout => 'default'} if opts.nil?
+    opts = {:driver => 'lan20', :timeout => 'default'} if opts.nil?
 
     # convert all keys to symbols for opts, we can't assume the user will use symbols
     opts.keys.each do |key|
@@ -94,7 +94,7 @@ module Rubyipmi
     end
 
     # Verify options just in case user passed in a incomplete hash
-    opts[:driver]  ||= 'auto'
+    opts[:driver]  ||= 'lan20'
     opts[:timeout] ||= 'default'
 
     if opts[:privilege] and not supported_privilege_type?(opts[:privilege])
@@ -189,7 +189,7 @@ module Rubyipmi
   end
 
   # gets data from the bmc device and puts in a hash for diagnostics
-  def self.get_diag(user, pass, host, opts={:driver => 'auto', :timeout => 'default'})
+  def self.get_diag(user, pass, host, opts={:driver => 'lan20', :timeout => 'default'})
     data = {}
     if Rubyipmi.is_provider_installed?('freeipmi')
       freeconn = Rubyipmi.connect(user, pass, host, 'freeipmi', opts)

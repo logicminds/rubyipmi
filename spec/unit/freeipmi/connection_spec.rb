@@ -50,8 +50,9 @@ describe "Bmc" do
 
   end
 
-  it 'object should have driver set to auto if not specified' do
-    expect(@conn.options.has_key?('driver-type')).to eq false
+  it 'object should have driver set to lan20 if not specified' do
+    expect(@conn.options['driver-type']).to eq "LAN_2_0"
+
   end
 
   it 'object should have driver set to auto if not specified' do

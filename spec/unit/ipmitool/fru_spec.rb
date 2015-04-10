@@ -30,7 +30,7 @@ describe :Fru do
 
   it "cmd should be ipmi-sensors with correct number of arguments" do
     @fru.list
-    verify_ipmitool_command(@fru, 3, "#{@path}/ipmitool", 'fru')
+    verify_ipmitool_command(@fru, 4, "#{@path}/ipmitool", 'fru')
   end
 
   it 'should return a list of unparsed frus' do
