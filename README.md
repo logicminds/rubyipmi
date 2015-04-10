@@ -78,39 +78,46 @@ from the standard.  In general this library should work will all servers.
    1. Install the freeipmi from source (http://www.gnu.org/software/freeipmi/) or ipmitool
    2. `gem install rubyipmi`
 
-#### Create a connection object
+### Create a connection object
 
    ```ruby
    require 'rubyipmi'
    conn = Rubyipmi.connect("username", "password", "hostname", "providertype")
-
    ```
 
-   Providertype: optional (ipmitool or freeipmi)
+   Additionally, if your using [openipmi](http://openipmi.sourceforge.net) and will be using rubyipmi to connect to
+   the  localhost you can utilize the openipmi driver and not have to pass in any connection parameters.
+   Openipmi works by installing a driver and makes it available to the host.  Freeipmi/Ipmitool will then try to use
+   this driver to automatically use the openipmi if no host is given.  The one caveat here is that you cannot control
+   remote hosts using openipmi.  The rubyipmi code must be executed on the host you want to control.
+   The upside is that you don't need any credentials.  Some commands may require root privileges to run when using openipmi.
+
+   Providertype: optional
+
+      valid options: 'auto', 'ipmitool', 'freeipmi'
 
    If you don't specify the provider type, Rubyipmi will detect if freeipmi or ipmitool
    is installed and load the first tool found.  If you specify the provider type rubyipmi will only use that specific
    provider.
 
-   Additionally, if your using [openipmi](http://openipmi.sourceforge.net) and will be using rubyipmi to connect to the
-   localhost you can utilize the openipmi driver and not have to pass in any connection parameters. Openipmi works
-   by installing a driver and makes it available to the host.  Freeipmi/Ipmitool will then try to use this driver to
-   automatically use the openipmi if no host is given.  The one caveat here is that you cannot control remote hosts using
-   openipmi.  The rubyipmi code must be executed on the host you want to control.  The upside is that you don't need
-   any credentials.  Some commands may require root privileges to run when using openipmi.
-
+   You can specify additional options by passing an options hash into the connection method
    ```ruby
-      conn = Rubyipmi.connect
-      conn.power.status
+      conn = Rubyipmi.connect("username", "password", "hostname", 'freeipmi', {:privilege  =>'USER', :driver => 'lan20'})
    ```
 
-   Should you need to specify some additional options or the provider type
-   ```ruby
-      conn = Rubyipmi.connect("username", "password", "hostname", 'freeipmi', {:privilege  =>'USER'})
-   ```
+   Privilege
+
+      This option controls the role of the user making the ipmi call.
+      valid options: 'CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR'  -- defaults to nil and uses the freeipmi/ipmitool default
+
+   Driver
+
+      This option allows you to control which driver to use when making IPMI calls.  Selecting auto will choose
+      either lan15 or lan20 based on your device.  The open type is when using openipmi in conjunction with the provider.
+      valid options: "auto", "lan15", "lan20", "open"   -- defaults to lan20
 
 
-#### power functions
+### power functions
 
    ```ruby
    require 'rubyipmi'
@@ -123,7 +130,7 @@ from the standard.  In general this library should work will all servers.
 
    ```
 
-#### Boot to specific device
+### Boot to specific device
 
   ```ruby
    require 'rubyipmi'
@@ -134,7 +141,7 @@ from the standard.  In general this library should work will all servers.
   ```
 
 
-#### Sensors
+### Sensors
 
   ```ruby
     require 'rubyipmi'
@@ -145,7 +152,7 @@ from the standard.  In general this library should work will all servers.
 
   ```
 
-#### Fru
+### Fru
 
   ```ruby
     require 'rubyipmi'
