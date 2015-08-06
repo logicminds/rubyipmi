@@ -9,9 +9,7 @@ end
 
 module Rubyipmi
   module Ipmitool
-
     class Connection
-
       attr_accessor :options
 
 
