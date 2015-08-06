@@ -28,7 +28,8 @@ module Rubyipmi::Freeipmi
           "--#{k}=#{v}"
         end
       }.join(" ")
-      return "#{cmd} #{args.rstrip}"
+
+      "#{cmd} #{args.rstrip}"
     end
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
