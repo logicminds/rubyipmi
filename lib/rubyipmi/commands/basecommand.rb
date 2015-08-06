@@ -112,11 +112,9 @@ module Rubyipmi
   # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
       # override in child class if needed
-      if ! exitstatus.success?
-         raise "Error occurred"
-      else
-        return true
-      end
+      raise "Error occurred" unless exitstatus.success?
+
+      true
     end
   end
 end

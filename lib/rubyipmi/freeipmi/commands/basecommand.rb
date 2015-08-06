@@ -38,9 +38,7 @@ module Rubyipmi::Freeipmi
         when "ipmipower"
           # until ipmipower returns the correct exit status this is a hack
           # essentially any result greater than 23 characters is an error
-          if @result.length > 23
-            raise "Error occurred"
-          end
+          raise "Error occurred" if @result.length > 23
         when "bmc-config"
           if @result.length > 100 and exitstatus.success?
             return true
@@ -48,11 +46,7 @@ module Rubyipmi::Freeipmi
             raise "Error occurred"
           end
         else
-          if exitstatus.success?
-            return true
-          else
-            raise "Error occurred"
-          end
+          super
       end
     end
 
