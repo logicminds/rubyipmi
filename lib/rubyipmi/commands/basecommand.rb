@@ -70,8 +70,7 @@ module Rubyipmi
         command = makecommand
         @lastcall = "#{command}"
         @result = `#{command} 2>&1`
-        # sometimes the command tool does not return the correct result so we have to validate it with additional
-        # code
+        # sometimes the command tool does not return the correct result, validate it with additional code
         process_status = validate_status($?)
       rescue
         if retrycount < max_retry_count
@@ -106,12 +105,11 @@ module Rubyipmi
     end
 
     def update(opts)
-          @options.merge!(opts)
+      @options.merge!(opts)
     end
 
   # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-      # override in child class if needed
       raise "Error occurred" unless exitstatus.success?
 
       true
