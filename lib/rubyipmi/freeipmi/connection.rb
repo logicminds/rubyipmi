@@ -1,4 +1,3 @@
-require 'rubyipmi/freeipmi/errorcodes'
 require 'rubyipmi/observablehash'
 require 'rubyipmi/commands/basecommand'
 require 'rubyipmi/freeipmi/commands/basecommand'

@@ -1,5 +1,3 @@
-require 'rubyipmi/freeipmi/errorcodes'
-
 module Rubyipmi::Freeipmi
 
   class BaseCommand < Rubyipmi::BaseCommand

@@ -1,5 +1,3 @@
-require 'rubyipmi/ipmitool/errorcodes'
-
 module Rubyipmi::Ipmitool
 
   class BaseCommand < Rubyipmi::BaseCommand
