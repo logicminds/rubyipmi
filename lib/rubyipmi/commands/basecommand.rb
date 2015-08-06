@@ -87,23 +87,6 @@ module Rubyipmi
       end
     end
 
-    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
-    # If a fix is found it is applied to the options hash, and then the last run command is retried
-    # until all the fixes are exhausted or a error not defined in the errorcodes is found
-    # this must be overrided in the subclass, as there are no generic errors that fit both providers
-    def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
-          raise "Could not find fix for error code: \n#{result}"
-        end
-      end
-    end
-
     def update(opts)
       @options.merge!(opts)
     end
