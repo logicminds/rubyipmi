@@ -36,18 +36,18 @@ module Rubyipmi::Freeipmi
     # this is required because freeipmi in older version always returned 0 even if an error occured
     def validate_status(exitstatus)
       case @cmdname
-        when "ipmipower"
-          # until ipmipower returns the correct exit status this is a hack
-          # essentially any result greater than 23 characters is an error
-          raise "Error occurred" if @result.length > 23
-        when "bmc-config"
-          if @result.length > 100 and exitstatus.success?
-            return true
-          else
-            raise "Error occurred"
-          end
+      when "ipmipower"
+        # until ipmipower returns the correct exit status this is a hack
+        # essentially any result greater than 23 characters is an error
+        raise "Error occurred" if @result.length > 23
+      when "bmc-config"
+        if @result.length > 100 and exitstatus.success?
+          return true
         else
-          super
+          raise "Error occurred"
+        end
+      else
+        super
       end
     end
 
