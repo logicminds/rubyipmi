@@ -1,5 +1,3 @@
-require 'rubyipmi/freeipmi/errorcodes'
-
 module Rubyipmi::Freeipmi
 
   class BaseCommand < Rubyipmi::BaseCommand
@@ -10,10 +8,6 @@ module Rubyipmi::Freeipmi
       @passfile.write "username #{@options["username"]}\n"
       @passfile.write "password #{@options["password"]}\n"
       @passfile.close
-    end
-
-    def max_retry_count
-      @max_retry_count ||= Rubyipmi::Freeipmi::ErrorCodes.length
     end
 
     def makecommand
@@ -51,20 +45,22 @@ module Rubyipmi::Freeipmi
       end
     end
 
-    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
-    # If a fix is found it is applied to the options hash, and then the last run command is retried
-    # until all the fixes are exhausted or a error not defined in the errorcodes is found
-    def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          raise "Could not find fix for error code: \n#{result}"
-        end
-      end
+    def all_drivers
+      Rubyipmi::Freeipmi::Connection::DRIVERS_MAP.values
     end
 
+    def configure_drivers
+      super(@options["driver-type"])
+    end
+
+    # Try a different driver if the previous one didn't work
+    def find_fix
+      if (new_driver = available_drivers.pop)
+        @options.merge_notify!("driver-type" => new_driver)
+      else
+        logger.error("Exhausted all auto fixes, cannot determine what the problem is") if logger
+        raise "Exhausted all auto fixes, cannot determine what the problem is"
+      end
+    end
   end
 end

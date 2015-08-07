@@ -7,7 +7,7 @@ module Rubyipmi
   class BaseCommand
     include Observable
     attr_reader :cmd, :max_retry_count
-    attr_accessor :options, :passfile
+    attr_accessor :available_drivers, :options, :passfile
     attr_reader :lastcall, :result
 
     def logger
@@ -56,14 +56,19 @@ module Rubyipmi
       @success
     end
 
+    def configure_drivers(current_option = nil)
+      @available_drivers = all_drivers
+      available_drivers.delete(current_option)
+    end
+
     def run
       # we search for the command everytime just in case its removed during execution
       # we also don't want to add this to the initialize since mocking is difficult and we don't want to
       # throw errors upon object creation
-      retrycount = 0
       process_status = false
       @cmd = locate_command(@cmdname)
       setpass
+      configure_drivers
       @result = nil
       logger.debug(makecommand) if logger
       begin
@@ -73,34 +78,11 @@ module Rubyipmi
         # sometimes the command tool does not return the correct result, validate it with additional code
         process_status = validate_status($?)
       rescue
-        if retrycount < max_retry_count
-          find_fix(@result)
-          retrycount = retrycount.next
-          retry
-        else
-          logger.error("Exhausted all auto fixes, cannot determine what the problem is") if logger
-          raise "Exhausted all auto fixes, cannot determine what the problem is"
-        end
+        find_fix
+        retry
       ensure
         removepass
         return process_status
-      end
-    end
-
-    # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
-    # If a fix is found it is applied to the options hash, and then the last run command is retried
-    # until all the fixes are exhausted or a error not defined in the errorcodes is found
-    # this must be overrided in the subclass, as there are no generic errors that fit both providers
-    def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
-          raise "Could not find fix for error code: \n#{result}"
-        end
       end
     end
 
