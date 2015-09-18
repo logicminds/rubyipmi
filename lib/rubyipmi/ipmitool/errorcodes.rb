@@ -3,13 +3,12 @@ module Rubyipmi
     class ErrorCodes
 
       @@codes = {
-          "Authentication type NONE not supported\nAuthentication type NONE not supported\n" +
-              "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
-         "Authentication type NONE not supported" => {"I" => "lanplus"},
-          "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"}
-
-
+        "Authentication type NONE not supported\nAuthentication type NONE not supported\n" +
+        "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
+        "Authentication type NONE not supported" => {"I" => "lanplus"},
+        "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"}
       }
+
       def self.length
         @@codes.length
       end
@@ -45,23 +44,16 @@ module Rubyipmi
           code = @result.split(":").last.chomp.strip if not @result.empty?
         end
         case code
-          when "invalid hostname"
-            raise code
-          when "password invalid"
-            raise code
-          when "username invalid"
-            raise code
-          else
-            raise :ipmierror, code
+        when "invalid hostname"
+          raise code
+        when "password invalid"
+          raise code
+        when "username invalid"
+          raise code
+        else
+          raise :ipmierror, code
         end
       end
-
-
     end
-
-
-
-
   end
 end
-

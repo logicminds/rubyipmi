@@ -1,14 +1,11 @@
 module Rubyipmi::Freeipmi
-
   class Chassis < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmi-chassis", opts)
-
     end
 
     # Turn the led light on / off or with a delay
-    def identify(status=false, delay=0)
+    def identify(status = false, delay = 0)
       if status
         if delay <= 0
           options["chassis-identify"] = "FORCE"
@@ -35,13 +32,12 @@ module Rubyipmi::Freeipmi
     end
 
     # set boot device from given boot device
-    def bootdevice(device, reboot=false, persistent=false)
+    def bootdevice(device, reboot = false, persistent = false)
       if config.bootdevices.include?(device)
         bootstatus = config.bootdevice(device, persistent)
         if reboot and bootstatus
           power.cycle
         end
-
       else
         logger.error("Device with name: #{device} is not a valid boot device for host #{options["hostname"]}") if logger
         raise "Device with name: #{device} is not a valid boot device for host #{options["hostname"]}"
@@ -49,7 +45,7 @@ module Rubyipmi::Freeipmi
     end
 
     # set boot device to pxe with option to reboot
-    def bootpxe(reboot=false,persistent=false)
+    def bootpxe(reboot = false, persistent = false)
       bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
       if reboot and bootstatus
@@ -58,17 +54,16 @@ module Rubyipmi::Freeipmi
     end
 
     # set boot device to disk with option to reboot
-    def bootdisk(reboot=false,persistent=false)
+    def bootdisk(reboot = false, persistent = false)
       bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
       if reboot and bootstatus
         power.cycle
       end
-
     end
 
     # set boot device to cdrom with option to reboot
-    def bootcdrom(reboot=false,persistent=false)
+    def bootcdrom(reboot = false, persistent = false)
       bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
       if reboot and bootstatus
@@ -77,7 +72,7 @@ module Rubyipmi::Freeipmi
     end
 
     # boot into bios setup with option to reboot
-    def bootbios(reboot=false,persistent=false)
+    def bootbios(reboot = false, persistent = false)
       bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
       if reboot and bootstatus
@@ -86,25 +81,25 @@ module Rubyipmi::Freeipmi
     end
 
     def status
-       options["get-status"] = false
-       value = runcmd
-       options.delete_notify("get-status")
-       if value
-         return parsestatus
-       else
-         return value
-       end
-
+      options["get-status"] = false
+      value = runcmd
+      options.delete_notify("get-status")
+      if value
+        return parsestatus
+      else
+        return value
+      end
     end
 
     # A currently unsupported method to retrieve the led status
     def identifystatus
       # TODO implement this function
       # parse out the identify status
-     # status.result
+      # status.result
     end
 
     private
+
     def parsestatus
       statusresult = @result
       statusvalues = {}
@@ -118,7 +113,5 @@ module Rubyipmi::Freeipmi
       end
       return statusvalues
     end
-
-
   end
 end

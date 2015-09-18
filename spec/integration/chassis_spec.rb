@@ -1,14 +1,12 @@
 require 'spec_helper'
 
 describe "Chassis" do
-
   before :each do
     user ||= ENV["ipmiuser"] || "admin"
     pass ||= ENV["ipmipass"] || "password"
     host ||= ENV["ipmihost"] || "10.0.1.16"
     provider ||= ENV["ipmiprovider"] || "ipmitool"
     @conn = Rubyipmi.connect(user, pass, host, provider)
-
   end
 
   it "test to turn uid light on for 5 seconds" do
@@ -22,5 +20,4 @@ describe "Chassis" do
     sleep(2)
     expect(@conn.chassis.identify(false)).to eq(true)
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Bmc" do
-
   before :all do
     @path = '/usr/local/bin'
     @provider = "freeipmi"
@@ -10,14 +9,9 @@ describe "Bmc" do
     @host = "ipmihost"
   end
 
- before :each do
-
-
+  before :each do
     allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
-
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true})
-
-
   end
 
   it "connection should not be nil" do
@@ -42,17 +36,14 @@ describe "Bmc" do
 
   it "sensors should not be nil" do
     expect(@conn.sensors).not_to be_nil
-
   end
 
   it "chassis should not be nill" do
     expect(@conn.chassis).not_to be_nil
-
   end
 
   it 'object should have driver set to lan20 if not specified' do
     expect(@conn.options['driver-type']).to eq "LAN_2_0"
-
   end
 
   it 'object should have driver set to auto if not specified' do

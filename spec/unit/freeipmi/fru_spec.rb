@@ -6,7 +6,6 @@ describe :Fru do
   end
 
   before :each do
-
     allow_message_expectations_on_nil
     data = nil
     provider = "freeipmi"
@@ -39,7 +38,6 @@ describe :Fru do
     expect(@fru.getfrus).not_to be_nil
   end
 
-
   it "should return a list of parsed frus" do
     expect(@fru.list.count).to eq(1)
   end
@@ -69,8 +67,6 @@ describe :Fru do
       fru = @fru.send(name)
       expect(fru).to be_an_instance_of(Rubyipmi::Freeipmi::FruData)
       expect(fru[:name]).to eq(name)
-
     end
   end
-
 end

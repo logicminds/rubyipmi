@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Power" do
-
   before :each do
     user ||= ENV["ipmiuser"] || "admin"
     pass ||= ENV["ipmipass"] || "password"
@@ -20,7 +19,6 @@ describe "Power" do
 
   it "test power status" do
     expect(@conn.chassis.power.status).to eq('off')
-
   end
 
   it "test to check if power status is off" do
@@ -36,5 +34,4 @@ describe "Power" do
     end
     expect(@conn.chassis.power.off?).to be true
   end
-
 end

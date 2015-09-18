@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe :Sensors do
   before :all do
     @path = '/usr/local/bin'
@@ -27,16 +26,15 @@ describe :Sensors do
     # these stubs allow us to run the command and return the fixtures
     allow(@sensors).to receive(:`).and_return(data)
     allow($?).to receive(:success?).and_return(true)
-
   end
 
- it "cmd should be ipmi-sensors with six arguments" do
+  it "cmd should be ipmi-sensors with six arguments" do
     @sensors.list
     verify_freeipmi_command(@sensors, 6, "#{@path}/ipmi-sensors")
- end
+  end
 
   it "can return a list of sensors" do
-   expect(@sensors.list).not_to be_nil
+    expect(@sensors.list).not_to be_nil
   end
 
   it "should return a count of sensors" do
@@ -79,7 +77,4 @@ describe :Sensors do
   #  @sensors.refresh
   #  after = @sensors.options.fetch('driver-type', false).should_not be_false
   #end
-
-
 end
-

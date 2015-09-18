@@ -13,10 +13,10 @@ module Rubyipmi
       attr_accessor :options
 
       DRIVERS_MAP = {
-          'lan15' => 'lan',
-          'lan20' => 'lanplus',
-          'open'  => 'open'
-        }
+        'lan15' => 'lan',
+        'lan20' => 'lanplus',
+        'open'  => 'open'
+      }
 
       def initialize(user, pass, host, opts)
         @options = Rubyipmi::ObservableHash.new

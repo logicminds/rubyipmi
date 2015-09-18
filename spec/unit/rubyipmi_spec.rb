@@ -1,10 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe :Rubyipmi do
-
-
   before :each do
-
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
   end
 
@@ -46,5 +43,3 @@ describe :Rubyipmi do
     expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
   end
 end
-
-

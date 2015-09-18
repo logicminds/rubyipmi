@@ -4,7 +4,6 @@ require 'rubygems'
 require 'bundler'
 @base_dir = File.dirname(__FILE__)
 
-
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -30,8 +29,6 @@ Jeweler::Tasks.new do |gem|
   gem.files.exclude '.gitignore'
   gem.files.exclude '.document'
   gem.files.exclude 'coverage/'
-
-
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -58,7 +55,7 @@ RSpec::Core::RakeTask.new :integration do |spec|
   ENV['ipmiuser'] = 'admin'
   ENV['ipmipass'] = 'password'
   ENV['ipmihost'] = '10.0.1.16'
-  providers ||=  Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
+  providers ||= Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
 
   providers.each do | provider |
     ENV['ipmiprovider'] = provider
@@ -92,7 +89,6 @@ task :send_diag, :user, :pass, :host do |t, args |
   emailto = 'corey@logicminds.biz'
   subject = "Rubyipmi diagnostics data"
   send_email(emailto, data.to_json, {:subject => subject})
-
 end
 
 def send_email(to,data, opts={})

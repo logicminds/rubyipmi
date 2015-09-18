@@ -1,5 +1,4 @@
 module Rubyipmi::Ipmitool
-
   class Lan < Rubyipmi::Ipmitool::BaseCommand
 
     attr_accessor :info
@@ -10,7 +9,6 @@ module Rubyipmi::Ipmitool
       super("ipmitool", opts)
       @info = {}
       @channel = 2
-
     end
 
     # sets the info var to be empty causing the variable to repopulate upon the next call to info
@@ -109,7 +107,7 @@ module Rubyipmi::Ipmitool
       return value
     end
 
-   private
+    private
 
     def print
       @options["cmdargs"] = "lan print"
@@ -127,7 +125,6 @@ module Rubyipmi::Ipmitool
         key = normalize(item.first.strip)
         value = item.last.strip
         @info[key] = value
-
       end
       return @info
     end
@@ -135,6 +132,5 @@ module Rubyipmi::Ipmitool
     def normalize(text)
       text.gsub(/\ /, '_').gsub(/\./, '').downcase
     end
-
   end
 end

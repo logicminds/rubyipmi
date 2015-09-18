@@ -1,5 +1,4 @@
 module Rubyipmi::Freeipmi
-
   class Lan
 
     attr_accessor :info

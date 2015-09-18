@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-
 describe "Bmc" do
-
   before :all do
     @path = '/usr/local/bin'
   end
@@ -26,7 +24,6 @@ describe "Bmc" do
     allow($?).to receive(:success?).and_return(true)
 
     allow(@bmc).to receive(:guid).and_return("guid")
-
   end
 
   it "bmc should not be nil" do
@@ -38,7 +35,7 @@ describe "Bmc" do
   end
 
   it "guid should not be nil" do
-     expect(@bmc.guid).not_to be_nil
+    expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nil" do
@@ -48,7 +45,6 @@ describe "Bmc" do
   it "info should parse as expected" do
     expect(@bmc.info).to eq(RETRIEVE)
   end
-
 end
 
 RETRIEVE = {

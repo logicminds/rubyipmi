@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Lan" do
-
   before :all do
     @path = '/usr/local/bin'
   end
@@ -44,7 +43,6 @@ describe "Lan" do
 
   it 'should print valid snmp string' do
     expect(@lan.snmp).to be_nil
-
   end
 
   it 'should print correct mac address' do
@@ -89,6 +87,4 @@ describe "Lan" do
   #  $?.stub(:success?).and_return(true)
   #
   #end
-
 end
-

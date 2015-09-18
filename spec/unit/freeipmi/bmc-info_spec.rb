@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe "Bmc" do
   before :all do
     @path = '/usr/local/bin'
@@ -34,5 +33,4 @@ describe "Bmc" do
     @bmcinfo.guid
     verify_freeipmi_command(@bmcinfo, 4, "#{@path}/bmc-info")
   end
-
 end

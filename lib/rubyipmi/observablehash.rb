@@ -15,6 +15,5 @@ module Rubyipmi
       delete(del)
       notify_observers(self)
     end
-
   end
 end

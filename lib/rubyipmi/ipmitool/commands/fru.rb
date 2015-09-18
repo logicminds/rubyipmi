@@ -1,5 +1,4 @@
 module Rubyipmi::Ipmitool
-
   class Fru < Rubyipmi::Ipmitool::BaseCommand
 
     attr_accessor :list
@@ -35,12 +34,12 @@ module Rubyipmi::Ipmitool
       @list
     end
 
-  # method to retrieve the raw fru data
+    # method to retrieve the raw fru data
     def getfrus
       command
     end
 
-   private
+    private
 
     # I use method missing to allow the user to say Fru.<name> which returns a frudata object unless the user
     # passes a keyname from the default fru device
@@ -97,11 +96,9 @@ module Rubyipmi::Ipmitool
         return @result
       end
     end
-
   end
 
   class FruData < Hash
-
     def name
       self[:name]
     end
