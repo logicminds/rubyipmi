@@ -1,5 +1,4 @@
 module Rubyipmi::Freeipmi
-
   class Fru < Rubyipmi::Freeipmi::BaseCommand
 
     attr_accessor :list
@@ -7,17 +6,17 @@ module Rubyipmi::Freeipmi
     DEFAULT_FRU = 'default_fru_device'
 
     def initialize(opts = ObservableHash.new)
-        super("ipmi-fru", opts)
-        @list = {}
+      super("ipmi-fru", opts)
+      @list = {}
     end
 
     def get_from_list(key)
       if list.has_key?(DEFAULT_FRU)
         if list[DEFAULT_FRU].has_key?(key)
-           list[DEFAULT_FRU][key]
-         else
-           nil
-         end
+          list[DEFAULT_FRU][key]
+        else
+          nil
+        end
       end
     end
 
@@ -87,7 +86,6 @@ module Rubyipmi::Freeipmi
               parsed_data = []
               @list[new_fru[:name]] = new_fru
             end
-
           end
           parsed_data << line
         end
@@ -104,16 +102,14 @@ module Rubyipmi::Freeipmi
 
     # run the command and return result
     def command
-       value = runcmd
-       if value
-         return @result
-       end
+      value = runcmd
+      if value
+        return @result
+      end
     end
-
   end
 
   class FruData < Hash
-
     def name
       self[:name]
     end
@@ -135,7 +131,6 @@ module Rubyipmi::Freeipmi
             key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
             if ! value.nil?
               self[key] = value.strip
-
             end
           end
         end
@@ -147,6 +142,5 @@ module Rubyipmi::Freeipmi
     def method_missing(method, *args, &block)
       self.fetch(method.to_s, nil)
     end
-
   end
 end

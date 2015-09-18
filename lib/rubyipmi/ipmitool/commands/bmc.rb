@@ -1,5 +1,4 @@
 module Rubyipmi::Ipmitool
-
   class Bmc < Rubyipmi::Ipmitool::BaseCommand
 
     attr_accessor :config
@@ -29,17 +28,16 @@ module Rubyipmi::Ipmitool
     end
 
     # reset the bmc device, useful for troubleshooting
-    def reset(type='cold')
+    def reset(type = 'cold')
       if ['cold', 'warm'].include?(type)
-         @options["cmdargs"] = "bmc reset #{type}"
-         value = runcmd()
-         @options.delete_notify("cmdargs")
-         return value
+        @options["cmdargs"] = "bmc reset #{type}"
+        value = runcmd()
+        @options.delete_notify("cmdargs")
+        return value
       else
         logger.error("reset type: #{type} is not a valid choice, use warm or cold") if logger
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
-
     end
 
     def guid
@@ -54,7 +52,6 @@ module Rubyipmi::Ipmitool
           end
         }
       end
-
     end
 
     # This function will get the bmcinfo and return a hash of each item in the info
@@ -87,7 +84,5 @@ module Rubyipmi::Ipmitool
         return @bmcinfo
       end
     end
-
-
   end
 end

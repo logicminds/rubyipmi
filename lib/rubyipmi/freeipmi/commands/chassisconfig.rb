@@ -1,10 +1,7 @@
 module Rubyipmi::Freeipmi
-
   class ChassisConfig < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmi-chassis-config", opts)
-
     end
 
     # This is the raw command to send a new configuration to the ipmi device
@@ -17,7 +14,7 @@ module Rubyipmi::Freeipmi
 
     # This is the raw command to get the entire ipmi chassis configuration
     # If you pass in a section you will get just the section
-    def checkout(section=nil)
+    def checkout(section = nil)
       @options["checkout"] = false
       if section
         @options["section"] = section
@@ -63,28 +60,28 @@ module Rubyipmi::Freeipmi
     end
 
     # shortcut to set boot device to pxe
-    def bootpxe(persistent=true)
+    def bootpxe(persistent = true)
       bootdevice("PXE",persistent)
     end
 
     # shortcut to set boot device to disk
-    def bootdisk(persistent=true)
+    def bootdisk(persistent = true)
       bootdevice("HARD-DRIVE",persistent)
     end
 
     # shortcut to set boot device to cdrom
-    def bootcdrom(persistent=true)
+    def bootcdrom(persistent = true)
       bootdevice("CD-DVD",persistent)
     end
 
     # shortcut to boot into bios setup
-    def bootbios(persistent=true)
+    def bootbios(persistent = true)
       bootdevice("BIOS-SETUP",persistent)
     end
 
     private
 
-    def setBootFlag(key,flag, persistent)
+    def setBootFlag(key, flag, persistent)
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
       @options.delete_notify("key-pair")
@@ -92,7 +89,7 @@ module Rubyipmi::Freeipmi
     end
   end
 
-   ## Possible values: NO-OVERRIDE/PXE/HARD-DRIVE/HARD-DRIVE-SAFE-MODE/
-   ##                  DIAGNOSTIC_PARTITION/CD-DVD/BIOS-SETUP/REMOTE-FLOPPY
-   ##                  PRIMARY-REMOTE-MEDIA/REMOTE-CD-DVD/REMOTE-HARD-DRIVE/FLOPPY
+  ## Possible values: NO-OVERRIDE/PXE/HARD-DRIVE/HARD-DRIVE-SAFE-MODE/
+  ##                  DIAGNOSTIC_PARTITION/CD-DVD/BIOS-SETUP/REMOTE-FLOPPY
+  ##                  PRIMARY-REMOTE-MEDIA/REMOTE-CD-DVD/REMOTE-HARD-DRIVE/FLOPPY
 end

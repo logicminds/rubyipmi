@@ -1,12 +1,11 @@
 require 'spec_helper'
 
 describe :Fru do
-
   before :all do
     @path = '/usr/local/bin'
   end
 
- before :each do
+  before :each do
     allow_message_expectations_on_nil
     data = nil
     provider = "ipmitool"
@@ -25,7 +24,6 @@ describe :Fru do
     allow(@fru).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     allow(@fru).to receive(:`).and_return(data)
     allow($?).to receive(:success?).and_return(true)
-
   end
 
   it "cmd should be ipmi-sensors with correct number of arguments" do
@@ -72,6 +70,4 @@ describe :Fru do
       expect(fru[:name]).to eq(name)
     end
   end
-
-
 end

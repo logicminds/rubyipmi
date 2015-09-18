@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe :Connection do
-
   before :all do
     @path = '/usr/local/bin'
     @provider = "ipmitool"
@@ -11,10 +10,8 @@ describe :Connection do
   end
 
   before :each do
-
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true})
-
   end
 
   it "connection should not be nil" do
@@ -39,7 +36,6 @@ describe :Connection do
 
   it "sensors should not be nil" do
     expect(@conn.sensors).not_to be_nil
-
   end
 
   it "chassis should not be nill" do
@@ -52,7 +48,6 @@ describe :Connection do
 
   it 'object should have driver set to auto if not specified' do
     expect(@conn.options['I']).to eq 'lanplus'
-
   end
 
   it 'object should have driver set to auto if not specified' do
@@ -92,6 +87,7 @@ describe :Connection do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'open'})
     expect(@conn.options['I']).to eq('open')
   end
+
   describe 'test' do
     it 'should retrun boolean on test connection when result is not a hash' do
       conn = Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'auto'})
@@ -117,6 +113,4 @@ describe :Connection do
       expect(conn.connection_works?).to eq false
     end
   end
-
-
 end

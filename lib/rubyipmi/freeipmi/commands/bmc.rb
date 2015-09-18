@@ -1,5 +1,4 @@
 module Rubyipmi::Freeipmi
-
   class Bmc < Rubyipmi::Freeipmi::BaseCommand
 
     #attr_accessor :options
@@ -25,12 +24,12 @@ module Rubyipmi::Freeipmi
       end
     end
 
-    def reset(type='cold')
+    def reset(type = 'cold')
       device.reset(type)
     end
 
     def guid
-       information.guid
+      information.guid
     end
 
     def config
@@ -48,6 +47,5 @@ module Rubyipmi::Freeipmi
     def device
       @bmcdevice ||= Rubyipmi::Freeipmi::BmcDevice.new(options)
     end
-
   end
 end

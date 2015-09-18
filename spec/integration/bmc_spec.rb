@@ -1,14 +1,12 @@
 require 'spec_helper'
 
 describe "Bmc" do
-
   before :each do
     user ||= ENV["ipmiuser"] || "admin"
     pass ||= ENV["ipmipass"] || "password"
     host ||= ENV["ipmihost"] || "10.0.1.16"
     provider ||= ENV["ipmiprovider"] || "ipmitool"
     @conn = Rubyipmi.connect(user, pass, host, provider)
-
   end
 
   it "creates a bmc object" do

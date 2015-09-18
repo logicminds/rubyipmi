@@ -8,7 +8,6 @@ describe "Errorcodes" do
 
   it 'should return a hash of codes' do
     expect(Rubyipmi::Freeipmi::ErrorCodes.code).to be_an_instance_of Hash
-
   end
 
   it 'should return a fix if code is found' do

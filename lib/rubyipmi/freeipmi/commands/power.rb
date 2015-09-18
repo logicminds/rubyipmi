@@ -1,6 +1,5 @@
 module Rubyipmi::Freeipmi
   class Power < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmipower", opts)
     end
@@ -31,7 +30,6 @@ module Rubyipmi::Freeipmi
       else
         command("cycle")
       end
-
     end
 
     # Perform a power reset on the system
@@ -65,8 +63,5 @@ module Rubyipmi::Freeipmi
     def off?
       status == "off"
     end
-
-
-
   end
 end

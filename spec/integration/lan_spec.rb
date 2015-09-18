@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe "Lan" do
   before :all do
     @user ||= ENV["ipmiuser"] || "admin"

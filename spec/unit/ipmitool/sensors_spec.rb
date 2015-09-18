@@ -25,7 +25,6 @@ describe :Sensors do
 
     # this is causing an error: An expectation of :success? was set on nil
     allow($?).to receive(:success?).and_return(true)
-
   end
 
   #it 'should figure out to add the -I lanplus' do
@@ -41,7 +40,7 @@ describe :Sensors do
   #end
 
   it "can return a list of sensors" do
-   expect(@sensors.list).not_to be_nil
+    expect(@sensors.list).not_to be_nil
   end
 
   it "should return a count of sensors" do
@@ -89,8 +88,4 @@ describe :Sensors do
   #  @sensors.list
   #  after = @sensors.options.fetch('I', false).should_not be_false
   #end
-
-
-
 end
-

@@ -1,9 +1,7 @@
 require 'rubyipmi/freeipmi/errorcodes'
 
 module Rubyipmi::Freeipmi
-
   class BaseCommand < Rubyipmi::BaseCommand
-
     def setpass
       super
       @options["config-file"] = @passfile.path
@@ -65,6 +63,5 @@ module Rubyipmi::Freeipmi
         end
       end
     end
-
   end
 end

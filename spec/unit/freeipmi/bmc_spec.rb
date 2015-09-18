@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe "Bmc" do
   before :all do
     @path = '/usr/local/bin'
@@ -33,11 +32,10 @@ describe "Bmc" do
   end
 
   it "guid should not be nil" do
-     expect(@bmc.guid).not_to be_nil
+    expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nill" do
     expect(@bmc.info).not_to be_nil
   end
-
 end

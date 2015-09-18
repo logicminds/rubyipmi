@@ -1,10 +1,7 @@
 module Rubyipmi::Freeipmi
-
   class BmcInfo < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("bmc-info", opts)
-
     end
 
     def guid
@@ -16,7 +13,6 @@ module Rubyipmi::Freeipmi
       else
         @result.chomp.strip
       end
-
     end
 
     def retrieve
@@ -49,5 +45,3 @@ module Rubyipmi::Freeipmi
     end
   end
 end
-
-

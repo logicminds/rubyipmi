@@ -1,14 +1,11 @@
 module Rubyipmi::Freeipmi
-
   class BmcConfig < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("bmc-config", opts)
       @sections = []
-
     end
 
-    def verbose(on=false)
+    def verbose(on = false)
       if on
         @options['verbose'] = false
       else
@@ -38,7 +35,6 @@ module Rubyipmi::Freeipmi
       return false
     end
 
-
     # returns the entire bmc-config configuration, can take a while to execute
     def configuration
       require 'pry'
@@ -61,7 +57,5 @@ module Rubyipmi::Freeipmi
       end
       @sections
     end
-
-
   end
 end

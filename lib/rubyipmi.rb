@@ -16,7 +16,6 @@
 #     USA
 #
 
-
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
 require 'logger'
@@ -73,7 +72,7 @@ module Rubyipmi
   # If provider is left blank the function will use the first available provider
   # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
   # the lan20 driver, but in order to support a wide use case we default to auto.
-  def self.connect(user, pass, host, provider='any', opts={:driver => 'lan20', :timeout => 'default'})
+  def self.connect(user, pass, host, provider = 'any', opts = {:driver => 'lan20', :timeout => 'default'})
     # use this variable to reduce cmd calls
     installed = false
 
@@ -142,7 +141,7 @@ module Rubyipmi
 
   # returns boolean true if privilege type is valid
   def self.supported_privilege_type?(type)
-     PRIV_TYPES.include?(type)
+    PRIV_TYPES.include?(type)
   end
 
   # method used to find the command which also makes it easier to mock with
@@ -157,13 +156,13 @@ module Rubyipmi
   # Return true or false if the provider is available
   def self.is_provider_installed?(provider)
     case provider
-      when "freeipmi"
-        cmdpath = locate_command('ipmipower')
-      when "ipmitool"
-        cmdpath = locate_command('ipmitool')
-      else
-        logger.error("Invalid BMC provider type #{provider}") if logger
-        false
+    when "freeipmi"
+      cmdpath = locate_command('ipmipower')
+    when "ipmitool"
+      cmdpath = locate_command('ipmitool')
+    else
+      logger.error("Invalid BMC provider type #{provider}") if logger
+      false
     end
     # return false if command was not found
     return ! cmdpath.nil?
@@ -189,7 +188,7 @@ module Rubyipmi
   end
 
   # gets data from the bmc device and puts in a hash for diagnostics
-  def self.get_diag(user, pass, host, opts={:driver => 'lan20', :timeout => 'default'})
+  def self.get_diag(user, pass, host, opts = {:driver => 'lan20', :timeout => 'default'})
     data = {}
     if Rubyipmi.is_provider_installed?('freeipmi')
       freeconn = Rubyipmi.connect(user, pass, host, 'freeipmi', opts)
@@ -205,7 +204,7 @@ module Rubyipmi
         data[:ipmitool] = ipmiconn.get_diag
       end
     end
-    File.open('/tmp/rubyipmi_diag_data.txt', 'w') {|f| f.write(data)}
+    File.open('/tmp/rubyipmi_diag_data.txt', 'w') { |f| f.write(data) }
     puts "Created file /tmp/rubyipmi_diag_data.txt"
   end
 end

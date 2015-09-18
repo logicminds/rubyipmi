@@ -1,7 +1,5 @@
 module Rubyipmi::Freeipmi
-
   class Sensors < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmi-sensors", opts)
     end
@@ -24,7 +22,7 @@ module Rubyipmi::Freeipmi
     end
 
     # returns a hash of fan sensors where the key is fan name and value is the sensor
-    def fanlist(refreshdata=false)
+    def fanlist(refreshdata = false)
       refresh if refreshdata
       flist = {}
       list.each do | name,sensor |
@@ -36,7 +34,7 @@ module Rubyipmi::Freeipmi
     end
 
     # returns a hash of sensors where each key is the name of the sensor and the value is the sensor
-    def templist(refreshdata=false)
+    def templist(refreshdata = false)
       refresh if refreshdata
       tlist = {}
       list.each do | name , sensor |
@@ -79,7 +77,6 @@ module Rubyipmi::Freeipmi
       end
       return sensorlist
     end
-
   end
 
   class Sensor < Hash
@@ -89,6 +86,7 @@ module Rubyipmi::Freeipmi
     end
 
     private
+
     def normalize(text)
       text.gsub(/\ /, '_').gsub(/\./, '').downcase
     end
@@ -97,7 +95,7 @@ module Rubyipmi::Freeipmi
     # Note: not all fields will exist on every server
     def parse(line)
       fields = [:id_num, :name, :value, :unit, :status, :type, :state, :lower_nonrec,
-                :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled  ]
+                :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
       data = line.split(/\|/)
       # should we ever encounter a field not in the fields list, just use a counter based fieldname so we just
       # use field1, field2, field3, ...
