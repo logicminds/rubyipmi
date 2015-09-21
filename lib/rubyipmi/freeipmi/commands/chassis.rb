@@ -83,7 +83,7 @@ module Rubyipmi::Freeipmi
 
     # A currently unsupported method to retrieve the led status
     def identifystatus
-      # TODO implement this function
+      # TODO: implement this function
       # parse out the identify status
       # status.result
     end

@@ -26,7 +26,7 @@ module Rubyipmi::Freeipmi
     def bootdevice
       value = checkout("Chassis_Boot_Flags")
       if value
-        # TODO parse result to return current boot device
+        # TODO: parse result to return current boot device
         # @result
       end
     end
@@ -39,11 +39,11 @@ module Rubyipmi::Freeipmi
       # freeipmi returns a list of supported devices
       # However, for now we will just assume the following
       ["PXE", "HARD-DRIVE", "CD-DVD", "BIOS-SETUP"]
-      # TODO return array of possible boot devices
+      # TODO: return array of possible boot devices
     end
 
     def bootpersistent(value)
-      # TODO find out if we can specify multiple key-pair values
+      # TODO: find out if we can specify multiple key-pair values
       if value == true
         flag = "Chassis_Boot_Flags:Boot_Flags_Persistent=Yes"
       else
