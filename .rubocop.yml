@@ -258,14 +258,6 @@ Style/LineEndConcatenation:
   Exclude:
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/MethodCallParentheses:
-  Exclude:
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'spec/unit/freeipmi/connection_spec.rb'
-    - 'spec/unit/ipmitool/connection_spec.rb'
-
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/MethodName:
