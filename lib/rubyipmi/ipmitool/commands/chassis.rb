@@ -8,7 +8,7 @@ module Rubyipmi::Ipmitool
     # status means to enable or disable the blinking
     def identify(status = false, delay = 0)
       if status
-        if not delay.between?(1,255)
+        if not delay.between?(1, 255)
           options["cmdargs"] = "chassis identify 255"
         else
           options["cmdargs"] = "chassis identify #{delay}"

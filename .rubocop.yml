@@ -343,11 +343,6 @@ Style/SelfAssignment:
   Exclude:
     - 'spec/integration/power_spec.rb'
 
-# Offense count: 80
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Enabled: false
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Style/SpaceAfterNot:

@@ -41,27 +41,27 @@ module Rubyipmi::Ipmitool
     end
 
     def snmp
-      info.fetch("snmp_community_string",nil)
+      info.fetch("snmp_community_string", nil)
     end
 
     def ip
-      info.fetch("ip_address",nil)
+      info.fetch("ip_address", nil)
     end
 
     def mac
-      info.fetch("mac_address",nil)
+      info.fetch("mac_address", nil)
     end
 
     def netmask
-      info.fetch("subnet_mask",nil)
+      info.fetch("subnet_mask", nil)
     end
 
     def gateway
-      info.fetch("default_gateway_ip",nil)
+      info.fetch("default_gateway_ip", nil)
     end
 
     def vlanid
-      info.fetch("802.1q_vlan_id",nil)
+      info.fetch("802.1q_vlan_id", nil)
     end
 
   #  def snmp=(community)
@@ -93,11 +93,11 @@ module Rubyipmi::Ipmitool
     end
 
     def dhcp?
-      info.fetch("ip_address_source",nil).match(/dhcp/i) != nil
+      info.fetch("ip_address_source", nil).match(/dhcp/i) != nil
     end
 
     def static?
-      info.fetch("ip_address_source",nil).match(/static/i) != nil
+      info.fetch("ip_address_source", nil).match(/static/i) != nil
     end
 
     def vlanid=(vlan)

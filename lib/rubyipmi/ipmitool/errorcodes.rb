@@ -18,7 +18,7 @@ module Rubyipmi
       end
 
       def self.search(code)
-        fix = @@codes.fetch(code,nil)
+        fix = @@codes.fetch(code, nil)
         if fix.nil?
           @@codes.each do | error, result |
             # the error should be a subset of the actual erorr

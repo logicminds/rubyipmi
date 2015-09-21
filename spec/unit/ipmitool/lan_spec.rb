@@ -15,7 +15,7 @@ describe "Lan" do
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @lan = @conn.bmc.lan
     data = nil
-    File.open("spec/fixtures/#{provider}/lan.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/lan.txt", 'r') do |file|
       data = file.read
     end
 
