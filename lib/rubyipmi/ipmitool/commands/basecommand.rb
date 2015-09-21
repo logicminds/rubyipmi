@@ -5,7 +5,7 @@ module Rubyipmi::Ipmitool
     def setpass
       super
       @options["f"] = @passfile.path
-      @passfile.write "#{@options["P"]}"
+      @passfile.write "#{@options['P']}"
       @passfile.rewind
       @passfile.close
     end

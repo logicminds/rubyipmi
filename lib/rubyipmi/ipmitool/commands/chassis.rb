@@ -40,8 +40,8 @@ module Rubyipmi::Ipmitool
           power.cycle
         end
       else
-        logger.debug("Device with name: #{device} is not a valid boot device for host #{options["hostname"]}") if logger
-        raise "Device with name: #{device} is not a valid boot device for host #{options["hostname"]}"
+        logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
+        raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
       end
       return bootstatus
     end
