@@ -87,7 +87,7 @@ module Rubyipmi
     # allow the user to specify an options hash instead of the provider
     # in the future I would stop using the provider and use the opts hash instead to get the provider
     # This allows us to be a little more flexible if the user is doesn't supply us what we need.
-    if provider.is_a?(Hash)
+    if provider.kind_of?(Hash)
       opts = provider
       provider = opts[:provider] ||= 'any'
     end
