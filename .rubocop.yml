@@ -119,25 +119,9 @@ Style/AndOr:
 Style/BlockDelimiters:
   Enabled: false
 
-# Offense count: 41
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'Rakefile'
-    - 'spec/unit/freeipmi/bmc-info_spec.rb'
-    - 'spec/unit/freeipmi/bmc_spec.rb'
-    - 'spec/unit/freeipmi/connection_spec.rb'
-    - 'spec/unit/freeipmi/errorcodes_spec.rb'
-    - 'spec/unit/freeipmi/fru_spec.rb'
-    - 'spec/unit/freeipmi/sensors_spec.rb'
-    - 'spec/unit/ipmitool/bmc_spec.rb'
-    - 'spec/unit/ipmitool/connection_spec.rb'
-    - 'spec/unit/ipmitool/errorcodes_spec.rb'
-    - 'spec/unit/ipmitool/fru_spec.rb'
-    - 'spec/unit/ipmitool/lan_spec.rb'
-    - 'spec/unit/ipmitool/sensors_spec.rb'
-    - 'spec/unit/rubyipmi_spec.rb'
+
+
+
 
 # Offense count: 2
 Style/ClassVars:

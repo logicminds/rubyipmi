@@ -13,7 +13,7 @@ describe :Fru do
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
-    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @fru = @conn.fru
     File.open("spec/fixtures/#{provider}/fru.txt", 'r') do |file|
       data = file.read

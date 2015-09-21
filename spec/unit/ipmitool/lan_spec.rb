@@ -12,7 +12,7 @@ describe "Lan" do
     pass = "impipass"
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @lan = @conn.bmc.lan
     data = nil
     File.open("spec/fixtures/#{provider}/lan.txt", 'r') do |file|
