@@ -21,7 +21,7 @@ describe "Bmc" do
 
     allow(@bmc).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     allow(@bmc).to receive(:`).and_return(data)
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
 
     allow(@bmc).to receive(:guid).and_return("guid")
   end

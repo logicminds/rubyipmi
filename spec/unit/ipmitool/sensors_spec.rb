@@ -24,7 +24,7 @@ describe :Sensors do
     allow(@sensors).to receive(:`).and_return(data)
 
     # this is causing an error: An expectation of :success? was set on nil
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
   end
 
   #it 'should figure out to add the -I lanplus' do

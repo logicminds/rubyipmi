@@ -25,7 +25,7 @@ describe :Sensors do
 
     # these stubs allow us to run the command and return the fixtures
     allow(@sensors).to receive(:`).and_return(data)
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
   end
 
   it "cmd should be ipmi-sensors with six arguments" do
