@@ -99,20 +99,6 @@ Style/AccessorMethodName:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
-# Offense count: 19
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/AndOr:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-    - 'lib/rubyipmi/freeipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/bmcinfo.rb'
-    - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
-
 
 
 

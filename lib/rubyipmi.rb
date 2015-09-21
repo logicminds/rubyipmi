@@ -50,7 +50,7 @@ module Rubyipmi
   def self.logger
     # by default the log will be set to info
     unless @logger
-      if @log_level and @log_level >= 0
+      if @log_level && @log_level >= 0
         @logger = Logger.new('/tmp/rubyipmi.log')
         @logger.progname = 'Rubyipmi'
         @logger.level = @log_level
@@ -96,7 +96,7 @@ module Rubyipmi
     opts[:driver] ||= 'lan20'
     opts[:timeout] ||= 'default'
 
-    if opts[:privilege] and !supported_privilege_type?(opts[:privilege])
+    if opts[:privilege] && !supported_privilege_type?(opts[:privilege])
       logger.error("Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}") if logger
       raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
     end
@@ -123,7 +123,7 @@ module Rubyipmi
     end
 
     # If the provider is available create a connection object
-    if installed or is_provider_installed?(provider)
+    if installed || is_provider_installed?(provider)
       if provider == "freeipmi"
         Rubyipmi::Freeipmi::Connection.new(user, pass, host, opts)
       elsif provider == "ipmitool"

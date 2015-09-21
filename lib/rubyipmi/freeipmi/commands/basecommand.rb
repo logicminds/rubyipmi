@@ -39,7 +39,7 @@ module Rubyipmi::Freeipmi
         # essentially any result greater than 23 characters is an error
         raise "Error occurred" if @result.length > 23
       when "bmc-config"
-        if @result.length > 100 and exitstatus.success?
+        if @result.length > 100 && exitstatus.success?
           return true
         else
           raise "Error occurred"

@@ -68,7 +68,7 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information
     def parse(data)
-      if !data.nil? and !data.empty?
+      if !data.nil? && !data.empty?
         parsed_data = []
         data.lines.each do |line|
           if line =~ /^FRU.*/

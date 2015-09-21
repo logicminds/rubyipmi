@@ -28,10 +28,10 @@ module Rubyipmi::Freeipmi
           key = item.first.strip
           value = item.last.strip
           # if the following condition is met we have subvalues
-          if key == value and !subkey
+          if key == value && !subkey
             subkey = key
             bmcinfo[subkey] = []
-          elsif key == value and subkey
+          elsif key == value && subkey
             # subvalue found
             bmcinfo[subkey] << value.gsub(/\[|\]/, "")
           else

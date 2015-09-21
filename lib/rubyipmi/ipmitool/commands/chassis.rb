@@ -36,7 +36,7 @@ module Rubyipmi::Ipmitool
     def bootdevice(device, reboot = false, persistent = false)
       if config.bootdevices.include?(device)
         bootstatus = config.bootdevice(device, persistent)
-        power.cycle if reboot and status
+        power.cycle if reboot && status
       else
         logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
@@ -48,7 +48,7 @@ module Rubyipmi::Ipmitool
     def bootpxe(reboot = false, persistent = false)
       bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
-      power.cycle if reboot and bootstatus
+      power.cycle if reboot && bootstatus
       bootstatus
     end
 
@@ -56,7 +56,7 @@ module Rubyipmi::Ipmitool
     def bootdisk(reboot = false, persistent = false)
       bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
-      power.cycle if reboot and bootstatus
+      power.cycle if reboot && bootstatus
       bootstatus
     end
 
@@ -64,7 +64,7 @@ module Rubyipmi::Ipmitool
     def bootcdrom(reboot = false, persistent = false)
       bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
-      power.cycle if reboot and bootstatus
+      power.cycle if reboot && bootstatus
       bootstatus
     end
 
@@ -72,7 +72,7 @@ module Rubyipmi::Ipmitool
     def bootbios(reboot = false, persistent = false)
       bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
-      power.cycle if reboot and bootstatus
+      power.cycle if reboot && bootstatus
       bootstatus
     end
 
