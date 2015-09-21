@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.module_path = "puppetmodules"
         puppet.manifests_path = "manifests"
         puppet.manifest_file  = "default.pp"
-        puppet.facter = { }
+        puppet.facter = {}
       end
     end
   end
