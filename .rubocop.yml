@@ -437,16 +437,6 @@ Style/SpecialGlobalVars:
     - 'spec/unit/ipmitool/lan_spec.rb'
     - 'spec/unit/ipmitool/sensors_spec.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Exclude:
-    - 'lib/rubyipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/observablehash.rb'
-    - 'spec/Vagrantfile'
-
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: WordRegex.
