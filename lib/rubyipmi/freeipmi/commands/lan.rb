@@ -1,6 +1,5 @@
 module Rubyipmi::Freeipmi
   class Lan
-
     attr_accessor :info
     attr_accessor :channel
     attr_accessor :config

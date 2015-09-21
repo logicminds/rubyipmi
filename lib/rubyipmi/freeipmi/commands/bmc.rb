@@ -1,6 +1,5 @@
 module Rubyipmi::Freeipmi
   class Bmc < Rubyipmi::Freeipmi::BaseCommand
-
     # attr_accessor :options
     attr_accessor :config
 

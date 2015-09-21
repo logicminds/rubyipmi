@@ -1,6 +1,5 @@
 module Rubyipmi::Ipmitool
   class Lan < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :info
     attr_accessor :channel
     MAX_RETRY = 1
@@ -64,12 +63,12 @@ module Rubyipmi::Ipmitool
       info.fetch("802.1q_vlan_id", nil)
     end
 
-  #  def snmp=(community)
-  #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
-  #    value = runcmd
-  #    @options.delete_notify("cmdargs")
-  #    return value
-  #  end
+    #  def snmp=(community)
+    #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
+    #    value = runcmd
+    #    @options.delete_notify("cmdargs")
+    #    return value
+    #  end
 
     def ip=(address)
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"

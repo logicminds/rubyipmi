@@ -1,6 +1,5 @@
 module Rubyipmi::Ipmitool
   class Bmc < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :config
 
     def initialize(opts = ObservableHash.new)

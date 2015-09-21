@@ -3,7 +3,6 @@ require 'tempfile'
 require 'rubyipmi'
 
 module Rubyipmi
-
   class BaseCommand
     include Observable
     attr_reader :cmd, :max_retry_count
@@ -108,7 +107,7 @@ module Rubyipmi
       @options.merge!(opts)
     end
 
-  # This method will check if the results are really valid as the exit code can be misleading and incorrect
+    # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
       raise "Error occurred" unless exitstatus.success?
 

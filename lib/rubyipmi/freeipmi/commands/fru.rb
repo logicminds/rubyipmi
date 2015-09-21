@@ -1,6 +1,5 @@
 module Rubyipmi::Freeipmi
   class Fru < Rubyipmi::Freeipmi::BaseCommand
-
     attr_accessor :list
 
     DEFAULT_FRU = 'default_fru_device'
