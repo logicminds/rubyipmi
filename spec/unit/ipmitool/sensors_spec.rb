@@ -53,7 +53,7 @@ describe :Sensors do
 
   it 'should return a list of temp names' do
     expect(@sensors.templist.count).to eq(43)
-    @sensors.templist.each do | temp |
+    @sensors.templist.each do |temp|
     end
   end
 

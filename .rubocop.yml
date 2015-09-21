@@ -354,19 +354,6 @@ Style/SpaceAfterNot:
     - 'lib/rubyipmi/ipmitool/commands/fru.rb'
     - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
 
-# Offense count: 21
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleInsidePipes, SupportedStyles.
-Style/SpaceAroundBlockParameters:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-    - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/unit/ipmitool/sensors_spec.rb'
-
 
 
 

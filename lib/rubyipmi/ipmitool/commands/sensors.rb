@@ -63,7 +63,7 @@ module Rubyipmi::Ipmitool
     def parse(data)
       sensorlist = {}
       if ! data.nil?
-        data.lines.each do | line|
+        data.lines.each do |line|
           # skip the header
           sensor = Sensor.new(line)
           sensorlist[sensor[:name]] = sensor
@@ -94,7 +94,7 @@ module Rubyipmi::Ipmitool
       data = line.split(/\|/)
       # should we ever encounter a field not in the fields list, just use a counter based fieldname
       i = 0
-      data.each do | value |
+      data.each do |value|
         field ||= fields.shift || "field#{i}"
         self[field] = value.strip
         i = i.next
