@@ -43,12 +43,6 @@ Style/AccessorMethodName:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
-# Offense count: 2
-Style/ClassVars:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-
 # Offense count: 1
 # Configuration parameters: Exclude.
 Style/FileName:
