@@ -6,11 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-Lint/Debugger:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/bmcconfig.rb'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 Lint/DeprecatedClassMethods:
@@ -60,15 +55,15 @@ Metrics/ModuleLength:
 Metrics/PerceivedComplexity:
   Max: 22
 
+
+
+
+
 # Offense count: 2
 Style/AccessorMethodName:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
-
-
-
-
 
 # Offense count: 2
 Style/ClassVars:
