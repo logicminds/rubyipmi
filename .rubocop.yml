@@ -113,12 +113,6 @@ Style/AndOr:
     - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
     - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-Style/BlockDelimiters:
-  Enabled: false
-
 
 
 

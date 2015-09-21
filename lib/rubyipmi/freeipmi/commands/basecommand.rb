@@ -16,7 +16,7 @@ module Rubyipmi::Freeipmi
 
     def makecommand
       # need to format the options to freeipmi format
-      args = @options.collect { |k, v|
+      args = @options.collect do |k, v|
         # must remove from command line as its handled via conf file
         next if k == 'password'
         next if k == 'username'
@@ -25,7 +25,7 @@ module Rubyipmi::Freeipmi
         else
           "--#{k}=#{v}"
         end
-      }.join(" ")
+      end.join(" ")
 
       "#{cmd} #{args.rstrip}"
     end
