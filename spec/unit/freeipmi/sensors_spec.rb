@@ -17,7 +17,7 @@ describe :Sensors do
 
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @sensors = @conn.sensors
-    File.open("spec/fixtures/#{provider}/sensors.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/sensors.txt", 'r') do |file|
       data = file.read
     end
     # this stub allows us to mock the command that is used with this test case

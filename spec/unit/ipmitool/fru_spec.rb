@@ -17,7 +17,7 @@ describe :Fru do
     @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
     @fru = @conn.fru
 
-    File.open("spec/fixtures/#{provider}/fru.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/fru.txt", 'r') do |file|
       data = file.read
     end
 

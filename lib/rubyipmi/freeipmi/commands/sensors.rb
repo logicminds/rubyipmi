@@ -25,7 +25,7 @@ module Rubyipmi::Freeipmi
     def fanlist(refreshdata = false)
       refresh if refreshdata
       flist = {}
-      list.each do | name,sensor |
+      list.each do | name, sensor |
         flist[name] = sensor if name =~ /.*fan.*/
       end
       return flist
@@ -93,7 +93,7 @@ module Rubyipmi::Freeipmi
     # Note: not all fields will exist on every server
     def parse(line)
       fields = [:id_num, :name, :value, :unit, :status, :type, :state, :lower_nonrec,
-                :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
+                :lower_crit, :lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
       data = line.split(/\|/)
       # should we ever encounter a field not in the fields list, just use a counter based fieldname so we just
       # use field1, field2, field3, ...

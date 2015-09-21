@@ -92,7 +92,7 @@ task :send_diag, :user, :pass, :host do |t, args |
   send_email(emailto, data.to_json, {:subject => subject})
 end
 
-def send_email(to,data, opts = {})
+def send_email(to, data, opts = {})
   gmail_id = ask("Enter your gmail account:  ")
   pass = ask("Enter your gmail password:  ") { |q| q.echo = '*' }
   opts[:from] = gmail_id
@@ -111,9 +111,9 @@ Date: #{Time.now.rfc2822}
   #{opts[:body]}
 END_OF_MESSAGE
 
-  smtp = Net::SMTP.new(opts[:server],opts[:port])
+  smtp = Net::SMTP.new(opts[:server], opts[:port])
   smtp.enable_starttls
-  smtp.start(opts[:server],gmail_id,pass,:login) do
+  smtp.start(opts[:server], gmail_id, pass, :login) do
     smtp.send_message(msg, gmail_id, to)
   end
 end

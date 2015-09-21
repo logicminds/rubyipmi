@@ -21,11 +21,11 @@ module Rubyipmi::Freeipmi
     end
 
     def dhcp?
-      info.fetch("ip_address_source",nil).match(/dhcp/i) != nil
+      info.fetch("ip_address_source", nil).match(/dhcp/i) != nil
     end
 
     def static?
-      info.fetch("ip_address_source",nil).match(/static/i) != nil
+      info.fetch("ip_address_source", nil).match(/static/i) != nil
     end
 
     def ip

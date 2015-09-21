@@ -32,7 +32,7 @@ module Rubyipmi::Freeipmi
     end
 
     def bootdevice(device, persistent)
-      setBootFlag("Boot_Device", device,persistent)
+      setBootFlag("Boot_Device", device, persistent)
     end
 
     def bootdevices
@@ -57,22 +57,22 @@ module Rubyipmi::Freeipmi
 
     # shortcut to set boot device to pxe
     def bootpxe(persistent = true)
-      bootdevice("PXE",persistent)
+      bootdevice("PXE", persistent)
     end
 
     # shortcut to set boot device to disk
     def bootdisk(persistent = true)
-      bootdevice("HARD-DRIVE",persistent)
+      bootdevice("HARD-DRIVE", persistent)
     end
 
     # shortcut to set boot device to cdrom
     def bootcdrom(persistent = true)
-      bootdevice("CD-DVD",persistent)
+      bootdevice("CD-DVD", persistent)
     end
 
     # shortcut to boot into bios setup
     def bootbios(persistent = true)
-      bootdevice("BIOS-SETUP",persistent)
+      bootdevice("BIOS-SETUP", persistent)
     end
 
     private

@@ -89,7 +89,7 @@ module Rubyipmi::Ipmitool
     # Note: not all fields will exist on every server
     def parse(line)
       fields = [:name, :value, :unit, :status, :type, :state, :lower_nonrec,
-                :lower_crit,:lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
+                :lower_crit, :lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
       # skip the header
       data = line.split(/\|/)
       # should we ever encounter a field not in the fields list, just use a counter based fieldname

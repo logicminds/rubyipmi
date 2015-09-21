@@ -127,7 +127,7 @@ module Rubyipmi
       if provider == "freeipmi"
         Rubyipmi::Freeipmi::Connection.new(user, pass, host, opts)
       elsif provider == "ipmitool"
-        Rubyipmi::Ipmitool::Connection.new(user,pass,host, opts)
+        Rubyipmi::Ipmitool::Connection.new(user, pass, host, opts)
       else
         logger.error("Incorrect provider given, must use one of #{valid_providers.join(', ')}") if logger
         raise "Incorrect provider given, must use one of #{valid_providers.join(', ')}"
