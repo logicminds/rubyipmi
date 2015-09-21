@@ -299,12 +299,6 @@ Style/Not:
     - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
-# Offense count: 1
-# Configuration parameters: NamePrefix, NamePrefixBlacklist.
-Style/PredicateName:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/RedundantBegin:
@@ -317,20 +311,6 @@ Style/RedundantBegin:
 # Configuration parameters: AllowMultipleReturnValues.
 Style/RedundantReturn:
   Enabled: false
-
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-Style/RegexpLiteral:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
-# Offense count: 1
-Style/RescueModifier:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-
 
 
 
@@ -363,3 +343,12 @@ Style/SpecialGlobalVars:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/ipmitool/commands/fru.rb'
+Style/RescueModifier:
+  Exclude:
+    - 'lib/rubyipmi.rb'
+Style/RegexpLiteral:
+  Exclude:
+    - 'spec/spec_helper.rb'
+Style/PredicateName:
+  Exclude:
+    - 'lib/rubyipmi.rb'
