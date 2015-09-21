@@ -16,14 +16,10 @@ module Rubyipmi::Freeipmi
     # If you pass in a section you will get just the section
     def checkout(section = nil)
       @options["checkout"] = false
-      if section
-        @options["section"] = section
-      end
+      @options["section"] = section if section
       value = runcmd
       @options.delete_notify("checkout")
-      if section
-        @options.delete_notify("section")
-      end
+      @options.delete_notify("section") if section
       return value
     end
 

@@ -47,9 +47,7 @@ module Rubyipmi::Ipmitool
       if value
         @result.lines.each { | line |
           line.chomp
-          if line =~ /GUID/
-            line.split(":").last.strip
-          end
+          line.split(":").last.strip if line =~ /GUID/
         }
       end
     end

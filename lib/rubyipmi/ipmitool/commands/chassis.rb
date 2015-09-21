@@ -36,9 +36,7 @@ module Rubyipmi::Ipmitool
     def bootdevice(device, reboot = false, persistent = false)
       if config.bootdevices.include?(device)
         bootstatus = config.bootdevice(device, persistent)
-        if reboot and status
-          power.cycle
-        end
+        power.cycle if reboot and status
       else
         logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
@@ -50,9 +48,7 @@ module Rubyipmi::Ipmitool
     def bootpxe(reboot = false, persistent = false)
       bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
       return bootstatus
     end
 
@@ -60,9 +56,7 @@ module Rubyipmi::Ipmitool
     def bootdisk(reboot = false, persistent = false)
       bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
       return bootstatus
     end
 
@@ -70,9 +64,7 @@ module Rubyipmi::Ipmitool
     def bootcdrom(reboot = false, persistent = false)
       bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
       return bootstatus
     end
 
@@ -80,9 +72,7 @@ module Rubyipmi::Ipmitool
     def bootbios(reboot = false, persistent = false)
       bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
       return bootstatus
     end
 
@@ -98,9 +88,7 @@ module Rubyipmi::Ipmitool
       options["cmdargs"] = "chassis identify status"
       value = runcmd
       options.delete_notify("cmdargs")
-      if value
-        @result.chomp.split(":").last.strip
-      end
+      @result.chomp.split(":").last.strip if value
     end
   end
 end

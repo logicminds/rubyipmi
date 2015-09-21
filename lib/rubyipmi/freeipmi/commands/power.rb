@@ -49,9 +49,7 @@ module Rubyipmi::Freeipmi
     # Get the power status of the system, will show either on or off
     def status
       value = command("stat")
-      if value
-        @result.split(":").last.chomp.strip
-      end
+      @result.split(":").last.chomp.strip if value
     end
 
     # Test to see if the power is on

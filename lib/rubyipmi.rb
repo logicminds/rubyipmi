@@ -147,9 +147,7 @@ module Rubyipmi
   # method used to find the command which also makes it easier to mock with
   def self.locate_command(commandname)
     location = `which #{commandname}`.strip
-    if not $?.success?
-      location = nil
-    end
+    location = nil if not $?.success?
     location
   end
 
@@ -180,9 +178,7 @@ module Rubyipmi
   def self.providers_installed
     available = []
     providers.each do |prov|
-      if is_provider_installed?(prov)
-        available << prov
-      end
+      available << prov if is_provider_installed?(prov)
     end
     return available
   end

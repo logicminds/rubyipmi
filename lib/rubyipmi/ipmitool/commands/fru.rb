@@ -28,9 +28,7 @@ module Rubyipmi::Ipmitool
 
     # return the list of fru information in a hash
     def list
-      if @list.count < 1
-        parse(getfrus)
-      end
+      parse(getfrus) if @list.count < 1
       @list
     end
 
@@ -92,9 +90,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "fru"
       value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        return @result
-      end
+      return @result if value
     end
   end
 
@@ -118,9 +114,7 @@ module Rubyipmi::Ipmitool
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase
-            if ! value.nil?
-              self[key] = value.strip
-            end
+            self[key] = value.strip if ! value.nil?
           end
         end
       end

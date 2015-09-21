@@ -35,9 +35,7 @@ module Rubyipmi::Freeipmi
     def bootdevice(device, reboot = false, persistent = false)
       if config.bootdevices.include?(device)
         bootstatus = config.bootdevice(device, persistent)
-        if reboot and bootstatus
-          power.cycle
-        end
+        power.cycle if reboot and bootstatus
       else
         logger.error("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
@@ -48,36 +46,28 @@ module Rubyipmi::Freeipmi
     def bootpxe(reboot = false, persistent = false)
       bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
     end
 
     # set boot device to disk with option to reboot
     def bootdisk(reboot = false, persistent = false)
       bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
     end
 
     # set boot device to cdrom with option to reboot
     def bootcdrom(reboot = false, persistent = false)
       bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
     end
 
     # boot into bios setup with option to reboot
     def bootbios(reboot = false, persistent = false)
       bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
-      if reboot and bootstatus
-        power.cycle
-      end
+      power.cycle if reboot and bootstatus
     end
 
     def status

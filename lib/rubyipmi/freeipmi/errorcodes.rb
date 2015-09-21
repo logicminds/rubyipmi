@@ -22,9 +22,7 @@ module Rubyipmi::Freeipmi
       fix = @@codes.fetch(code, nil)
       if fix.nil?
         @@codes.each do | error, result |
-          if code =~ /.*#{error}.*/i
-            fix = result
-          end
+          fix = result if code =~ /.*#{error}.*/i
         end
       end
       raise "No Fix found" if fix.nil?

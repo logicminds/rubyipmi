@@ -57,9 +57,7 @@ module Rubyipmi::Ipmitool
     # Get the power status of the system, will show either on or off
     def status
       value = command("status")
-      if value
-        @result.match(/(off|on)/).to_s
-      end
+      @result.match(/(off|on)/).to_s if value
     end
 
     # Test to see if the power is on

@@ -26,9 +26,7 @@ module Rubyipmi::Freeipmi
       refresh if refreshdata
       flist = {}
       list.each do | name,sensor |
-        if name =~ /.*fan.*/
-          flist[name] = sensor
-        end
+        flist[name] = sensor if name =~ /.*fan.*/
       end
       return flist
     end
