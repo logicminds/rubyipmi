@@ -405,11 +405,6 @@ Style/SpecialGlobalVars:
     - 'spec/unit/ipmitool/lan_spec.rb'
     - 'spec/unit/ipmitool/sensors_spec.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: WordRegex.
-Style/WordArray:
-  MinSize: 7
 
 
 
@@ -434,3 +429,5 @@ ClassCheck:
   EnforcedStyle: kind_of?
 SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+Style/WordArray:
+  Enabled: false
