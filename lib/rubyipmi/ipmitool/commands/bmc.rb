@@ -44,10 +44,10 @@ module Rubyipmi::Ipmitool
       value = runcmd
       @options.delete_notify("cmdargs")
       if value
-        @result.lines.each { |line|
+        @result.lines.each do |line|
           line.chomp
           line.split(":").last.strip if line =~ /GUID/
-        }
+        end
       end
     end
 
