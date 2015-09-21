@@ -25,7 +25,7 @@ module Rubyipmi::Freeipmi
     def setsection(section, key, value)
       keypair = "#{section}:#{key}=#{value}"
       @options["commit"] = false
-      if not keypair.empty?
+      if !keypair.empty?
         @options["key-pair"] = keypair
         value = runcmd
         @options.delete_notify("commit")

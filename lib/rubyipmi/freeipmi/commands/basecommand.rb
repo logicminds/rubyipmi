@@ -20,7 +20,7 @@ module Rubyipmi::Freeipmi
         # must remove from command line as its handled via conf file
         next if k == 'password'
         next if k == 'username'
-        if not v
+        if !v
           "--#{k}"
         else
           "--#{k}=#{v}"
