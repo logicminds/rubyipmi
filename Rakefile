@@ -58,7 +58,7 @@ RSpec::Core::RakeTask.new :integration do |spec|
   ENV['ipmihost'] = '10.0.1.16'
   providers ||= Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
 
-  providers.each do | provider |
+  providers.each do |provider|
     ENV['ipmiprovider'] = provider
     spec.pattern = FileList['spec/integration/**/*_spec.rb']
   end
@@ -77,7 +77,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 desc "send diagnostics to logicminds for testing for the given host"
-task :send_diag, :user, :pass, :host do |t, args |
+task :send_diag, :user, :pass, :host do |t, args|
   require 'rubyipmi'
   require 'net/smtp'
   require 'json'

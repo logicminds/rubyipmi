@@ -25,7 +25,7 @@ module Rubyipmi::Freeipmi
     def fanlist(refreshdata = false)
       refresh if refreshdata
       flist = {}
-      list.each do | name, sensor |
+      list.each do |name, sensor|
         flist[name] = sensor if name =~ /.*fan.*/
       end
       return flist
@@ -35,7 +35,7 @@ module Rubyipmi::Freeipmi
     def templist(refreshdata = false)
       refresh if refreshdata
       tlist = {}
-      list.each do | name, sensor |
+      list.each do |name, sensor|
         if sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/
           tlist[name] = sensor
         end
@@ -67,7 +67,7 @@ module Rubyipmi::Freeipmi
     def parse(data)
       sensorlist = {}
       if ! data.nil?
-        data.lines.each do | line|
+        data.lines.each do |line|
           # skip the header
           sensor = Sensor.new(line)
           sensorlist[sensor[:name]] = sensor
@@ -98,7 +98,7 @@ module Rubyipmi::Freeipmi
       # should we ever encounter a field not in the fields list, just use a counter based fieldname so we just
       # use field1, field2, field3, ...
       i = 0
-      data.each do | value |
+      data.each do |value|
         field ||= fields.shift || "field#{i}"
         self[field] = value.strip
         i = i.next

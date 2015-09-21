@@ -20,7 +20,7 @@ module Rubyipmi
       def self.search(code)
         fix = @@codes.fetch(code, nil)
         if fix.nil?
-          @@codes.each do | error, result |
+          @@codes.each do |error, result|
             # the error should be a subset of the actual erorr
             return result if code =~ /.*#{error}.*/i
           end
