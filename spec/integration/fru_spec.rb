@@ -32,6 +32,6 @@ describe "Fru" do
   end
 
   it "test missing method with known bad method" do
-    expect {@conn.fru.blah}.to raise_exception
+    expect { @conn.fru.blah }.to raise_exception
   end
 end
