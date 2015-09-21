@@ -372,12 +372,6 @@ Style/SpaceAroundBlockParameters:
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
     - 'spec/unit/ipmitool/sensors_spec.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
 # Offense count: 19
 # Cop supports --auto-correct.
 # Configuration parameters: MultiSpaceAllowedForOperators.
