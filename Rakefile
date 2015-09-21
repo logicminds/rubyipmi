@@ -16,18 +16,19 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "rubyipmi"
-  gem.homepage = "http://github.com/logicminds/rubyipmi"
-  gem.license = "LGPLv2.1"
-  gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
-  gem.description = %Q{Provides a library for controlling IPMI devices using pure ruby code}
-  gem.email = "corey@logicminds.biz"
-  gem.authors = ["Corey Osman"]
+  gem.name        = "rubyipmi"
+  gem.homepage    = "http://github.com/logicminds/rubyipmi"
+  gem.license     = "LGPLv2.1"
+  gem.summary     = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
+  gem.description = "Provides a library for controlling IPMI devices using pure ruby code"
+  gem.email       = "corey@logicminds.biz"
+  gem.authors     = ["Corey Osman"]
+  gem.files.exclude '.document'
+  gem.files.exclude '.gitignore'
+  gem.files.exclude '.rspec'
+  gem.files.exclude '.rubocop.yml'
   gem.files.exclude '.travis.yml'
   gem.files.exclude 'Gemfile.lock'
-  gem.files.exclude '.rspec'
-  gem.files.exclude '.gitignore'
-  gem.files.exclude '.document'
   gem.files.exclude 'coverage/'
   # dependencies defined in Gemfile
 end
