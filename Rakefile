@@ -43,7 +43,7 @@ RSpec::Core::RakeTask.new(:unit) do |spec|
 end
 
 desc "Run integrations tests against real systems using a vagrant box"
-task :vintegration, :user, :pass, :host do |task, args|
+task :vintegration, :user, :pass, :host do |_task, args|
   vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
   puts `cd #{@base_dir}/spec && vagrant up`
   puts `cd #{@base_dir}/spec && vagrant provision`
@@ -76,7 +76,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 desc "send diagnostics to logicminds for testing for the given host"
-task :send_diag, :user, :pass, :host do |t, args|
+task :send_diag, :user, :pass, :host do |_t, args|
   require 'rubyipmi'
   require 'net/smtp'
   require 'json'

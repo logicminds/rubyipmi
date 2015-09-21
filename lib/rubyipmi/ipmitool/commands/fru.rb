@@ -40,7 +40,7 @@ module Rubyipmi::Ipmitool
 
     # I use method missing to allow the user to say Fru.<name> which returns a frudata object unless the user
     # passes a keyname from the default fru device
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       name = method.to_s
       fru = list.fetch(name, nil)
       # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
@@ -121,7 +121,7 @@ module Rubyipmi::Ipmitool
 
     private
 
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       fetch(method.to_s, nil)
     end
   end

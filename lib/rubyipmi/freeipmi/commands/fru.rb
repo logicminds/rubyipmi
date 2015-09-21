@@ -49,7 +49,7 @@ module Rubyipmi::Freeipmi
 
     private
 
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       name = method.to_s
       fru = list.fetch(name, nil)
       # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
@@ -128,7 +128,7 @@ module Rubyipmi::Freeipmi
 
     private
 
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       fetch(method.to_s, nil)
     end
   end
