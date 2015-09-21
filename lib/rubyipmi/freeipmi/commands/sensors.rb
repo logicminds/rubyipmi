@@ -35,7 +35,7 @@ module Rubyipmi::Freeipmi
     def templist(refreshdata = false)
       refresh if refreshdata
       tlist = {}
-      list.each do | name , sensor |
+      list.each do | name, sensor |
         if sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/
           tlist[name] = sensor
         end
