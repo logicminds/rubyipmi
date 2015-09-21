@@ -62,11 +62,11 @@ describe "Bmc" do
   end
 
   it 'should raise exception if invalid privilege type' do
-    expect{ Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'BLAH',:debug => true, :driver => 'auto'}) }.to raise_error(RuntimeError)
+    expect { Rubyipmi.connect(@user, @pass, @host, @provider,{:privilege => 'BLAH',:debug => true, :driver => 'auto'}) }.to raise_error(RuntimeError)
   end
 
   it 'should raise exception if invalid driver type' do
-    expect{ Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'foo'}) }.to raise_error(RuntimeError)
+    expect { Rubyipmi.connect(@user, @pass, @host, @provider,{:debug => true, :driver => 'foo'}) }.to raise_error(RuntimeError)
   end
 
   it 'object should have driver set to lan_2_0' do

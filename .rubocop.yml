@@ -389,12 +389,6 @@ Style/SpaceAroundOperators:
     - 'spec/unit/ipmitool/errorcodes_spec.rb'
     - 'spec/unit/rubyipmi_spec.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Style/SpecialGlobalVars:
