@@ -284,20 +284,6 @@ Style/NegatedIf:
     - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
-# Offense count: 13
-# Cop supports --auto-correct.
-Style/Not:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-    - 'lib/rubyipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/bmcconfig.rb'
-    - 'lib/rubyipmi/freeipmi/commands/bmcinfo.rb'
-    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
 
 

@@ -58,7 +58,7 @@ module Rubyipmi::Ipmitool
       status = runcmd
       @options.delete_notify("cmdargs")
       subkey = nil
-      if not status
+      if !status
         raise @result
       else
         @result.lines.each do |line|

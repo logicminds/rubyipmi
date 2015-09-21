@@ -57,7 +57,7 @@ module Rubyipmi::Freeipmi
     private
 
     def method_missing(method, *args, &block)
-      if not list.has_key?(method.to_s)
+      if !list.has_key?(method.to_s)
         raise NoMethodError
       else
         list[method.to_s]
