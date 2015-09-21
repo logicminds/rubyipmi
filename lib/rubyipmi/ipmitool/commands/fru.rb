@@ -123,7 +123,7 @@ module Rubyipmi::Ipmitool
     private
 
     def method_missing(method, *args, &block)
-      self.fetch(method.to_s, nil)
+      fetch(method.to_s, nil)
     end
   end
 end
