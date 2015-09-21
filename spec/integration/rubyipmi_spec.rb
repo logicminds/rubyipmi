@@ -58,7 +58,7 @@ describe "rubyipmi" do
   it 'can get diag info' do
     # must have both freeipmi and ipmitool for this to pass
     Rubyipmi.get_diag(@user, @pass, @host)
-    expect(File.exists?('/tmp/rubyipmi_diag_data.txt')).to be true
+    expect(File.exist?('/tmp/rubyipmi_diag_data.txt')).to be true
     FileUtils.rm('/tmp/rubyipmi_diag_data.txt')
   end
 
@@ -72,7 +72,7 @@ describe "rubyipmi" do
     it 'should only create an info log level' do
       Rubyipmi.log_level = Logger::INFO
       Rubyipmi.get_diag(@user, @pass, @host)
-      expect(File.exists?('/tmp/rubyipmi.log')).to be true
+      expect(File.exist?('/tmp/rubyipmi.log')).to be true
       size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
       expect(size).to be_within(60).of(100)
     end
@@ -80,7 +80,7 @@ describe "rubyipmi" do
     it 'should create a log with debug level' do
       Rubyipmi.log_level = Logger::DEBUG
       Rubyipmi.get_diag(@user, @pass, @host)
-      expect(File.exists?('/tmp/rubyipmi.log')).to be true
+      expect(File.exist?('/tmp/rubyipmi.log')).to be true
       size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
       expect(size).to be > 100
     end
@@ -91,7 +91,7 @@ describe "rubyipmi" do
       logger.level = Logger::DEBUG
       Rubyipmi.logger = logger
       Rubyipmi.get_diag(@user, @pass, @host)
-      expect(File.exists?('/tmp/rubyipmi_custom.log')).to be true
+      expect(File.exist?('/tmp/rubyipmi_custom.log')).to be true
       size = File.open('/tmp/rubyipmi_custom.log', 'r') { |f| f.read.length }
       expect(size).to be > 100
       FileUtils.rm_f('/tmp/rubyipmi_custom.log')
@@ -100,13 +100,13 @@ describe "rubyipmi" do
     it 'should not create a log file when log level is nil' do
       Rubyipmi.get_diag(@user, @pass, @host)
       expect(Rubyipmi.logger.instance_of?(NullLogger)).to be true
-      expect(File.exists?('/tmp/rubyipmi.log')).to be false
+      expect(File.exist?('/tmp/rubyipmi.log')).to be false
     end
 
     it 'should not create a log file when logger is set to nil and log_level is nil' do
       Rubyipmi.get_diag(@user, @pass, @host)
       expect(Rubyipmi.logger.instance_of?(NullLogger)).to be true
-      expect(File.exists?('/tmp/rubyipmi.log')).to be false
+      expect(File.exist?('/tmp/rubyipmi.log')).to be false
     end
   end
 end
