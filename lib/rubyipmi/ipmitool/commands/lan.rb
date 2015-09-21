@@ -1,7 +1,5 @@
 module Rubyipmi::Ipmitool
-
   class Lan < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :info
     attr_accessor :channel
     MAX_RETRY = 1
@@ -10,7 +8,6 @@ module Rubyipmi::Ipmitool
       super("ipmitool", opts)
       @info = {}
       @channel = 2
-
     end
 
     # sets the info var to be empty causing the variable to repopulate upon the next call to info
@@ -43,81 +40,79 @@ module Rubyipmi::Ipmitool
     end
 
     def snmp
-      info.fetch("snmp_community_string",nil)
+      info.fetch("snmp_community_string", nil)
     end
 
     def ip
-      info.fetch("ip_address",nil)
+      info.fetch("ip_address", nil)
     end
 
     def mac
-      info.fetch("mac_address",nil)
+      info.fetch("mac_address", nil)
     end
 
     def netmask
-      info.fetch("subnet_mask",nil)
+      info.fetch("subnet_mask", nil)
     end
 
     def gateway
-      info.fetch("default_gateway_ip",nil)
+      info.fetch("default_gateway_ip", nil)
     end
 
     def vlanid
-      info.fetch("802.1q_vlan_id",nil)
+      info.fetch("802.1q_vlan_id", nil)
     end
 
-  #  def snmp=(community)
-  #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
-  #    value = runcmd
-  #    @options.delete_notify("cmdargs")
-  #    return value
-  #  end
+    #  def snmp=(community)
+    #    @options["cmdargs"] = "lan set #{channel} snmp #{community}"
+    #    value = runcmd
+    #    @options.delete_notify("cmdargs")
+    #    return value
+    #  end
 
     def ip=(address)
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def netmask=(mask)
       @options["cmdargs"] = "lan set #{channel} netmask #{mask}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def gateway=(address)
       @options["cmdargs"] = "lan set #{channel} defgw ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def dhcp?
-      info.fetch("ip_address_source",nil).match(/dhcp/i) != nil
+      info.fetch("ip_address_source", nil).match(/dhcp/i) != nil
     end
 
     def static?
-      info.fetch("ip_address_source",nil).match(/static/i) != nil
+      info.fetch("ip_address_source", nil).match(/static/i) != nil
     end
 
     def vlanid=(vlan)
       @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
-   private
+    private
 
     def print
       @options["cmdargs"] = "lan print"
       value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        @result
-      end
+      @result if value
     end
 
     def parse(landata)
@@ -127,14 +122,12 @@ module Rubyipmi::Ipmitool
         key = normalize(item.first.strip)
         value = item.last.strip
         @info[key] = value
-
       end
-      return @info
+      @info
     end
 
     def normalize(text)
       text.gsub(/\ /, '_').gsub(/\./, '').downcase
     end
-
   end
 end

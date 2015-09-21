@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-
 describe "Bmc" do
-
   before :all do
     @path = '/usr/local/bin'
   end
@@ -14,19 +12,18 @@ describe "Bmc" do
     pass = "impipass"
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @bmc = @conn.bmc
     data = nil
-    File.open("spec/fixtures/#{provider}/bmc_info.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/bmc_info.txt", 'r') do |file|
       data = file.read
     end
 
     allow(@bmc).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     allow(@bmc).to receive(:`).and_return(data)
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
 
     allow(@bmc).to receive(:guid).and_return("guid")
-
   end
 
   it "bmc should not be nil" do
@@ -38,7 +35,7 @@ describe "Bmc" do
   end
 
   it "guid should not be nil" do
-     expect(@bmc.guid).not_to be_nil
+    expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nil" do
@@ -48,7 +45,6 @@ describe "Bmc" do
   it "info should parse as expected" do
     expect(@bmc.info).to eq(RETRIEVE)
   end
-
 end
 
 RETRIEVE = {

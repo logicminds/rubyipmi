@@ -1,20 +1,17 @@
 module Rubyipmi::Ipmitool
-
   class ChassisConfig < Rubyipmi::Ipmitool::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
-
     end
 
     # Get the current boot device
     def bootdevice
-       # Not available with ipmitool
-       false
+      # Not available with ipmitool
+      false
     end
 
     # Set the boot device
-    def bootdevice(device, persistent=false)
+    def bootdevice(device, persistent = false)
       if persistent
         @options["cmdargs"] = "chassis bootdev #{device}"
       else
@@ -22,7 +19,7 @@ module Rubyipmi::Ipmitool
       end
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     # Get list of available boot devices
@@ -33,24 +30,23 @@ module Rubyipmi::Ipmitool
     end
 
     # shortcut to set boot device to pxe
-    def bootpxe(persistent=true)
-      bootdevice("pxe",persistent)
+    def bootpxe(persistent = true)
+      bootdevice("pxe", persistent)
     end
 
     # shortcut to set boot device to disk
-    def bootdisk(persistent=true)
-      bootdevice("disk",persistent)
+    def bootdisk(persistent = true)
+      bootdevice("disk", persistent)
     end
 
     # shortcut to set boot device to cdrom
-    def bootcdrom(persistent=true)
-      bootdevice("cdrom",persistent)
+    def bootcdrom(persistent = true)
+      bootdevice("cdrom", persistent)
     end
 
     # shortcut to boot into bios setup
-    def bootbios(persistent=true)
-      bootdevice("bios",persistent)
+    def bootbios(persistent = true)
+      bootdevice("bios", persistent)
     end
-
   end
 end

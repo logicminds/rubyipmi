@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Connection" do
-
   before :each do
     user ||= ENV["ipmiuser"] || "admin"
     pass ||= ENV["ipmipass"] || "password"
@@ -11,7 +10,7 @@ describe "Connection" do
   end
 
   it "creates a new object" do
-     expect(@conn).to be_truthy
+    expect(@conn).to be_truthy
   end
 
   it 'creates a bmc object' do

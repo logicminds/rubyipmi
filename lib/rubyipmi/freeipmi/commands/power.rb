@@ -1,6 +1,5 @@
 module Rubyipmi::Freeipmi
   class Power < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmipower", opts)
     end
@@ -8,9 +7,9 @@ module Rubyipmi::Freeipmi
     # The command function is a wrapper that actually calls the run method
     def command(opt)
       @options[opt] = false
-      value = runcmd
+      runcmd
       @options.delete_notify(opt)
-      return @result
+      @result
     end
 
     # Turn on the system
@@ -31,7 +30,6 @@ module Rubyipmi::Freeipmi
       else
         command("cycle")
       end
-
     end
 
     # Perform a power reset on the system
@@ -51,9 +49,7 @@ module Rubyipmi::Freeipmi
     # Get the power status of the system, will show either on or off
     def status
       value = command("stat")
-      if value
-        @result.split(":").last.chomp.strip
-      end
+      @result.split(":").last.chomp.strip if value
     end
 
     # Test to see if the power is on
@@ -65,8 +61,5 @@ module Rubyipmi::Freeipmi
     def off?
       status == "off"
     end
-
-
-
   end
 end

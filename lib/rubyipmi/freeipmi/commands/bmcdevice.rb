@@ -1,7 +1,5 @@
 module Rubyipmi::Freeipmi
-
   class BmcDevice < Rubyipmi::Freeipmi::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("bmc-device", opts)
     end
@@ -11,11 +9,11 @@ module Rubyipmi::Freeipmi
       @options[opt] = false
       value = runcmd
       @options.delete_notify(opt)
-      return value
+      value
     end
 
     # reset the bmc device, useful for debugging and troubleshooting
-    def reset(type='cold')
+    def reset(type = 'cold')
       if ['cold', 'warm'].include?(type)
         key = "#{type}-reset"
         command(key)
@@ -24,10 +22,5 @@ module Rubyipmi::Freeipmi
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
     end
-
-
-
   end
-
-
 end

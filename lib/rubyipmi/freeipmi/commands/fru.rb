@@ -1,23 +1,17 @@
 module Rubyipmi::Freeipmi
-
   class Fru < Rubyipmi::Freeipmi::BaseCommand
-
     attr_accessor :list
 
     DEFAULT_FRU = 'default_fru_device'
 
     def initialize(opts = ObservableHash.new)
-        super("ipmi-fru", opts)
-        @list = {}
+      super("ipmi-fru", opts)
+      @list = {}
     end
 
     def get_from_list(key)
-      if list.has_key?(DEFAULT_FRU)
-        if list[DEFAULT_FRU].has_key?(key)
-           list[DEFAULT_FRU][key]
-         else
-           nil
-         end
+      if list.key?(DEFAULT_FRU)
+        list[DEFAULT_FRU][key] if list[DEFAULT_FRU].key?(key)
       end
     end
 
@@ -40,7 +34,7 @@ module Rubyipmi::Freeipmi
     # method to retrieve the raw fru data
     def getfrus
       command
-      return @result
+      @result
     end
 
     def names
@@ -49,15 +43,13 @@ module Rubyipmi::Freeipmi
 
     # return the list of fru information in a hash
     def list
-      if @list.count < 1
-        parse(getfrus)
-      end
+      parse(getfrus) if @list.count < 1
       @list
     end
 
     private
 
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       name = method.to_s
       fru = list.fetch(name, nil)
       # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
@@ -76,7 +68,7 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information
     def parse(data)
-      if ! data.nil? and ! data.empty?
+      if !data.nil? && !data.empty?
         parsed_data = []
         data.lines.each do |line|
           if line =~ /^FRU.*/
@@ -87,7 +79,6 @@ module Rubyipmi::Freeipmi
               parsed_data = []
               @list[new_fru[:name]] = new_fru
             end
-
           end
           parsed_data << line
         end
@@ -99,21 +90,17 @@ module Rubyipmi::Freeipmi
           @list[new_fru[:name]] = new_fru
         end
       end
-      return @list
+      @list
     end
 
     # run the command and return result
     def command
-       value = runcmd
-       if value
-         return @result
-       end
+      value = runcmd
+      return @result if value
     end
-
   end
 
   class FruData < Hash
-
     def name
       self[:name]
     end
@@ -124,7 +111,7 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information that should be an array of lines
     def parse(data)
-      if ! data.nil?
+      unless data.nil?
         data.each do |line|
           key, value = line.split(':', 2)
           if key =~ /^FRU.*/
@@ -133,10 +120,7 @@ module Rubyipmi::Freeipmi
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
-            if ! value.nil?
-              self[key] = value.strip
-
-            end
+            self[key] = value.strip unless value.nil?
           end
         end
       end
@@ -144,9 +128,8 @@ module Rubyipmi::Freeipmi
 
     private
 
-    def method_missing(method, *args, &block)
-      self.fetch(method.to_s, nil)
+    def method_missing(method, *_args, &_block)
+      fetch(method.to_s, nil)
     end
-
   end
 end

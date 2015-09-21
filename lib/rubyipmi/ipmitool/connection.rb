@@ -13,10 +13,10 @@ module Rubyipmi
       attr_accessor :options
 
       DRIVERS_MAP = {
-          'lan15' => 'lan',
-          'lan20' => 'lanplus',
-          'open'  => 'open'
-        }
+        'lan15' => 'lan',
+        'lan20' => 'lanplus',
+        'open'  => 'open'
+      }
 
       def initialize(user, pass, host, opts)
         @options = Rubyipmi::ObservableHash.new
@@ -26,9 +26,7 @@ module Rubyipmi
         # So they are not required
         @options["U"] = user if user
         @options["P"] = pass if pass
-        if opts.has_key?(:privilege)
-          @options["L"] = opts[:privilege]
-        end
+        @options["L"] = opts[:privilege] if opts.key?(:privilege)
         # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
         #  the user really wants to.
         @options['I'] = DRIVERS_MAP[opts[:driver]] unless DRIVERS_MAP[opts[:driver]].nil?
@@ -36,11 +34,9 @@ module Rubyipmi
 
       # test the connection to ensure we can at least make a single call
       def connection_works?
-        begin
-          ! (bmc.info.nil? || bmc.info.empty? )
-        rescue
-          false
-        end
+        ! (bmc.info.nil? || bmc.info.empty?)
+      rescue
+        false
       end
 
       def fru

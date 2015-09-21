@@ -1,7 +1,5 @@
 module Rubyipmi::Ipmitool
-
   class Fru < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :list
 
     DEFAULT_FRU = 'builtin_fru_device'
@@ -29,22 +27,20 @@ module Rubyipmi::Ipmitool
 
     # return the list of fru information in a hash
     def list
-      if @list.count < 1
-        parse(getfrus)
-      end
+      parse(getfrus) if @list.count < 1
       @list
     end
 
-  # method to retrieve the raw fru data
+    # method to retrieve the raw fru data
     def getfrus
       command
     end
 
-   private
+    private
 
     # I use method missing to allow the user to say Fru.<name> which returns a frudata object unless the user
     # passes a keyname from the default fru device
-    def method_missing(method, *args, &block)
+    def method_missing(method, *_args, &_block)
       name = method.to_s
       fru = list.fetch(name, nil)
       # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
@@ -63,7 +59,7 @@ module Rubyipmi::Ipmitool
 
     # parse the fru information
     def parse(data)
-      if ! data.nil?
+      unless data.nil?
         parsed_data = []
         data.lines.each do |line|
           if line =~ /^FRU.*/
@@ -93,15 +89,11 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "fru"
       value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        return @result
-      end
+      return @result if value
     end
-
   end
 
   class FruData < Hash
-
     def name
       self[:name]
     end
@@ -112,7 +104,7 @@ module Rubyipmi::Ipmitool
 
     # parse the fru information that should be an array of lines
     def parse(data)
-      if ! data.nil?
+      unless data.nil?
         data.each do |line|
           key, value = line.split(':', 2)
           if key =~ /^FRU\s+Device.*/
@@ -121,9 +113,7 @@ module Rubyipmi::Ipmitool
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase
-            if ! value.nil?
-              self[key] = value.strip
-            end
+            self[key] = value.strip unless value.nil?
           end
         end
       end
@@ -131,8 +121,8 @@ module Rubyipmi::Ipmitool
 
     private
 
-    def method_missing(method, *args, &block)
-      self.fetch(method.to_s, nil)
+    def method_missing(method, *_args, &_block)
+      fetch(method.to_s, nil)
     end
   end
 end

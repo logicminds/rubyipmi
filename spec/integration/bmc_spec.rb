@@ -1,14 +1,12 @@
 require 'spec_helper'
 
 describe "Bmc" do
-
   before :each do
     user ||= ENV["ipmiuser"] || "admin"
     pass ||= ENV["ipmipass"] || "password"
     host ||= ENV["ipmihost"] || "10.0.1.16"
     provider ||= ENV["ipmiprovider"] || "ipmitool"
     @conn = Rubyipmi.connect(user, pass, host, provider)
-
   end
 
   it "creates a bmc object" do
@@ -17,7 +15,7 @@ describe "Bmc" do
 
   it "options should change after calling info" do
     before = @conn.bmc.options.clone
-    info = @conn.bmc.info
+    @conn.bmc.info
     after = @conn.bmc.options.clone
     expect(before.length).to be < after.length
   end
@@ -35,7 +33,7 @@ describe "Bmc" do
   end
 
   it "reset should fail when type is wrong" do
-    expect{@conn.bmc.reset('freezing')}.to raise_exception
+    expect { @conn.bmc.reset('freezing') }.to raise_exception
   end
 
   it "is able to retrieve the bmc info" do

@@ -1,0 +1,66 @@
+Style/StringLiterals:
+  Enabled: false
+AllCops:
+  Exclude:
+  - 'rubyipmi.gemspec'
+SignalException:
+  EnforcedStyle: only_raise
+Documentation:
+  Enabled: false
+ClassAndModuleChildren:
+  Enabled: false
+HashSyntax:
+  EnforcedStyle: hash_rockets
+ClassCheck:
+  EnforcedStyle: kind_of?
+SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+Style/WordArray:
+  Enabled: false
+
+# TODO: fix these
+Metrics/AbcSize:
+  Max: 60
+Metrics/CyclomaticComplexity:
+  Max: 19
+Metrics/LineLength:
+  Max: 149
+Metrics/MethodLength:
+  Max: 44
+Metrics/ModuleLength:
+  Max: 128
+Metrics/PerceivedComplexity:
+  Max: 22
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
+    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
+Style/RescueModifier:
+  Exclude:
+    - 'lib/rubyipmi.rb'
+Style/RegexpLiteral:
+  Exclude:
+    - 'spec/spec_helper.rb'
+Style/PredicateName:
+  Exclude:
+    - 'lib/rubyipmi.rb'
+Lint/RescueException:
+  Exclude:
+    - 'spec/integration/rubyipmi_spec.rb'
+Lint/DuplicateMethods:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
+    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
+Style/AccessorMethodName:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/connection.rb'
+    - 'lib/rubyipmi/ipmitool/connection.rb'
+Style/MethodName:
+  Enabled: false
+GuardClause:
+  Enabled: false
+
+# Don't understand
+Style/FileName:
+  Exclude:
+    - 'spec/unit/freeipmi/bmc-info_spec.rb'

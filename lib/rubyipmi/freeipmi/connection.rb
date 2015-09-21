@@ -6,16 +6,17 @@ require 'rubyipmi/freeipmi/commands/basecommand'
 Dir[File.dirname(__FILE__) + '/commands/*.rb'].each do |file|
   require file
 end
+
 module Rubyipmi
   module Freeipmi
     class Connection
       attr_accessor :options
 
       DRIVERS_MAP = {
-          'lan15' => 'LAN',
-          'lan20' => 'LAN_2_0',
-          'open'  => 'OPENIPMI'
-        }
+        'lan15' => 'LAN',
+        'lan20' => 'LAN_2_0',
+        'open'  => 'OPENIPMI'
+      }
 
       def initialize(user, pass, host, opts)
         @options = Rubyipmi::ObservableHash.new
@@ -25,8 +26,8 @@ module Rubyipmi
         # So they are not required
         @options["username"] = user if user
         @options["password"] = pass if pass
-        if opts.has_key?(:privilege)
-          @options["privilege-level"] = opts[:privilege]        # privilege type
+        if opts.key?(:privilege)
+          @options["privilege-level"] = opts[:privilege] # privilege type
         end
         # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
         #       the user really wants to
@@ -35,11 +36,9 @@ module Rubyipmi
 
       # test the connection to ensure we can at least make a single call
       def connection_works?
-        begin
-          ! (bmc.info.nil? || bmc.info.empty? )
-        rescue
-          false
-        end
+        ! (bmc.info.nil? || bmc.info.empty?)
+      rescue
+        false
       end
 
       def provider

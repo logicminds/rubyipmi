@@ -3,7 +3,6 @@ require 'tempfile'
 require 'rubyipmi'
 
 module Rubyipmi
-
   class BaseCommand
     include Observable
     attr_reader :cmd, :max_retry_count
@@ -39,7 +38,7 @@ module Rubyipmi
 
     def locate_command(commandname)
       location = `which #{commandname}`.strip
-      if not $?.success?
+      unless $CHILD_STATUS.success?
         logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
@@ -71,7 +70,7 @@ module Rubyipmi
         @lastcall = "#{command}"
         @result = `#{command} 2>&1`
         # sometimes the command tool does not return the correct result, validate it with additional code
-        process_status = validate_status($?)
+        process_status = validate_status($CHILD_STATUS)
       rescue
         if retrycount < max_retry_count
           find_fix(@result)
@@ -83,7 +82,7 @@ module Rubyipmi
         end
       ensure
         removepass
-        return process_status
+        process_status
       end
     end
 
@@ -108,7 +107,7 @@ module Rubyipmi
       @options.merge!(opts)
     end
 
-  # This method will check if the results are really valid as the exit code can be misleading and incorrect
+    # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
       raise "Error occurred" unless exitstatus.success?
 

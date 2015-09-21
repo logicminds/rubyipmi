@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe "Bmc" do
   before :all do
     @path = '/usr/local/bin'
@@ -14,10 +13,10 @@ describe "Bmc" do
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmipower').and_return("#{@path}/ipmipower")
 
-    @conn = Rubyipmi.connect(user, pass, host, provider,{:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @bmc = @conn.bmc
     data = nil
-    File.open("spec/fixtures/#{provider}/bmc_info.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/bmc_info.txt", 'r') do |file|
       data = file.read
     end
     allow(@bmc).to receive(:guid).and_return("guid")
@@ -33,11 +32,10 @@ describe "Bmc" do
   end
 
   it "guid should not be nil" do
-     expect(@bmc.guid).not_to be_nil
+    expect(@bmc.guid).not_to be_nil
   end
 
   it "info should not be nill" do
     expect(@bmc.info).not_to be_nil
   end
-
 end

@@ -1,7 +1,5 @@
 module Rubyipmi::Ipmitool
-
   class Power < Rubyipmi::Ipmitool::BaseCommand
-
     def initialize(opts = ObservableHash.new)
       super("ipmitool", opts)
     end
@@ -11,7 +9,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "power #{opt}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     # Turn on the system
@@ -40,7 +38,6 @@ module Rubyipmi::Ipmitool
       else
         command("cycle")
       end
-
     end
 
     # Perform a power reset on the system
@@ -60,21 +57,17 @@ module Rubyipmi::Ipmitool
     # Get the power status of the system, will show either on or off
     def status
       value = command("status")
-      if value
-        @result.match(/(off|on)/).to_s
-      end
+      @result.match(/(off|on)/).to_s if value
     end
 
     # Test to see if the power is on
     def on?
       status == "on"
-
     end
 
     # Test to see if the power is off
     def off?
       status == "off"
     end
-
   end
 end

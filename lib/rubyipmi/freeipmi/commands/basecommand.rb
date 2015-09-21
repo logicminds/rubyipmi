@@ -1,14 +1,12 @@
 require 'rubyipmi/freeipmi/errorcodes'
 
 module Rubyipmi::Freeipmi
-
   class BaseCommand < Rubyipmi::BaseCommand
-
     def setpass
       super
       @options["config-file"] = @passfile.path
-      @passfile.write "username #{@options["username"]}\n"
-      @passfile.write "password #{@options["password"]}\n"
+      @passfile.write "username #{@options['username']}\n"
+      @passfile.write "password #{@options['password']}\n"
       @passfile.close
     end
 
@@ -18,16 +16,16 @@ module Rubyipmi::Freeipmi
 
     def makecommand
       # need to format the options to freeipmi format
-      args = @options.collect { |k, v|
+      args = @options.collect do |k, v|
         # must remove from command line as its handled via conf file
         next if k == 'password'
         next if k == 'username'
-        if not v
+        if !v
           "--#{k}"
         else
           "--#{k}=#{v}"
         end
-      }.join(" ")
+      end.join(" ")
 
       "#{cmd} #{args.rstrip}"
     end
@@ -41,7 +39,7 @@ module Rubyipmi::Freeipmi
         # essentially any result greater than 23 characters is an error
         raise "Error occurred" if @result.length > 23
       when "bmc-config"
-        if @result.length > 100 and exitstatus.success?
+        if @result.length > 100 && exitstatus.success?
           return true
         else
           raise "Error occurred"
@@ -65,6 +63,5 @@ module Rubyipmi::Freeipmi
         end
       end
     end
-
   end
 end
