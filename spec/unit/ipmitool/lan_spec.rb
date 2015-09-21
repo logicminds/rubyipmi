@@ -69,7 +69,7 @@ describe "Lan" do
     expect(@lan.static?).to eq false
   end
 
-  #it 'should attempt to apply fix and fail, then switch to channel 1' do
+  # it 'should attempt to apply fix and fail, then switch to channel 1' do
   #  channelbefore = @lan.channel
   #  error = "some lan channel problem"
   #  @lan.stub(:`).and_return(error)
@@ -86,5 +86,5 @@ describe "Lan" do
   #  @lan.stub(:`).and_return(data)
   #  $?.stub(:success?).and_return(true)
   #
-  #end
+  # end
 end

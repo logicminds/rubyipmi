@@ -27,7 +27,7 @@ module Rubyipmi::Freeipmi
       value = checkout("Chassis_Boot_Flags")
       if value
         # TODO parse result to return current boot device
-        #@result
+        # @result
       end
     end
 
