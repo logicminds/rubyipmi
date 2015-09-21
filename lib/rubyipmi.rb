@@ -163,7 +163,7 @@ module Rubyipmi
       false
     end
     # return false if command was not found
-    return ! cmdpath.nil?
+    return !cmdpath.nil?
   end
 
   def self.providers

@@ -343,17 +343,6 @@ Style/SelfAssignment:
   Exclude:
     - 'spec/integration/power_spec.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-Style/SpaceAfterNot:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-
 
 
 

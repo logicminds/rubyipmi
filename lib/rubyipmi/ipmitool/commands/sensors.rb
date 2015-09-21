@@ -62,7 +62,7 @@ module Rubyipmi::Ipmitool
 
     def parse(data)
       sensorlist = {}
-      if ! data.nil?
+      if !data.nil?
         data.lines.each do |line|
           # skip the header
           sensor = Sensor.new(line)
