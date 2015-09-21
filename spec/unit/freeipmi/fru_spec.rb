@@ -1,6 +1,5 @@
 require 'spec_helper'
 describe :Fru do
-
   before :all do
     @path = '/usr/local/bin'
   end

@@ -73,7 +73,6 @@ module Rubyipmi::Ipmitool
     end
   end
 
-
   class Sensor < Hash
     def initialize(line)
       parse(line)
@@ -81,6 +80,7 @@ module Rubyipmi::Ipmitool
     end
 
     private
+
     def normalize(text)
       text.gsub(/\ /, '_').gsub(/\./, '').downcase
     end

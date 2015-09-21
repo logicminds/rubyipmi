@@ -26,7 +26,6 @@ def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)
   expect(args_match.count).to eq(exp_args_count)
 end
 
-
 def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   actual = cmdobj.lastcall
   actual.scan(/(^#{Regexp.escape(expcmd)})/) do |cmd_match|
@@ -38,7 +37,6 @@ def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   # args_match.should =~ exp_args
   expect(args_match.count).to eq(exp_args_count)
 end
-
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

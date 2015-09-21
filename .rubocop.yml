@@ -99,15 +99,6 @@ Style/AccessorMethodName:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-Style/AlignHash:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/unit/ipmitool/bmc_spec.rb'
-
 # Offense count: 19
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -162,13 +153,6 @@ Style/CommentAnnotation:
     - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
     - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/CommentIndentation:
-  Exclude:
-    - 'lib/rubyipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/ipmitool/commands/lan.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 Style/DeprecatedHashMethods:
@@ -187,51 +171,6 @@ Style/DeprecatedHashMethods:
 Style/EmptyElse:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/EmptyLines:
-  Exclude:
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/spec_helper.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'spec/Vagrantfile'
-    - 'spec/integration/fru_spec.rb'
-    - 'spec/integration/sensor_spec.rb'
-    - 'spec/unit/freeipmi/fru_spec.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
-    - 'lib/rubyipmi/ipmitool/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundModuleBody:
-  Exclude:
-    - 'lib/rubyipmi/commands/basecommand.rb'
 
 # Offense count: 1
 # Configuration parameters: Exclude.

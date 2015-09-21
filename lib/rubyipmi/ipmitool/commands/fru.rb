@@ -1,6 +1,5 @@
 module Rubyipmi::Ipmitool
   class Fru < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :list
 
     DEFAULT_FRU = 'builtin_fru_device'

@@ -1,7 +1,6 @@
 module Rubyipmi
   module Ipmitool
     class ErrorCodes
-
       @@codes = {
         "Authentication type NONE not supported\nAuthentication type NONE not supported\n" \
         "Error: Unable to establish LAN session\nGet Device ID command failed\n" => {"I" => "lanplus"},
@@ -29,7 +28,6 @@ module Rubyipmi
         end
         raise "No Fix found" if fix.nil?
       end
-
 
       def throwError
         # Find out what kind of error is happening, parse results
