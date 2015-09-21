@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-Lint/DuplicateMethods:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
-
-
-# Offense count: 3
-Lint/RescueException:
-  Exclude:
-    - 'spec/integration/rubyipmi_spec.rb'
-
 # Offense count: 13
 Metrics/AbcSize:
   Max: 60
@@ -112,3 +100,10 @@ Style/RegexpLiteral:
 Style/PredicateName:
   Exclude:
     - 'lib/rubyipmi.rb'
+Lint/RescueException:
+  Exclude:
+    - 'spec/integration/rubyipmi_spec.rb'
+Lint/DuplicateMethods:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
+    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
