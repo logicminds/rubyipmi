@@ -52,7 +52,7 @@ describe :Connection do
 
   it 'object should have driver set to auto if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-    expect(@conn.options.has_key?('I')).to eq false
+    expect(@conn.options.key?('I')).to eq false
   end
 
   it 'should raise exception if invalid driver type' do
@@ -61,7 +61,7 @@ describe :Connection do
 
   it 'object should have priv type set to ADMINISTRATOR if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-    expect(@conn.options.has_key?('L')).to eq false
+    expect(@conn.options.key?('L')).to eq false
   end
 
   it 'object should have priv type set to USER ' do
