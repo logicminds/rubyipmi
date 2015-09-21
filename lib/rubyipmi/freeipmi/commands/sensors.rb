@@ -47,7 +47,7 @@ module Rubyipmi::Freeipmi
       @options["no-header-output"] = false
       @options["output-sensor-state"] = false
       @options["entity-sensor-names"] = false
-      value = runcmd
+      runcmd
       @options.delete_notify('no-header-output')
       @options.delete_notify('output-sensor-state')
       @options.delete_notify('entity-sensor-names')

@@ -93,7 +93,6 @@ module Rubyipmi::Freeipmi
     def parsestatus
       statusresult = @result
       statusvalues = {}
-      subkey = nil
       statusresult.lines.each do |line|
         # clean up the data from spaces
         item = line.split(':')

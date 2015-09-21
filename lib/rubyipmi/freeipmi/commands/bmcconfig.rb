@@ -16,7 +16,7 @@ module Rubyipmi::Freeipmi
     def section(section)
       @options["checkout"] = false
       @options["section"] = section
-      value = runcmd
+      runcmd
       @options.delete_notify("checkout")
       @options.delete_notify("section")
       @result
@@ -40,7 +40,7 @@ module Rubyipmi::Freeipmi
       require 'pry'
       binding.pry
       @options["checkout"] = false
-      value = runcmd
+      runcmd
       @options.delete_notify("checkout")
       @result
     end

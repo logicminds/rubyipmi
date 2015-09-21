@@ -15,7 +15,7 @@ describe "Bmc" do
 
   it "options should change after calling info" do
     before = @conn.bmc.options.clone
-    info = @conn.bmc.info
+    @conn.bmc.info
     after = @conn.bmc.options.clone
     expect(before.length).to be < after.length
   end

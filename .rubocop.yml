@@ -52,20 +52,6 @@ Lint/UnusedMethodArgument:
     - 'lib/rubyipmi/ipmitool/commands/fru.rb'
     - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
 
-# Offense count: 11
-Lint/UselessAssignment:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
-    - 'lib/rubyipmi/freeipmi/commands/bmcconfig.rb'
-    - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
-    - 'lib/rubyipmi/freeipmi/commands/power.rb'
-    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-    - 'spec/integration/bmc_spec.rb'
-    - 'spec/integration/rubyipmi_spec.rb'
-
 # Offense count: 13
 Metrics/AbcSize:
   Max: 60

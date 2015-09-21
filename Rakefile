@@ -45,7 +45,6 @@ end
 desc "Run integrations tests against real systems using a vagrant box"
 task :vintegration, :user, :pass, :host do |task, args|
   vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
-  ipmiprovider = "freeipmi"
   puts `cd #{@base_dir}/spec && vagrant up`
   puts `cd #{@base_dir}/spec && vagrant provision`
   puts `vagrant ssh \"/rubyipmi/rake integration #{vars}\"`

@@ -21,7 +21,7 @@ module Rubyipmi::Ipmitool
 
     def version
       @options['V'] = nil
-      value = runcmd
+      runcmd
       @options.delete_notify('V')
       @result.slice(/\d\.\d.\d/)
     end

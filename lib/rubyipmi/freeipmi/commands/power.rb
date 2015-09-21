@@ -7,7 +7,7 @@ module Rubyipmi::Freeipmi
     # The command function is a wrapper that actually calls the run method
     def command(opt)
       @options[opt] = false
-      value = runcmd
+      runcmd
       @options.delete_notify(opt)
       @result
     end
