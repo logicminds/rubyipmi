@@ -3,7 +3,7 @@ module Rubyipmi::Freeipmi
 
     @@codes = {
       "authentication type unavailable for attempted privilege level" => {"driver-type" => "LAN_2_0"},
-      "authentication type unavailable for attempted privilege level\n" => {"driver-type" => "LAN_2_0"},
+      "authentication type unavailable for attempted privilege level\n" => {"driver-type" => "LAN_2_0"}
     }
 
     def self.length
