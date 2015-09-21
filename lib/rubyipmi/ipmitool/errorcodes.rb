@@ -39,7 +39,7 @@ module Rubyipmi
           code = "ipmi call: #{@lastcall} timed out"
           raise code
         else
-          code = @result.split(":").last.chomp.strip if !@result.empty?
+          code = @result.split(":").last.chomp.strip unless @result.empty?
         end
         case code
         when "invalid hostname"

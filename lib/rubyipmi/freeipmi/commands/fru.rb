@@ -116,7 +116,7 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information that should be an array of lines
     def parse(data)
-      if !data.nil?
+      unless data.nil?
         data.each do |line|
           key, value = line.split(':', 2)
           if key =~ /^FRU.*/
@@ -125,7 +125,7 @@ module Rubyipmi::Freeipmi
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
-            self[key] = value.strip if !value.nil?
+            self[key] = value.strip unless value.nil?
           end
         end
       end

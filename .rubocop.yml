@@ -271,18 +271,6 @@ Style/MethodCallParentheses:
 Style/MethodName:
   Enabled: false
 
-# Offense count: 11
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-    - 'lib/rubyipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/bmcconfig.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
-    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
 
 
