@@ -378,22 +378,6 @@ Style/SpaceAroundOperators:
     - 'spec/unit/ipmitool/errorcodes_spec.rb'
     - 'spec/unit/rubyipmi_spec.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-Style/SpecialGlobalVars:
-  Exclude:
-    - 'lib/rubyipmi.rb'
-    - 'lib/rubyipmi/commands/basecommand.rb'
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
-    - 'spec/unit/freeipmi/bmc-info_spec.rb'
-    - 'spec/unit/freeipmi/fru_spec.rb'
-    - 'spec/unit/freeipmi/sensors_spec.rb'
-    - 'spec/unit/ipmitool/bmc_spec.rb'
-    - 'spec/unit/ipmitool/fru_spec.rb'
-    - 'spec/unit/ipmitool/lan_spec.rb'
-    - 'spec/unit/ipmitool/sensors_spec.rb'
-
 
 
 
@@ -420,3 +404,9 @@ SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 Style/WordArray:
   Enabled: false
+
+# Should fix
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
+    - 'lib/rubyipmi/ipmitool/commands/fru.rb'

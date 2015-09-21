@@ -39,7 +39,7 @@ module Rubyipmi
 
     def locate_command(commandname)
       location = `which #{commandname}`.strip
-      if not $?.success?
+      if not $CHILD_STATUS.success?
         logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
@@ -71,7 +71,7 @@ module Rubyipmi
         @lastcall = "#{command}"
         @result = `#{command} 2>&1`
         # sometimes the command tool does not return the correct result, validate it with additional code
-        process_status = validate_status($?)
+        process_status = validate_status($CHILD_STATUS)
       rescue
         if retrycount < max_retry_count
           find_fix(@result)

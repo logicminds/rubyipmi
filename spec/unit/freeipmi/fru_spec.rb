@@ -22,7 +22,7 @@ describe :Fru do
 
     allow(@fru).to receive(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
     allow(@fru).to receive(:`).and_return(data)
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
   end
 
   it "cmd should be ipmi-fru with correct number of arguments" do
