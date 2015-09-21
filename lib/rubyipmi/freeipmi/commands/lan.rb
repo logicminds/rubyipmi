@@ -85,7 +85,7 @@ module Rubyipmi::Freeipmi
     #  end
 
     def parse(landata)
-      if !landata.nil? and !landata.empty?
+      if !landata.nil? && !landata.empty?
         landata.lines.each do |line|
           # clean up the data from spaces
           next if line.match(/#+/)
