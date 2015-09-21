@@ -16,7 +16,7 @@ module Rubyipmi::Freeipmi
     def section(section)
       @options["checkout"] = false
       @options["section"] = section
-      value = runcmd
+      runcmd
       @options.delete_notify("checkout")
       @options.delete_notify("section")
       @result
@@ -38,7 +38,7 @@ module Rubyipmi::Freeipmi
     # returns the entire bmc-config configuration, can take a while to execute
     def configuration
       @options["checkout"] = false
-      value = runcmd
+      runcmd
       @options.delete_notify("checkout")
       @result
     end

@@ -10,7 +10,7 @@ module Rubyipmi::Freeipmi
 
     def version
       @options['version'] = false
-      value = runcmd
+      runcmd
       @options.delete_notify('version')
       @result.slice(/\d\.\d.\d/)
     end
