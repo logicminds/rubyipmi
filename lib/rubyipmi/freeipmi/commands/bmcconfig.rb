@@ -37,8 +37,6 @@ module Rubyipmi::Freeipmi
 
     # returns the entire bmc-config configuration, can take a while to execute
     def configuration
-      require 'pry'
-      binding.pry
       @options["checkout"] = false
       runcmd
       @options.delete_notify("checkout")
