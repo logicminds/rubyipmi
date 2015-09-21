@@ -252,12 +252,6 @@ Style/LeadingCommentSpace:
     - 'spec/unit/ipmitool/lan_spec.rb'
     - 'spec/unit/ipmitool/sensors_spec.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/MethodName:
