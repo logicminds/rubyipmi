@@ -77,7 +77,7 @@ module Rubyipmi::Freeipmi
 
     private
 
-    def setBootFlag(key, flag, persistent)
+    def setBootFlag(key, flag, _persistent)
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
       @options.delete_notify("key-pair")
