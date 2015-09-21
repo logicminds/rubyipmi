@@ -39,7 +39,7 @@ module Rubyipmi
 
     def locate_command(commandname)
       location = `which #{commandname}`.strip
-      if !$CHILD_STATUS.success?
+      unless $CHILD_STATUS.success?
         logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
         raise "#{commandname} command not found, is #{commandname} installed?"
       end

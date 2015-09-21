@@ -147,7 +147,7 @@ module Rubyipmi
   # method used to find the command which also makes it easier to mock with
   def self.locate_command(commandname)
     location = `which #{commandname}`.strip
-    location = nil if !$CHILD_STATUS.success?
+    location = nil unless $CHILD_STATUS.success?
     location
   end
 
