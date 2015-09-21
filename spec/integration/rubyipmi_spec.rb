@@ -73,7 +73,7 @@ describe "rubyipmi" do
       Rubyipmi.log_level = Logger::INFO
       Rubyipmi.get_diag(@user,@pass,@host)
       expect(File.exists?('/tmp/rubyipmi.log')).to be true
-      size = File.open('/tmp/rubyipmi.log', 'r') {|f| f.read.length}
+      size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
       expect(size).to be_within(60).of(100)
     end
 
@@ -81,7 +81,7 @@ describe "rubyipmi" do
       Rubyipmi.log_level = Logger::DEBUG
       Rubyipmi.get_diag(@user,@pass,@host)
       expect(File.exists?('/tmp/rubyipmi.log')).to be true
-      size = File.open('/tmp/rubyipmi.log', 'r') {|f| f.read.length}
+      size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
       expect(size).to be > 100
     end
 
@@ -92,7 +92,7 @@ describe "rubyipmi" do
       Rubyipmi.logger = logger
       Rubyipmi.get_diag(@user,@pass,@host)
       expect(File.exists?('/tmp/rubyipmi_custom.log')).to be true
-      size = File.open('/tmp/rubyipmi_custom.log', 'r') {|f| f.read.length}
+      size = File.open('/tmp/rubyipmi_custom.log', 'r') { |f| f.read.length }
       expect(size).to be > 100
       FileUtils.rm_f('/tmp/rubyipmi_custom.log')
     end

@@ -21,7 +21,7 @@ describe :Rubyipmi do
   end
 
   it 'is provider installed should return false when bad provider' do
-    expect{Rubyipmi.is_provider_installed?('bad_provider')}.to_not raise_error
+    expect{ Rubyipmi.is_provider_installed?('bad_provider') }.to_not raise_error
     expect(Rubyipmi.is_provider_installed?('bad_provider')).to be_falsey
   end
 

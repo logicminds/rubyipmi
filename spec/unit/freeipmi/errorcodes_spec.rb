@@ -17,11 +17,11 @@ describe "Errorcodes" do
 
   it 'should throw and error if no fix is found' do
     code = 'Crap Shoot'
-    expect {Rubyipmi::Freeipmi::ErrorCodes.search(code)}.to raise_error
+    expect { Rubyipmi::Freeipmi::ErrorCodes.search(code) }.to raise_error
   end
 
   it 'should throw and error when a bad code is given' do
     code = nil
-    expect {Rubyipmi::Freeipmi::ErrorCodes.search(code)}.to raise_error
+    expect { Rubyipmi::Freeipmi::ErrorCodes.search(code) }.to raise_error
   end
 end
