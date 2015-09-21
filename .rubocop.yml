@@ -166,13 +166,6 @@ Style/DeprecatedHashMethods:
     - 'spec/unit/ipmitool/connection_spec.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyElse:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-
-# Offense count: 1
 # Configuration parameters: Exclude.
 Style/FileName:
   Exclude:
