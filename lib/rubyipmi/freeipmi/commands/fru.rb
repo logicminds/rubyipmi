@@ -11,11 +11,7 @@ module Rubyipmi::Freeipmi
 
     def get_from_list(key)
       if list.has_key?(DEFAULT_FRU)
-        if list[DEFAULT_FRU].has_key?(key)
-          list[DEFAULT_FRU][key]
-        else
-          nil
-        end
+        list[DEFAULT_FRU][key] if list[DEFAULT_FRU].has_key?(key)
       end
     end
 
