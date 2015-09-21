@@ -1,5 +1,5 @@
 require 'spec_helper'
-#require 'rubyipmi/Freeipmi/errorcodes'
+# require 'rubyipmi/Freeipmi/errorcodes'
 
 describe "Errorcodes" do
   it 'should return the length of fix hash' do

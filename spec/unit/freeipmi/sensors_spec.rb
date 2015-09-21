@@ -67,7 +67,7 @@ describe :Sensors do
     end
   end
 
-  #it 'fix should be added to options after error occurs' do
+  # it 'fix should be added to options after error occurs' do
   #  error = nil
   #  File.open("spec/fixtures/freeipmi/errors.txt",'r') do |file|
   #    error = file.read
@@ -76,5 +76,5 @@ describe :Sensors do
   #  $?.stub(:success?).and_return(false)
   #  @sensors.refresh
   #  after = @sensors.options.fetch('driver-type', false).should_not be_false
-  #end
+  # end
 end

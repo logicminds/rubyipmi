@@ -27,17 +27,17 @@ describe :Sensors do
     allow($CHILD_STATUS).to receive(:success?).and_return(true)
   end
 
-  #it 'should figure out to add the -I lanplus' do
+  # it 'should figure out to add the -I lanplus' do
   #  error = 'Authentication type NONE not supported'
   #  @sensors.stub(:`).and_return(error)
   #  @sensors.list
   #  @sensors.lastcall.includes?('-I lanplus')
-  #end
+  # end
 
-  #it "cmd should be ipmi-sensors with three arguments" do
+  # it "cmd should be ipmi-sensors with three arguments" do
   #  @sensors.list
   #  verify_ipmitool_command(@sensors, 3, "#{@path}/ipmitool", 'sensor')
-  #end
+  # end
 
   it "can return a list of sensors" do
     expect(@sensors.list).not_to be_nil
@@ -78,7 +78,7 @@ describe :Sensors do
     expect(Rubyipmi::Ipmitool::Sensor.new("fakesensor")).not_to be nil
   end
 
-  #it 'fix should be added to options after error occurs' do
+  # it 'fix should be added to options after error occurs' do
   #  error = nil
   #  File.open("spec/fixtures/ipmitool/errors.txt",'r') do |file|
   #    error = file.read
@@ -87,5 +87,5 @@ describe :Sensors do
   #  $?.stub(:success?).and_return(false)
   #  @sensors.list
   #  after = @sensors.options.fetch('I', false).should_not be_false
-  #end
+  # end
 end

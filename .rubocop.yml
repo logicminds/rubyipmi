@@ -239,19 +239,6 @@ Style/FileName:
   Exclude:
     - 'spec/unit/freeipmi/bmc-info_spec.rb'
 
-# Offense count: 19
-# Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
-    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
-    - 'spec/Vagrantfile'
-    - 'spec/spec_helper.rb'
-    - 'spec/unit/freeipmi/errorcodes_spec.rb'
-    - 'spec/unit/freeipmi/sensors_spec.rb'
-    - 'spec/unit/ipmitool/lan_spec.rb'
-    - 'spec/unit/ipmitool/sensors_spec.rb'
-
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/MethodName:
