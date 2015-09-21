@@ -93,7 +93,7 @@ module Rubyipmi
     end
 
     # Verify options just in case user passed in a incomplete hash
-    opts[:driver]  ||= 'lan20'
+    opts[:driver] ||= 'lan20'
     opts[:timeout] ||= 'default'
 
     if opts[:privilege] and not supported_privilege_type?(opts[:privilege])
