@@ -318,12 +318,6 @@ Style/RedundantBegin:
 Style/RedundantReturn:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
-    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
