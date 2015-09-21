@@ -12,7 +12,7 @@ describe "Bmc" do
     pass = "impipass"
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @bmc = @conn.bmc
     data = nil
     File.open("spec/fixtures/#{provider}/bmc_info.txt", 'r') do |file|

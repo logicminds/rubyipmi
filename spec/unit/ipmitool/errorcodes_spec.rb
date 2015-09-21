@@ -12,7 +12,7 @@ describe "Errorcodes" do
 
   it 'should return a fix if code is found' do
     code = 'Authentication type NONE not supported'
-    expect(Rubyipmi::Ipmitool::ErrorCodes.search(code)).to eq({"I" => "lanplus"})
+    expect(Rubyipmi::Ipmitool::ErrorCodes.search(code)).to eq("I" => "lanplus")
   end
 
   it 'should throw and error if no fix is found' do
