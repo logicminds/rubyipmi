@@ -9,7 +9,7 @@ module Rubyipmi::Freeipmi
       @options[opt] = false
       value = runcmd
       @options.delete_notify(opt)
-      return value
+      value
     end
 
     # reset the bmc device, useful for debugging and troubleshooting

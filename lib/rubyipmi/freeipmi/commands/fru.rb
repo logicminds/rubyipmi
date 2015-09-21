@@ -39,7 +39,7 @@ module Rubyipmi::Freeipmi
     # method to retrieve the raw fru data
     def getfrus
       command
-      return @result
+      @result
     end
 
     def names
@@ -95,7 +95,7 @@ module Rubyipmi::Freeipmi
           @list[new_fru[:name]] = new_fru
         end
       end
-      return @list
+      @list
     end
 
     # run the command and return result

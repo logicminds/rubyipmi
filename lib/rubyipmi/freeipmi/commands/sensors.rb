@@ -28,7 +28,7 @@ module Rubyipmi::Freeipmi
       list.each do |name, sensor|
         flist[name] = sensor if name =~ /.*fan.*/
       end
-      return flist
+      flist
     end
 
     # returns a hash of sensors where each key is the name of the sensor and the value is the sensor
@@ -40,7 +40,7 @@ module Rubyipmi::Freeipmi
           tlist[name] = sensor
         end
       end
-      return tlist
+      tlist
     end
 
     def getsensors
@@ -73,7 +73,7 @@ module Rubyipmi::Freeipmi
           sensorlist[sensor[:name]] = sensor
         end
       end
-      return sensorlist
+      sensorlist
     end
   end
 

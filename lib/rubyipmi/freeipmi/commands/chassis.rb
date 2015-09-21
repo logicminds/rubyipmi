@@ -18,7 +18,7 @@ module Rubyipmi::Freeipmi
       # Run the command
       value = runcmd
       options.delete_notify("chassis-identify")
-      return value
+      value
     end
 
     # Access to the power command created on the fly
@@ -101,7 +101,7 @@ module Rubyipmi::Freeipmi
         value = item.last.strip
         statusvalues[key] = value
       end
-      return statusvalues
+      statusvalues
     end
   end
 end

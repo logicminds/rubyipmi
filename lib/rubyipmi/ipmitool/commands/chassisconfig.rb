@@ -19,7 +19,7 @@ module Rubyipmi::Ipmitool
       end
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     # Get list of available boot devices
