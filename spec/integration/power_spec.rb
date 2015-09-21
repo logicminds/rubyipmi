@@ -29,7 +29,7 @@ describe "Power" do
         break
       else
         sleep(5)
-        max_count = max_count - 1
+        max_count -= 1
       end
     end
     expect(@conn.chassis.power.off?).to be true

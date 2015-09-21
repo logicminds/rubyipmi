@@ -337,12 +337,6 @@ Style/RescueModifier:
   Exclude:
     - 'lib/rubyipmi.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'spec/integration/power_spec.rb'
-
 
 
 
