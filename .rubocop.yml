@@ -413,14 +413,6 @@ Style/SpaceInsideBlockBraces:
 Style/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
-    - 'spec/integration/lan_spec.rb'
-
 # Offense count: 12
 # Cop supports --auto-correct.
 Style/SpecialGlobalVars:

@@ -30,7 +30,7 @@ describe "Lan" do
   end
 
   it "static should be opposite of dhcp" do
-    expect(conn.bmc.lan.dhcp? ).to_not eq(conn.bmc.lan.static?)
+    expect(conn.bmc.lan.dhcp?).to_not eq(conn.bmc.lan.static?)
   end
 
   it "should set gateway address" do
