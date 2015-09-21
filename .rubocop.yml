@@ -299,16 +299,6 @@ Style/Not:
     - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantBegin:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
-
-
-
-
 
 
 
