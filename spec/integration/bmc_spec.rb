@@ -33,7 +33,7 @@ describe "Bmc" do
   end
 
   it "reset should fail when type is wrong" do
-    expect{ @conn.bmc.reset('freezing') }.to raise_exception
+    expect { @conn.bmc.reset('freezing') }.to raise_exception
   end
 
   it "is able to retrieve the bmc info" do
