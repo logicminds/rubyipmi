@@ -12,10 +12,6 @@ Lint/DuplicateMethods:
     - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
     - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
 
-# Offense count: 1
-Lint/EnsureReturn:
-  Exclude:
-    - 'lib/rubyipmi/commands/basecommand.rb'
 
 # Offense count: 3
 Lint/RescueException:

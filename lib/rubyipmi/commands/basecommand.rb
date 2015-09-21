@@ -82,7 +82,7 @@ module Rubyipmi
         end
       ensure
         removepass
-        return process_status
+        process_status
       end
     end
 
