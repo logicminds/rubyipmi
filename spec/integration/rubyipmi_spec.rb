@@ -19,7 +19,7 @@ describe "rubyipmi" do
   it "should test if a provider is present" do
     value = Rubyipmi.is_provider_installed?("ipmitool")
     value2 = Rubyipmi.is_provider_installed?("freeipmi")
-    expect((value|value2)).to eq true
+    expect((value | value2)).to eq true
   end
 
   it "should create a connection object if freeipmi is present" do

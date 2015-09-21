@@ -31,7 +31,7 @@ describe :Rubyipmi do
     host = "ipmihost"
     provider = "ipmitool"
     conn = Rubyipmi.connect(user, pass, host, provider, {'driver' => 'lan15'})
-    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+    expect(conn.options).to eq({"H" => "ipmihost", "U" => "ipmiuser", "P" => "impipass", "I" => "lan"})
   end
 
   it 'does not error when converting strings to symbols' do
@@ -40,6 +40,6 @@ describe :Rubyipmi do
     host = "ipmihost"
     provider = "ipmitool"
     conn = Rubyipmi.connect(user, pass, host, provider, {:driver => 'lan15'})
-    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+    expect(conn.options).to eq({"H" => "ipmihost", "U" => "ipmiuser", "P" => "impipass", "I" => "lan"})
   end
 end

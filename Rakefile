@@ -45,7 +45,7 @@ end
 desc "Run integrations tests against real systems using a vagrant box"
 task :vintegration, :user, :pass, :host do |task, args|
   vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
-  ipmiprovider="freeipmi"
+  ipmiprovider = "freeipmi"
   puts `cd #{@base_dir}/spec && vagrant up`
   puts `cd #{@base_dir}/spec && vagrant provision`
   puts `vagrant ssh \"/rubyipmi/rake integration #{vars}\"`
@@ -96,12 +96,12 @@ def send_email(to, data, opts = {})
   gmail_id = ask("Enter your gmail account:  ")
   pass = ask("Enter your gmail password:  ") { |q| q.echo = '*' }
   opts[:from] = gmail_id
-  opts[:server]      ||= 'smtp.gmail.com'
-  opts[:from_alias]  ||= gmail_id
-  opts[:subject]     ||= @subject
-  opts[:body]        ||= data
-  opts[:to]          ||= to
-  opts[:port]        ||= 587
+  opts[:server] ||= 'smtp.gmail.com'
+  opts[:from_alias] ||= gmail_id
+  opts[:subject] ||= @subject
+  opts[:body] ||= data
+  opts[:to] ||= to
+  opts[:port] ||= 587
   msg = <<END_OF_MESSAGE
 From: #{opts[:from_alias]} <#{opts[:from]}>
 To: <#{to}>
