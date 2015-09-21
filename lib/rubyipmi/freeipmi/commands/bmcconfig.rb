@@ -49,9 +49,7 @@ module Rubyipmi::Freeipmi
         @options["listsections"] = false
         value = runcmd
         @options.delete_notify("listsections")
-        if value
-          @sections = @result.split(/\n/)
-        end
+        @sections = @result.split(/\n/) if value
       end
       @sections
     end

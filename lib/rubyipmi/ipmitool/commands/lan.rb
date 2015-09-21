@@ -113,9 +113,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "lan print"
       value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        @result
-      end
+      @result if value
     end
 
     def parse(landata)

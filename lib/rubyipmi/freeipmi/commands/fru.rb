@@ -48,9 +48,7 @@ module Rubyipmi::Freeipmi
 
     # return the list of fru information in a hash
     def list
-      if @list.count < 1
-        parse(getfrus)
-      end
+      parse(getfrus) if @list.count < 1
       @list
     end
 
@@ -103,9 +101,7 @@ module Rubyipmi::Freeipmi
     # run the command and return result
     def command
       value = runcmd
-      if value
-        return @result
-      end
+      return @result if value
     end
   end
 
@@ -129,9 +125,7 @@ module Rubyipmi::Freeipmi
             end
           else
             key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
-            if ! value.nil?
-              self[key] = value.strip
-            end
+            self[key] = value.strip if ! value.nil?
           end
         end
       end

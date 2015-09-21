@@ -22,9 +22,7 @@ module Rubyipmi
         if fix.nil?
           @@codes.each do | error, result |
             # the error should be a subset of the actual erorr
-            if code =~ /.*#{error}.*/i
-              return result
-            end
+            return result if code =~ /.*#{error}.*/i
           end
         else
           return fix
