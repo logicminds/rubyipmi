@@ -26,7 +26,7 @@ module Rubyipmi
         # So they are not required
         @options["U"] = user if user
         @options["P"] = pass if pass
-        @options["L"] = opts[:privilege] if opts.has_key?(:privilege)
+        @options["L"] = opts[:privilege] if opts.key?(:privilege)
         # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
         #  the user really wants to.
         @options['I'] = DRIVERS_MAP[opts[:driver]] unless DRIVERS_MAP[opts[:driver]].nil?

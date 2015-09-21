@@ -48,12 +48,12 @@ describe "Bmc" do
 
   it 'object should have driver set to auto if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-    expect(@conn.options.has_key?('driver-type')).to eq false
+    expect(@conn.options.key?('driver-type')).to eq false
   end
 
   it 'object should have priv type set to ADMINISTRATOR if not specified' do
     @conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-    expect(@conn.options.has_key?('privilege-level')).to eq false
+    expect(@conn.options.key?('privilege-level')).to eq false
   end
 
   it 'object should have priv type set to USER ' do
