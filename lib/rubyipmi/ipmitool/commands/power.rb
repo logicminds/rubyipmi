@@ -9,7 +9,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "power #{opt}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     # Turn on the system

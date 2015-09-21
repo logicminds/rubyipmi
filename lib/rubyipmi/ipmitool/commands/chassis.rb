@@ -19,7 +19,7 @@ module Rubyipmi::Ipmitool
       # Run the command
       value = runcmd
       options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     # Access to the power command created on the fly
@@ -41,7 +41,7 @@ module Rubyipmi::Ipmitool
         logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
       end
-      return bootstatus
+      bootstatus
     end
 
     # set boot device to pxe with option to reboot
@@ -49,7 +49,7 @@ module Rubyipmi::Ipmitool
       bootstatus = config.bootpxe(persistent)
       # Only reboot if setting the boot flag was successful
       power.cycle if reboot and bootstatus
-      return bootstatus
+      bootstatus
     end
 
     # set boot device to disk with option to reboot
@@ -57,7 +57,7 @@ module Rubyipmi::Ipmitool
       bootstatus = config.bootdisk(persistent)
       # Only reboot if setting the boot flag was successful
       power.cycle if reboot and bootstatus
-      return bootstatus
+      bootstatus
     end
 
     # set boot device to cdrom with option to reboot
@@ -65,7 +65,7 @@ module Rubyipmi::Ipmitool
       bootstatus = config.bootcdrom(persistent)
       # Only reboot if setting the boot flag was successful
       power.cycle if reboot and bootstatus
-      return bootstatus
+      bootstatus
     end
 
     # boot into bios setup with option to reboot
@@ -73,14 +73,14 @@ module Rubyipmi::Ipmitool
       bootstatus = config.bootbios(persistent)
       # Only reboot if setting the boot flag was successful
       power.cycle if reboot and bootstatus
-      return bootstatus
+      bootstatus
     end
 
     def status
       options["cmdargs"] = "chassis status"
       value = runcmd
       options.delete_notify("cmdargs")
-      return {:result => @result, :value => value}
+      {:result => @result, :value => value}
     end
 
     # A currently unsupported method to retrieve the led status

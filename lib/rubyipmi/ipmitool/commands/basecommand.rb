@@ -27,7 +27,7 @@ module Rubyipmi::Ipmitool
       # since ipmitool requires commands to be in specific order
       args << ' ' + options.fetch('cmdargs', '')
 
-      return "#{cmd} #{args.lstrip}"
+      "#{cmd} #{args.lstrip}"
     end
 
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes

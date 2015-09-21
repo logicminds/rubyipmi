@@ -12,7 +12,7 @@ Coveralls.wear!
 def command_is_eql?(source, expected)
   src = source.split(' ')
   exp = expected.split(' ')
-  return exp - src
+  exp - src
 end
 
 def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)

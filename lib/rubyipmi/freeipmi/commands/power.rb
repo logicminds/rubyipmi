@@ -9,7 +9,7 @@ module Rubyipmi::Freeipmi
       @options[opt] = false
       value = runcmd
       @options.delete_notify(opt)
-      return @result
+      @result
     end
 
     # Turn on the system

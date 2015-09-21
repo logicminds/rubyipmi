@@ -75,21 +75,21 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def netmask=(mask)
       @options["cmdargs"] = "lan set #{channel} netmask #{mask}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def gateway=(address)
       @options["cmdargs"] = "lan set #{channel} defgw ipaddr #{address}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     def dhcp?
@@ -104,7 +104,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return value
+      value
     end
 
     private
@@ -124,7 +124,7 @@ module Rubyipmi::Ipmitool
         value = item.last.strip
         @info[key] = value
       end
-      return @info
+      @info
     end
 
     def normalize(text)

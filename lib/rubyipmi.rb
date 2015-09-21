@@ -163,7 +163,7 @@ module Rubyipmi
       false
     end
     # return false if command was not found
-    return !cmdpath.nil?
+    !cmdpath.nil?
   end
 
   def self.providers
@@ -180,7 +180,7 @@ module Rubyipmi
     providers.each do |prov|
       available << prov if is_provider_installed?(prov)
     end
-    return available
+    available
   end
 
   # gets data from the bmc device and puts in a hash for diagnostics

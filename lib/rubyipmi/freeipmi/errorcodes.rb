@@ -26,7 +26,7 @@ module Rubyipmi::Freeipmi
         end
       end
       raise "No Fix found" if fix.nil?
-      return fix
+      fix
     end
   end
 end

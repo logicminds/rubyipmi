@@ -9,7 +9,7 @@ module Rubyipmi::Freeipmi
       @options["commit"] = false
       value = runcmd
       @options.delete_notify("commit")
-      return value
+      value
     end
 
     # This is the raw command to get the entire ipmi chassis configuration
@@ -20,7 +20,7 @@ module Rubyipmi::Freeipmi
       value = runcmd
       @options.delete_notify("checkout")
       @options.delete_notify("section") if section
-      return value
+      value
     end
 
     def bootdevice
@@ -52,7 +52,7 @@ module Rubyipmi::Freeipmi
       @options["key-pair"] = "\"#{flag}\""
       value = commit
       @options.delete_notify("key-pair")
-      return value
+      value
     end
 
     # shortcut to set boot device to pxe
@@ -81,7 +81,7 @@ module Rubyipmi::Freeipmi
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
       @options.delete_notify("key-pair")
-      return value
+      value
     end
   end
 

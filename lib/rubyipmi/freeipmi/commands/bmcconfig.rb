@@ -19,7 +19,7 @@ module Rubyipmi::Freeipmi
       value = runcmd
       @options.delete_notify("checkout")
       @options.delete_notify("section")
-      return @result
+      @result
     end
 
     def setsection(section, key, value)
@@ -32,7 +32,7 @@ module Rubyipmi::Freeipmi
         @options.delete_notify("key-pair")
         return value
       end
-      return false
+      false
     end
 
     # returns the entire bmc-config configuration, can take a while to execute
