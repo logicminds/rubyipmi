@@ -145,14 +145,6 @@ Style/ClassVars:
     - 'lib/rubyipmi/freeipmi/errorcodes.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: Keywords.
-Style/CommentAnnotation:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
-    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
-
 # Offense count: 1
 # Configuration parameters: Exclude.
 Style/FileName:
