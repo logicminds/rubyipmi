@@ -35,7 +35,7 @@ module Rubyipmi
       # test the connection to ensure we can at least make a single call
       def connection_works?
         begin
-          ! (bmc.info.nil? || bmc.info.empty? )
+          ! (bmc.info.nil? || bmc.info.empty?)
         rescue
           false
         end
