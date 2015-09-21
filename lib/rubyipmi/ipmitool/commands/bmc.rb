@@ -31,7 +31,7 @@ module Rubyipmi::Ipmitool
     def reset(type = 'cold')
       if ['cold', 'warm'].include?(type)
         @options["cmdargs"] = "bmc reset #{type}"
-        value = runcmd()
+        value = runcmd
         @options.delete_notify("cmdargs")
         return value
       else
@@ -42,7 +42,7 @@ module Rubyipmi::Ipmitool
 
     def guid
       @options["cmdargs"] = "bmc guid"
-      value = runcmd()
+      value = runcmd
       @options.delete_notify("cmdargs")
       if value
         @result.lines.each { |line|

@@ -87,7 +87,7 @@ describe "Bmc" do
   describe 'test' do
     it 'should retrun boolean on test connection when result is not a hash' do
       conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-      bmc = double()
+      bmc = double
       allow(bmc).to receive(:info).and_return('')
       allow(conn).to receive(:bmc).and_return(bmc)
       expect(conn.connection_works?).to eq false
@@ -95,7 +95,7 @@ describe "Bmc" do
 
     it 'should retrun boolean on test connection when result is a hash' do
       conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-      bmc = double()
+      bmc = double
       allow(bmc).to receive(:info).and_return({:test => true})
       allow(conn).to receive(:bmc).and_return(bmc)
       expect(conn.connection_works?).to eq true
@@ -103,7 +103,7 @@ describe "Bmc" do
 
     it 'should retrun boolean on test connection when nil' do
       conn = Rubyipmi.connect(@user, @pass, @host, @provider, {:debug => true, :driver => 'auto'})
-      bmc = double()
+      bmc = double
       allow(bmc).to receive(:info).and_return(nil)
       allow(conn).to receive(:bmc).and_return(bmc)
       expect(conn.connection_works?).to eq false
