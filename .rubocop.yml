@@ -55,10 +55,13 @@ Style/AccessorMethodName:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
-Style/MethodName:
-  Enabled: false
 GuardClause:
   Enabled: false
+
+# Fixed by deprecation
+Style/MethodName:
+  Exclude:
+    - 'lib/rubyipmi/commands/mixins/power_mixin.rb'
 
 # Don't understand
 Style/FileName:

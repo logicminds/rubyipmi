@@ -32,7 +32,7 @@ module Rubyipmi::Freeipmi
     end
 
     def bootdevice(device, persistent)
-      setBootFlag("Boot_Device", device, persistent)
+      set_boot_flag("Boot_Device", device, persistent)
     end
 
     def bootdevices
@@ -77,7 +77,7 @@ module Rubyipmi::Freeipmi
 
     private
 
-    def setBootFlag(key, flag, _persistent)
+    def set_boot_flag(key, flag, _persistent)
       @options["key-pair"] = "\"Chassis_Boot_Flags:#{key}=#{flag}\""
       value = commit
       @options.delete_notify("key-pair")
