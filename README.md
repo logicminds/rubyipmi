@@ -135,9 +135,15 @@ from the standard.  In general this library should work will all servers.
   ```ruby
    require 'rubyipmi'
    conn = Rubyipmi.connect("username", "password", "hostname")
-   conn.chassis.bootpxe(true, false) # reboot after setting, one time boot only - non persistent
-   conn.chassis.bootdisk(false, false) # boot to disk on next reboot, don't reboot automatically
-
+   conn.chassis.bootpxe(reboot=bool, persistent=bool)
+   conn.chassis.bootdisk(reboot=bool, persistent=bool)
+   
+   Examples:
+   conn.chassis.bootpxe(reboot=true, persistent=false) # reboot immediately, PXE boot once
+   conn.chassis.bootpxe(reboot=false, persistent=false) # on next reboot PXE boot once
+   conn.chassis.bootdisk(reboot=true, persistent=false) # reboot immediately, boot off disk once
+   conn.chassis.bootdisk(reboot=true, persistent=true) # reboot immediately, boot off disk forever
+   conn.chassis.bootdisk(reboot=false, persistent=true) # reboot off disk forever, starting on next reboot
   ```
 
 
