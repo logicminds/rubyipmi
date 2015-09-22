@@ -18,6 +18,7 @@ SpaceInsideHashLiteralBraces:
 Style/WordArray:
   Enabled: false
 
+
 # TODO: fix these
 Metrics/AbcSize:
   Max: 60
@@ -33,6 +34,8 @@ Metrics/PerceivedComplexity:
   Max: 22
 Style/SpecialGlobalVars:
   Exclude:
+    - 'lib/rubyipmi.rb'
+    - 'lib/rubyipmi/commands/basecommand.rb'
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/ipmitool/commands/fru.rb'
 Style/RescueModifier:
