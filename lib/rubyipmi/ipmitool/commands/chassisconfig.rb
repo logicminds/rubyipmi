@@ -4,12 +4,6 @@ module Rubyipmi::Ipmitool
       super("ipmitool", opts)
     end
 
-    # Get the current boot device
-    def bootdevice
-      # Not available with ipmitool
-      false
-    end
-
     # Set the boot device
     def bootdevice(device, persistent = false)
       if persistent
