@@ -23,14 +23,6 @@ module Rubyipmi::Freeipmi
       value
     end
 
-    def bootdevice
-      value = checkout("Chassis_Boot_Flags")
-      if value
-        # TODO: parse result to return current boot device
-        # @result
-      end
-    end
-
     def bootdevice(device, persistent)
       set_boot_flag("Boot_Device", device, persistent)
     end
