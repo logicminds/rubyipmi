@@ -50,10 +50,6 @@ Style/PredicateName:
 Lint/RescueException:
   Exclude:
     - 'spec/integration/rubyipmi_spec.rb'
-Lint/DuplicateMethods:
-  Exclude:
-    - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
 Style/AccessorMethodName:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
