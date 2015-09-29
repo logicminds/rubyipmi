@@ -59,29 +59,27 @@ module Rubyipmi::Ipmitool
 
     # parse the fru information
     def parse(data)
-      unless data.nil?
-        parsed_data = []
-        data.lines.each do |line|
-          if line =~ /^FRU.*/
-            # this is the either the first line of of the fru or another fru
-            if parsed_data.count != 0
-              # we have reached a new fru device so lets record the previous fru
-              new_fru = FruData.new(parsed_data)
-              parsed_data = []
-              @list[new_fru[:name]] = new_fru
-            end
-
+      return unless data
+      parsed_data = []
+      data.lines.each do |line|
+        if line =~ /^FRU.*/
+          # this is the either the first line of of the fru or another fru
+          if parsed_data.count != 0
+            # we have reached a new fru device so lets record the previous fru
+            new_fru = FruData.new(parsed_data)
+            parsed_data = []
+            @list[new_fru[:name]] = new_fru
           end
-          parsed_data << line
+
         end
-        # process the last fru
-        if parsed_data.count != 0
-          # we have reached a new fru device so lets record the previous fru
-          new_fru = FruData.new(parsed_data)
-          parsed_data = []
-          @list[new_fru[:name]] = new_fru
-        end
+        parsed_data << line
       end
+      # process the last fru
+      return if parsed_data.count == 0
+      # we have reached a new fru device so lets record the previous fru
+      new_fru = FruData.new(parsed_data)
+      parsed_data = []
+      @list[new_fru[:name]] = new_fru
     end
 
     # run the command and return result
@@ -104,17 +102,16 @@ module Rubyipmi::Ipmitool
 
     # parse the fru information that should be an array of lines
     def parse(data)
-      unless data.nil?
-        data.each do |line|
-          key, value = line.split(':', 2)
-          if key =~ /^FRU\s+Device.*/
-            if value =~ /([\w\s]*)\(.*\)/
-              self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
-            end
-          else
-            key = key.strip.gsub(/\ /, '_').downcase
-            self[key] = value.strip unless value.nil?
+      return unless data
+      data.each do |line|
+        key, value = line.split(':', 2)
+        if key =~ /^FRU\s+Device.*/
+          if value =~ /([\w\s]*)\(.*\)/
+            self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
           end
+        else
+          key = key.strip.gsub(/\ /, '_').downcase
+          self[key] = value.strip unless value.nil?
         end
       end
     end
