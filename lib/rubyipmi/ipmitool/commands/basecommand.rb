@@ -34,15 +34,14 @@ module Rubyipmi::Ipmitool
     # If a fix is found it is applied to the options hash, and then the last run command is retried
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
     def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
+      return unless result
+      # The errorcode code hash contains the fix
+      begin
+        fix = ErrorCodes.search(result)
+        @options.merge_notify!(fix)
 
-        rescue
-          raise "Could not find fix for error code: \n#{result}"
-        end
+      rescue
+        raise "Could not find fix for error code: \n#{result}"
       end
     end
   end

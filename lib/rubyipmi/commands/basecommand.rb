@@ -91,15 +91,14 @@ module Rubyipmi
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
     # this must be overrided in the subclass, as there are no generic errors that fit both providers
     def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
-          raise "Could not find fix for error code: \n#{result}"
-        end
+      return unless result
+      # The errorcode code hash contains the fix
+      begin
+        fix = ErrorCodes.search(result)
+        @options.merge_notify!(fix)
+      rescue
+        Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
+        raise "Could not find fix for error code: \n#{result}"
       end
     end
 

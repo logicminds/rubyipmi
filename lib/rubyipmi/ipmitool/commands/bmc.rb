@@ -43,11 +43,10 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "bmc guid"
       value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        @result.lines.each do |line|
-          line.chomp
-          line.split(":").last.strip if line =~ /GUID/
-        end
+      return unless value
+      @result.lines.each do |line|
+        line.chomp
+        line.split(":").last.strip if line =~ /GUID/
       end
     end
 

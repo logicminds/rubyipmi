@@ -10,9 +10,8 @@ module Rubyipmi::Freeipmi
     end
 
     def get_from_list(key)
-      if list.key?(DEFAULT_FRU)
-        list[DEFAULT_FRU][key] if list[DEFAULT_FRU].key?(key)
-      end
+      return unless list.key?(DEFAULT_FRU)
+      list[DEFAULT_FRU][key] if list[DEFAULT_FRU].key?(key)
     end
 
     def manufacturer
@@ -111,17 +110,16 @@ module Rubyipmi::Freeipmi
 
     # parse the fru information that should be an array of lines
     def parse(data)
-      unless data.nil?
-        data.each do |line|
-          key, value = line.split(':', 2)
-          if key =~ /^FRU.*/
-            if value =~ /([\w\s]*)\(.*\)/
-              self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
-            end
-          else
-            key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
-            self[key] = value.strip unless value.nil?
+      return unless data
+      data.each do |line|
+        key, value = line.split(':', 2)
+        if key =~ /^FRU.*/
+          if value =~ /([\w\s]*)\(.*\)/
+            self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
           end
+        else
+          key = key.strip.gsub(/\ /, '_').downcase.gsub(/fru_/, '')
+          self[key] = value.strip unless value.nil?
         end
       end
     end
