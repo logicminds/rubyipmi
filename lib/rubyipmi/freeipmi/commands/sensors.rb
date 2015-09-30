@@ -18,6 +18,10 @@ module Rubyipmi::Freeipmi
       @options.delete_notify('entity-sensor-names')
       @result
     end
+
+    def sensor_class
+      Sensor
+    end
   end
 
   class Sensor < Hash

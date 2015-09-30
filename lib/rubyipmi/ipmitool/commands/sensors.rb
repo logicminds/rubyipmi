@@ -14,6 +14,10 @@ module Rubyipmi::Ipmitool
       options.delete_notify("cmdargs")
       @result
     end
+
+    def sensor_class
+      Sensor
+    end
   end
 
   class Sensor < Hash
