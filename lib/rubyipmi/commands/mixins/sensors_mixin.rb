@@ -20,23 +20,15 @@ module Rubyipmi
     # returns a hash of fan sensors where the key is fan name and value is the sensor
     def fanlist(refreshdata = false)
       refresh if refreshdata
-      flist = {}
-      list.each do |name, sensor|
-        flist[name] = sensor if name =~ /.*fan.*/
-      end
-      flist
+      list.each_with_object({}) { |(name, sensor), flist| flist[name] = sensor if name =~ /.*fan.*/ }
     end
 
     # returns a hash of sensors where each key is the name of the sensor and the value is the sensor
     def templist(refreshdata = false)
       refresh if refreshdata
-      tlist = {}
-      list.each do |name, sensor|
-        if sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/
-          tlist[name] = sensor
-        end
+      list.each_with_object({}) do |(name, sensor), tlist|
+        tlist[name] = sensor if (sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/)
       end
-      tlist
     end
 
     private
@@ -50,15 +42,13 @@ module Rubyipmi
     end
 
     def parse(data)
-      sensorlist = {}
-      unless data.nil?
-        data.lines.each do |line|
-          # skip the header
-          sensor = Sensor.new(line)
-          sensorlist[sensor[:name]] = sensor
-        end
+      return {} if data.nil?
+
+      data.lines.each_with_object({}) do |line, sensorlist|
+        # skip the header
+        sensor = sensor_class.new(line)
+        sensorlist[sensor[:name]] = sensor
       end
-      sensorlist
     end
   end
 end
