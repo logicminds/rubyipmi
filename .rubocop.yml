@@ -54,8 +54,6 @@ Style/AccessorMethodName:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
-GuardClause:
-  Enabled: false
 
 # Fixed by deprecation
 Style/MethodName:
