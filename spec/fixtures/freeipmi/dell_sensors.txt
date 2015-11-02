@@ -1,0 +1,45 @@
+4   | System Board 1 SEL Fullness     | Event Logging Disabled      | Nominal  | N/A        | N/A   | 'OK'
+5   | System Board 1 12V Standby      | Voltage                     | Nominal  | 12.16      | V     | 'OK'
+6   | System Board 1 5V Standby       | Voltage                     | Nominal  | 5.08       | V     | 'OK'
+7   | System Board 1 5V               | Voltage                     | Nominal  | 5.03       | V     | 'OK'
+8   | System Board 1 3.3V Standby     | Voltage                     | Nominal  | 3.43       | V     | 'OK'
+9   | System Board 1 3.3V             | Voltage                     | Nominal  | 3.35       | V     | 'OK'
+11  | System Board 1 MEZZ1 TEMP       | Temperature                 | Nominal  | 41.00      | C     | 'OK'
+2   | Processor 2 P2 ThermalTrip      | Processor                   | N/A      | N/A        | N/A   | N/A
+1   | Processor 1 P1 ThermalTrip      | Processor                   | N/A      | N/A        | N/A   | N/A
+3   | Processor 1 CPU ERR2            | Processor                   | N/A      | N/A        | N/A   | N/A
+12  | Processor 1 CPU1 Temp           | Temperature                 | Nominal  | 44.00      | C     | 'OK'
+13  | Processor 1 CPU2 Temp           | Temperature                 | N/A      | N/A        | C     | N/A
+14  | Processor 1 DIMM ZONE 1 Temp    | Temperature                 | Nominal  | 35.00      | C     | 'OK'
+15  | Processor 1 DIMM ZONE 2 Temp    | Temperature                 | N/A      | N/A        | C     | N/A
+18  | Processor 1 PCH Temp            | Temperature                 | Nominal  | 43.00      | C     | 'OK'
+19  | System Board 2 Watchdog         | Watchdog 2                  | Nominal  | N/A        | N/A   | 'OK'
+22  | Power Supply 1 AC lost          | Power Unit                  | N/A      | N/A        | N/A   | N/A
+23  | Memory Module Memory            | Memory                      | N/A      | N/A        | N/A   | N/A
+25  | Power Supply 2 Sys Pwr Monitor  | System ACPI Power State     | N/A      | N/A        | N/A   | N/A
+26  | Battery Battery low             | Battery                     | Nominal  | N/A        | N/A   | 'OK'
+29  | Processor 1 M2090 Temp 1        | Temperature                 | N/A      | N/A        | C     | N/A
+30  | Processor 1 M2090 PWR 1         | Other Units Based Sensor    | N/A      | N/A        | W     | N/A
+31  | Processor 1 M2090 Temp 2        | Temperature                 | N/A      | N/A        | C     | N/A
+32  | Processor 1 M2090 PWR 2         | Other Units Based Sensor    | N/A      | N/A        | W     | N/A
+35  | Power Supply 2 M2090 STATUS 1   | OEM Reserved                | N/A      | N/A        | N/A   | N/A
+36  | Power Supply 2 M2090 STATUS 2   | OEM Reserved                | N/A      | N/A        | N/A   | N/A
+38  | Add-in Card GPGPU Insert        | Add In Card                 | N/A      | N/A        | N/A   | N/A
+39  | Processor 1 MIC Temp 1          | Temperature                 | N/A      | N/A        | C     | N/A
+40  | Processor 1 MIC PWR 1           | Other Units Based Sensor    | N/A      | N/A        | W     | N/A
+48  | Processor 1 MIC Temp 2          | Temperature                 | N/A      | N/A        | C     | N/A
+16  | Processor 1 MIC PWR 2           | Other Units Based Sensor    | N/A      | N/A        | W     | N/A
+45  | Power Supply 2 MIC STATUS 1     | OEM Reserved                | N/A      | N/A        | N/A   | N/A
+46  | Power Supply 2 MIC STATUS 2     | OEM Reserved                | N/A      | N/A        | N/A   | N/A
+42  | Chassis Specific NPDB Status    | Power Unit                  | N/A      | N/A        | N/A   | N/A
+53  | Chassis Specific SC FW Status   | Management Subsystem Health | Nominal  | N/A        | N/A   | 'OK'
+49  | Air Inlet Inlet Temp            | Temperature                 | Nominal  | 26.00      | C     | 'OK'
+51  | Power Management Input Voltage  | Voltage                     | Nominal  | 11.97      | V     | 'OK'
+52  | Power Management Input Current  | Current                     | Nominal  | 3.00       | A     | 'OK'
+54  | Chassis Specific PSU 1 Status   | Power Supply                | Critical | N/A        | N/A   | 'Presence detected' 'Power Supply Failure detected' 'Power Supply input lost (AC/DC)'
+96  | Fan 96 FAN_1                    | Fan                         | Nominal  | 6790.00    | RPM   | 'OK'
+97  | Fan 97 FAN_2                    | Fan                         | Nominal  | 6790.00    | RPM   | 'OK'
+98  | Fan 98 FAN_3                    | Fan                         | Nominal  | 6790.00    | RPM   | 'OK'
+99  | Fan 99 FAN_4                    | Fan                         | Nominal  | 6860.00    | RPM   | 'OK'
+112 | Chassis Specific PSU Mismatch   | Power Supply                | Nominal  | N/A        | N/A   | 'OK'
+113 | Chassis Specific PSU Redundancy | Power Supply                | Nominal  | N/A

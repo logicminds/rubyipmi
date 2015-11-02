@@ -8,6 +8,7 @@ branches:
   only:
     - master
     - development
+    - gh-37
 notifications:
   email:
     - corey@logicminds.biz 
