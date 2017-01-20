@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Corey Osman"]
   s.date = "2015-04-10"
-  s.description = "Provides a library for controlling IPMI devices using pure ruby code"
+  s.description = "Controls IPMI devices via command line wrapper for ipmitool and freeipmi"
   s.email = "corey@logicminds.biz"
   s.extra_rdoc_files = [
     "LICENSE.txt",
