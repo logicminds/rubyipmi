@@ -1,10 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe :Rubyipmi do
-
-
   before :each do
-
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
   end
 
@@ -24,7 +21,7 @@ describe :Rubyipmi do
   end
 
   it 'is provider installed should return false when bad provider' do
-    expect{Rubyipmi.is_provider_installed?('bad_provider')}.to_not raise_error
+    expect { Rubyipmi.is_provider_installed?('bad_provider') }.to_not raise_error
     expect(Rubyipmi.is_provider_installed?('bad_provider')).to be_falsey
   end
 
@@ -33,8 +30,8 @@ describe :Rubyipmi do
     pass = "impipass"
     host = "ipmihost"
     provider = "ipmitool"
-    conn = Rubyipmi.connect(user, pass, host, provider, {'driver' => 'lan15'})
-    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+    conn = Rubyipmi.connect(user, pass, host, provider, 'driver' => 'lan15')
+    expect(conn.options).to eq("H" => "ipmihost", "U" => "ipmiuser", "P" => "impipass", "I" => "lan")
   end
 
   it 'does not error when converting strings to symbols' do
@@ -42,9 +39,7 @@ describe :Rubyipmi do
     pass = "impipass"
     host = "ipmihost"
     provider = "ipmitool"
-    conn = Rubyipmi.connect(user, pass, host, provider, {:driver => 'lan15'})
-    expect(conn.options).to eq({"H"=>"ipmihost", "U"=>"ipmiuser", "P"=>"impipass", "I"=>"lan"})
+    conn = Rubyipmi.connect(user, pass, host, provider, :driver => 'lan15')
+    expect(conn.options).to eq("H" => "ipmihost", "U" => "ipmiuser", "P" => "impipass", "I" => "lan")
   end
 end
-
-

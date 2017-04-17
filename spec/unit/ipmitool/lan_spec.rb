@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Lan" do
-
   before :all do
     @path = '/usr/local/bin'
   end
@@ -13,16 +12,16 @@ describe "Lan" do
     pass = "impipass"
     host = "ipmihost"
     allow(Rubyipmi).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    @conn = Rubyipmi.connect(user, pass, host, provider, {:debug => true})
+    @conn = Rubyipmi.connect(user, pass, host, provider, :debug => true)
     @lan = @conn.bmc.lan
     data = nil
-    File.open("spec/fixtures/#{provider}/lan.txt",'r') do |file|
+    File.open("spec/fixtures/#{provider}/lan.txt", 'r') do |file|
       data = file.read
     end
 
     allow(@lan).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
     allow(@lan).to receive(:`).and_return(data)
-    allow($?).to receive(:success?).and_return(true)
+    allow($CHILD_STATUS).to receive(:success?).and_return(true)
   end
 
   it "cmd should be lan with correct number of arguments" do
@@ -44,7 +43,6 @@ describe "Lan" do
 
   it 'should print valid snmp string' do
     expect(@lan.snmp).to be_nil
-
   end
 
   it 'should print correct mac address' do
@@ -71,7 +69,7 @@ describe "Lan" do
     expect(@lan.static?).to eq false
   end
 
-  #it 'should attempt to apply fix and fail, then switch to channel 1' do
+  # it 'should attempt to apply fix and fail, then switch to channel 1' do
   #  channelbefore = @lan.channel
   #  error = "some lan channel problem"
   #  @lan.stub(:`).and_return(error)
@@ -88,7 +86,5 @@ describe "Lan" do
   #  @lan.stub(:`).and_return(data)
   #  $?.stub(:success?).and_return(true)
   #
-  #end
-
+  # end
 end
-

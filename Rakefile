@@ -4,7 +4,6 @@ require 'rubygems'
 require 'bundler'
 @base_dir = File.dirname(__FILE__)
 
-
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -17,21 +16,20 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "rubyipmi"
-  gem.homepage = "http://github.com/logicminds/rubyipmi"
-  gem.license = "LGPLv2.1"
-  gem.summary = %Q{A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi}
-  gem.description = %Q{Provides a library for controlling IPMI devices using pure ruby code}
-  gem.email = "corey@logicminds.biz"
-  gem.authors = ["Corey Osman"]
+  gem.name        = "rubyipmi"
+  gem.homepage    = "http://github.com/logicminds/rubyipmi"
+  gem.license     = "LGPLv2.1"
+  gem.summary     = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
+  gem.description = "Provides a library for controlling IPMI devices using pure ruby code"
+  gem.email       = "corey@logicminds.biz"
+  gem.authors     = ["Corey Osman"]
+  gem.files.exclude '.document'
+  gem.files.exclude '.gitignore'
+  gem.files.exclude '.rspec'
+  gem.files.exclude '.rubocop.yml'
   gem.files.exclude '.travis.yml'
   gem.files.exclude 'Gemfile.lock'
-  gem.files.exclude '.rspec'
-  gem.files.exclude '.gitignore'
-  gem.files.exclude '.document'
   gem.files.exclude 'coverage/'
-
-
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -45,9 +43,8 @@ RSpec::Core::RakeTask.new(:unit) do |spec|
 end
 
 desc "Run integrations tests against real systems using a vagrant box"
-task :vintegration, :user, :pass, :host do |task, args|
+task :vintegration, :user, :pass, :host do |_task, args|
   vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
-  ipmiprovider="freeipmi"
   puts `cd #{@base_dir}/spec && vagrant up`
   puts `cd #{@base_dir}/spec && vagrant provision`
   puts `vagrant ssh \"/rubyipmi/rake integration #{vars}\"`
@@ -58,9 +55,9 @@ RSpec::Core::RakeTask.new :integration do |spec|
   ENV['ipmiuser'] = 'admin'
   ENV['ipmipass'] = 'password'
   ENV['ipmihost'] = '10.0.1.16'
-  providers ||=  Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
+  providers ||= Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
 
-  providers.each do | provider |
+  providers.each do |provider|
     ENV['ipmiprovider'] = provider
     spec.pattern = FileList['spec/integration/**/*_spec.rb']
   end
@@ -79,7 +76,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 desc "send diagnostics to logicminds for testing for the given host"
-task :send_diag, :user, :pass, :host do |t, args |
+task :send_diag, :user, :pass, :host do |_t, args|
   require 'rubyipmi'
   require 'net/smtp'
   require 'json'
@@ -91,20 +88,19 @@ task :send_diag, :user, :pass, :host do |t, args |
   data = Rubyipmi.get_diag(args[:user], args[:pass], args[:host])
   emailto = 'corey@logicminds.biz'
   subject = "Rubyipmi diagnostics data"
-  send_email(emailto, data.to_json, {:subject => subject})
-
+  send_email(emailto, data.to_json, :subject => subject)
 end
 
-def send_email(to,data, opts={})
+def send_email(to, data, opts = {})
   gmail_id = ask("Enter your gmail account:  ")
   pass = ask("Enter your gmail password:  ") { |q| q.echo = '*' }
   opts[:from] = gmail_id
-  opts[:server]      ||= 'smtp.gmail.com'
-  opts[:from_alias]  ||= gmail_id
-  opts[:subject]     ||= @subject
-  opts[:body]        ||= data
-  opts[:to]          ||= to
-  opts[:port]        ||= 587
+  opts[:server] ||= 'smtp.gmail.com'
+  opts[:from_alias] ||= gmail_id
+  opts[:subject] ||= @subject
+  opts[:body] ||= data
+  opts[:to] ||= to
+  opts[:port] ||= 587
   msg = <<END_OF_MESSAGE
 From: #{opts[:from_alias]} <#{opts[:from]}>
 To: <#{to}>
@@ -114,9 +110,9 @@ Date: #{Time.now.rfc2822}
   #{opts[:body]}
 END_OF_MESSAGE
 
-  smtp = Net::SMTP.new(opts[:server],opts[:port])
+  smtp = Net::SMTP.new(opts[:server], opts[:port])
   smtp.enable_starttls
-  smtp.start(opts[:server],gmail_id,pass,:login) do
+  smtp.start(opts[:server], gmail_id, pass, :login) do
     smtp.send_message(msg, gmail_id, to)
   end
 end

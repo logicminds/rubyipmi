@@ -1,7 +1,5 @@
 module Rubyipmi::Ipmitool
-
   class Bmc < Rubyipmi::Ipmitool::BaseCommand
-
     attr_accessor :config
 
     def initialize(opts = ObservableHash.new)
@@ -23,38 +21,33 @@ module Rubyipmi::Ipmitool
 
     def version
       @options['V'] = nil
-      value = runcmd
+      runcmd
       @options.delete_notify('V')
       @result.slice(/\d\.\d.\d/)
     end
 
     # reset the bmc device, useful for troubleshooting
-    def reset(type='cold')
+    def reset(type = 'cold')
       if ['cold', 'warm'].include?(type)
-         @options["cmdargs"] = "bmc reset #{type}"
-         value = runcmd()
-         @options.delete_notify("cmdargs")
-         return value
+        @options["cmdargs"] = "bmc reset #{type}"
+        value = runcmd
+        @options.delete_notify("cmdargs")
+        return value
       else
         logger.error("reset type: #{type} is not a valid choice, use warm or cold") if logger
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
-
     end
 
     def guid
       @options["cmdargs"] = "bmc guid"
-      value = runcmd()
+      value = runcmd
       @options.delete_notify("cmdargs")
-      if value
-        @result.lines.each { | line |
-          line.chomp
-          if line =~ /GUID/
-            line.split(":").last.strip
-          end
-        }
+      return unless value
+      @result.lines.each do |line|
+        line.chomp
+        line.split(":").last.strip if line =~ /GUID/
       end
-
     end
 
     # This function will get the bmcinfo and return a hash of each item in the info
@@ -63,7 +56,7 @@ module Rubyipmi::Ipmitool
       status = runcmd
       @options.delete_notify("cmdargs")
       subkey = nil
-      if not status
+      if !status
         raise @result
       else
         @result.lines.each do |line|
@@ -75,7 +68,7 @@ module Rubyipmi::Ipmitool
           if value.empty?
             subkey = key
             @bmcinfo[subkey] = []
-          elsif key == value and subkey
+          elsif key == value && subkey
             # subvalue found
             @bmcinfo[subkey] << value
           else
@@ -87,7 +80,5 @@ module Rubyipmi::Ipmitool
         return @bmcinfo
       end
     end
-
-
   end
 end

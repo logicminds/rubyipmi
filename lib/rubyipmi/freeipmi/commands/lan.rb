@@ -1,7 +1,5 @@
 module Rubyipmi::Freeipmi
-
   class Lan
-
     attr_accessor :info
     attr_accessor :channel
     attr_accessor :config
@@ -22,11 +20,11 @@ module Rubyipmi::Freeipmi
     end
 
     def dhcp?
-      info.fetch("ip_address_source",nil).match(/dhcp/i) != nil
+      info.fetch("ip_address_source", nil).match(/dhcp/i) != nil
     end
 
     def static?
-      info.fetch("ip_address_source",nil).match(/static/i) != nil
+      info.fetch("ip_address_source", nil).match(/static/i) != nil
     end
 
     def ip
@@ -87,7 +85,7 @@ module Rubyipmi::Freeipmi
     #  end
 
     def parse(landata)
-      if ! landata.nil? and ! landata.empty?
+      if !landata.nil? && !landata.empty?
         landata.lines.each do |line|
           # clean up the data from spaces
           next if line.match(/#+/)

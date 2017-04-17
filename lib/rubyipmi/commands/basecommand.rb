@@ -3,7 +3,6 @@ require 'tempfile'
 require 'rubyipmi'
 
 module Rubyipmi
-
   class BaseCommand
     include Observable
     attr_reader :cmd, :max_retry_count
@@ -39,7 +38,7 @@ module Rubyipmi
 
     def locate_command(commandname)
       location = `which #{commandname}`.strip
-      if not $?.success?
+      unless $?.success?
         logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
@@ -70,8 +69,7 @@ module Rubyipmi
         command = makecommand
         @lastcall = "#{command}"
         @result = `#{command} 2>&1`
-        # sometimes the command tool does not return the correct result so we have to validate it with additional
-        # code
+        # sometimes the command tool does not return the correct result, validate it with additional code
         process_status = validate_status($?)
       rescue
         if retrycount < max_retry_count
@@ -84,7 +82,7 @@ module Rubyipmi
         end
       ensure
         removepass
-        return process_status
+        process_status
       end
     end
 
@@ -93,30 +91,26 @@ module Rubyipmi
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
     # this must be overrided in the subclass, as there are no generic errors that fit both providers
     def find_fix(result)
-      if result
-        # The errorcode code hash contains the fix
-        begin
-          fix = ErrorCodes.search(result)
-          @options.merge_notify!(fix)
-        rescue
-          Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
-          raise "Could not find fix for error code: \n#{result}"
-        end
+      return unless result
+      # The errorcode code hash contains the fix
+      begin
+        fix = ErrorCodes.search(result)
+        @options.merge_notify!(fix)
+      rescue
+        Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
+        raise "Could not find fix for error code: \n#{result}"
       end
     end
 
     def update(opts)
-          @options.merge!(opts)
+      @options.merge!(opts)
     end
 
-  # This method will check if the results are really valid as the exit code can be misleading and incorrect
+    # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-      # override in child class if needed
-      if ! exitstatus.success?
-         raise "Error occurred"
-      else
-        return true
-      end
+      raise "Error occurred" unless exitstatus.success?
+
+      true
     end
   end
 end
