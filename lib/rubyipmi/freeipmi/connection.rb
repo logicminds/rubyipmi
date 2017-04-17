@@ -1,4 +1,3 @@
-require 'rubyipmi/freeipmi/errorcodes'
 require 'rubyipmi/observablehash'
 require 'rubyipmi/commands/basecommand'
 require 'rubyipmi/freeipmi/commands/basecommand'
@@ -10,6 +9,12 @@ module Rubyipmi
   module Freeipmi
     class Connection
       attr_accessor :options
+
+      DRIVERS_MAP = {
+          'lan15' => 'LAN',
+          'lan20' => 'LAN_2_0',
+          'open'  => 'OPENIPMI'
+        }
 
       def initialize(user, pass, host, opts)
         @options = Rubyipmi::ObservableHash.new
@@ -24,7 +29,7 @@ module Rubyipmi
         end
         # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
         #       the user really wants to
-        @options['driver-type'] = drivers_map[opts[:driver]] unless drivers_map[opts[:driver]].nil?
+        @options['driver-type'] = DRIVERS_MAP[opts[:driver]] unless DRIVERS_MAP[opts[:driver]].nil?
       end
 
       # test the connection to ensure we can at least make a single call
@@ -34,14 +39,6 @@ module Rubyipmi
         rescue
           false
         end
-      end
-
-      def drivers_map
-        {
-          'lan15' => 'LAN',
-          'lan20' => 'LAN_2_0',
-          'open'  => 'OPENIPMI'
-        }
       end
 
       def provider
