@@ -1,6 +1,5 @@
 require 'spec_helper'
 describe "Sensors" do
-
   attr_accessor :provider
   before :each do
     user = ENV["ipmiuser"] || 'admin'
@@ -8,7 +7,6 @@ describe "Sensors" do
     host = ENV["ipmihost"] || "10.0.1.16"
     provider = ENV["ipmiprovider"] || 'ipmitool'
     @conn = Rubyipmi.connect(user, pass, host, provider)
-
   end
 
   it "test get all sensors" do
@@ -37,7 +35,4 @@ describe "Sensors" do
   it "test should return list of temps" do
     expect(@conn.sensors.templist.count).to be > 1
   end
-
-
-
 end
