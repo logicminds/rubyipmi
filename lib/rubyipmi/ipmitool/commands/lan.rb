@@ -30,7 +30,11 @@ module Rubyipmi::Ipmitool
           # wait for error to occur then retry using channel 1
           if retrycount < MAX_RETRY
             @channel = 1
+            retrycount = retrycount.next
             retry
+          else
+            # failed to fetch info, return cached info
+            @info
           end
         end
       else
