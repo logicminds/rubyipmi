@@ -101,7 +101,7 @@ Gem::Specification.new do |s|
     "spec/vagrant",
     "spec/vagrant.pub"
   ]
-  s.homepage = "http://github.com/logicminds/rubyipmi"
+  s.homepage = "https://github.com/logicminds/rubyipmi"
   s.licenses = ["LGPLv2.1"]
   s.rubygems_version = "2.4.5"
   s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
