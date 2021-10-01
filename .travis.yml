@@ -1,13 +1,10 @@
 language: ruby
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1.3
-  - 2.2
-branches:
-  only:
-    - master
-    - development
+  - 2.5  
+  - 2.6
+  - 2.7
+  - 3.0
+
 notifications:
   email:
     - corey@logicminds.biz 
