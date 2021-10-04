@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(/^(test|spec|features)/) || f.match(/^*.tar\.gz/)
+    f.match(/^(\.|test|spec|features)/) || f.match(/^*.tar\.gz/)
   end
   s.homepage = "https://github.com/logicminds/rubyipmi"
   s.licenses = ["LGPLv2.1"]
