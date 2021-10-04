@@ -1,3 +1,6 @@
+### 0.11.1
+ * remove hidden files from gem package
+
 ### 0.11.0
 This is a big update with many minor changes and bug fixes.  Thank you for all that submitted fixes.
 - Removes jeweler dependency and replaces with bundler commands, updates gemspec
