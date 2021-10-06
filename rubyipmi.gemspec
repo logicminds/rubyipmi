@@ -29,6 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
   s.add_development_dependency(%q<highline>, [">= 0"])
   s.add_development_dependency(%q<rake>, [">= 0"])
-  s.add_dependency(%q<highline>, [">= 0"])
 end
 
