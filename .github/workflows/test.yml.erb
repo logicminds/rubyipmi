@@ -10,14 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - ruby: "2.5"
-          - ruby: "2.6"
-          - ruby: "2.7"
-          - ruby: "3.0"
-            coverage: "yes"
-    env:
-      COVERAGE: ${{ matrix.coverage }}
+        ruby:
+          - "2.5"
+          - "2.6"
+          - "2.7"
+          - "3.0"
     steps:
       - uses: actions/checkout@v2
       - name: Install Ruby ${{ matrix.ruby }}
