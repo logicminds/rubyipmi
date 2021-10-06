@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.add_development_dependency(%q<rspec>, ["~> 3.1"])
   s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-  s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
+  s.add_development_dependency(%q<bundler>, [">= 2.0.0"])
   s.add_development_dependency(%q<highline>, [">= 0"])
   s.add_development_dependency(%q<rake>, [">= 0"])
 end
