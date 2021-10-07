@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     f.match(/^(\.|test|spec|features)/) || f.match(/^*.tar\.gz/)
   end
   s.homepage = "https://github.com/logicminds/rubyipmi"
-  s.licenses = ["LGPLv2.1"]
+  s.license = "LGPL-2.1-only"
   s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.require_paths = ['lib']
   s.add_development_dependency 'rspec', "~> 3.1"
