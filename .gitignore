@@ -12,6 +12,8 @@ Gemfile.lock
 # bundler
 .bundle
 Gemfile.lock
+# built gems
+*.gem
 
 # jeweler generated
 pkg
