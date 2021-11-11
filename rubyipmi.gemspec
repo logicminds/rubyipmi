@@ -6,8 +6,6 @@ Gem::Specification.new do |s|
   s.name = "rubyipmi"
   s.version = Rubyipmi::VERSION
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.require_paths = ["lib"]
   s.authors = ["Corey Osman"]
   s.date = "2021-09-29"
   s.description = "Controls IPMI devices via command line wrapper for ipmitool and freeipmi"
@@ -20,15 +18,12 @@ Gem::Specification.new do |s|
     f.match(/^(\.|test|spec|features)/) || f.match(/^*.tar\.gz/)
   end
   s.homepage = "https://github.com/logicminds/rubyipmi"
-  s.licenses = ["LGPLv2.1"]
-  s.rubygems_version = "2.4.5"
+  s.license = "LGPL-2.1-only"
   s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.require_paths = ['lib']
-  s.add_development_dependency(%q<rspec>, ["~> 3.1"])
-  s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-  s.add_development_dependency(%q<bundler>, [">= 1.1.5"])
-  s.add_development_dependency(%q<highline>, [">= 0"])
-  s.add_development_dependency(%q<rake>, [">= 0"])
-  s.add_dependency(%q<highline>, [">= 0"])
+  s.add_development_dependency 'rspec', "~> 3.1"
+  s.add_development_dependency 'rdoc', "~> 3.12"
+  s.add_development_dependency 'bundler', "~> 2.0"
+  s.add_development_dependency 'highline', '>= 1.0', '< 3'
+  s.add_development_dependency 'rake', '~> 13'
 end
-
