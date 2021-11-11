@@ -20,11 +20,7 @@ describe :Sensors do
     File.open("spec/fixtures/#{provider}/sensors.txt", 'r') do |file|
       data = file.read
     end
-    allow(@sensors).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    allow(@sensors).to receive(:`).and_return(data)
-
-    # this is causing an error: An expectation of :success? was set on nil
-    allow($CHILD_STATUS).to receive(:success?).and_return(true)
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
   end
 
   # it 'should figure out to add the -I lanplus' do

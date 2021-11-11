@@ -21,7 +21,7 @@ describe :Fru do
 
     allow(@fru).to receive(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
     allow(@fru).to receive(:`).and_return(data)
-    allow($CHILD_STATUS).to receive(:success?).and_return(true)
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
   end
 
   it "cmd should be ipmi-fru with correct number of arguments" do
