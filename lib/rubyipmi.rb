@@ -19,6 +19,7 @@
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
 require 'logger'
+require 'open3'
 
 class NullLogger < Logger
   def initialize(*_args)
@@ -144,11 +145,18 @@ module Rubyipmi
     PRIV_TYPES.include?(type)
   end
 
+  # test-friendly capture3
+  def self.capture3(cmd)
+    return Open3.capture3(cmd)
+  end
+
   # method used to find the command which also makes it easier to mock with
   def self.locate_command(commandname)
-    location = `which #{commandname}`.strip
-    location = nil unless $?.success?
-    location
+    stdout, stderr, status = Open3.capture3("which #{commandname}")
+    logger&.error("Which command returned: #{stderr}") unless status.success?
+
+    return nil unless status.success?
+    stdout
   end
 
   # Return true or false if the provider is available

@@ -37,9 +37,8 @@ module Rubyipmi
     end
 
     def locate_command(commandname)
-      location = `which #{commandname}`.strip
-      unless $?.success?
-        logger.error("#{commandname} command not found, is #{commandname} installed?") if logger
+      unless location = Rubyipmi.locate_command(commandname)
+        logger&.error("#{commandname} command not found, is #{commandname} installed?")
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
       location
@@ -67,10 +66,10 @@ module Rubyipmi
       logger.debug(makecommand) if logger
       begin
         command = makecommand
-        @lastcall = "#{command}"
-        @result = `#{command} 2>&1`
+        @lastcall = command.to_s
+        @result, @result_err, status = Rubyipmi.capture3(command)
         # sometimes the command tool does not return the correct result, validate it with additional code
-        process_status = validate_status($?)
+        process_status = validate_status(status)
       rescue
         if retrycount < max_retry_count
           find_fix(@result)
@@ -96,7 +95,8 @@ module Rubyipmi
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-      rescue
+      rescue e
+        raise e
         Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
         raise "Could not find fix for error code: \n#{result}"
       end
@@ -108,7 +108,8 @@ module Rubyipmi
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-      raise "Error occurred" unless exitstatus.success?
+      raise "Error occurred" unless exitstatus
+      raise "Error occurred" if exitstatus.is_a?(Process::Status) && exitstatus.success?
 
       true
     end
