@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.license = "LGPL-2.1-only"
   s.summary = "A ruby wrapper for ipmi command line tools that supports ipmitool and freeipmi"
   s.require_paths = ['lib']
+  s.add_dependency 'observer', '~> 0.1.0'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rdoc', "~> 3.12"
   s.add_development_dependency 'bundler', "~> 2.0"
