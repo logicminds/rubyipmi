@@ -1,3 +1,14 @@
+## unreleased
+
+### 0.12.0
+ * Add Ruby 3.4 support @ekohl
+ * Update test matrix for other 3.x rubies @ekohl
+ * Remove highline as a runtime dependency + simpify gemspec & Gemfile @ekohl
+ * Use the SPDX license code in gemspec @ekohl
+ * Limit dependency ranges to avoid gemspec warnings @ekohl
+ * Simplify gemspec @ekohl
+ * Adds github actions for testing
+
 ### 0.11.1
  * remove hidden files from gem package
 
@@ -13,7 +24,7 @@ This is a big update with many minor changes and bug fixes.  Thank you for all t
   Adds a missing counter incrementation with the same style as
   in basecommands and make it return current @info in case of a failure,
   so all methods accessing it will just get return nil.
- 
+
 - Leverage Enumerable#each_with_object
 - Add a SensorsMixin to remove duplicate code
 - Enable Rubocop GuardClause and fix complaints
@@ -32,7 +43,7 @@ This is a big update with many minor changes and bug fixes.  Thank you for all t
 - Remove if / else logic and unnecessary return in #validate_status
 - Reword confusing project description
 - Update README.md section on booting to specific devices
-- Update documentation around bootpxe, bootdisk functions 
+- Update documentation around bootpxe, bootdisk functions
 - Remove pry statement from method
 ### 0.10.0
 * gh-26 - make the driver default to lan20

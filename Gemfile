@@ -3,8 +3,9 @@ source "http://rubygems.org"
 gemspec
 
 group :development do
-  gem 'coveralls', :require => false
+  gem 'coveralls_reborn', require: false
   gem 'pry'
   gem 'pry-rescue'
-  gem "rubocop", "~> 0.33.0", :require => false
+  gem "rubocop", :require => false
+  gem "reline"
 end
