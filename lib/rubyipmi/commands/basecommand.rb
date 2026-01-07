@@ -108,8 +108,7 @@ module Rubyipmi
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-      raise "Error occurred" unless exitstatus
-      raise "Error occurred" if exitstatus.is_a?(Process::Status) && exitstatus.success?
+      raise "Error occurred" unless exitstatus.is_a?(Process::Status) && exitstatus.success?
 
       true
     end
