@@ -156,7 +156,7 @@ module Rubyipmi
     logger&.error("Which command returned: #{stderr}") unless status.success?
 
     return nil unless status.success?
-    stdout
+    stdout.strip
   end
 
   # Return true or false if the provider is available
