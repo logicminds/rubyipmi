@@ -22,7 +22,7 @@ describe :Fru do
     end
 
     allow(@fru).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
   end
 
   it "cmd should be ipmi-sensors with correct number of arguments" do

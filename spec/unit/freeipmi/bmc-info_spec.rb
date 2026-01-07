@@ -20,7 +20,7 @@ describe "Bmc" do
       data = file.read
     end
     allow(@bmcinfo).to receive(:locate_command).with('bmc-info').and_return("#{@path}/bmc-info")
-    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
   end
 
   it "cmd should be bmc-info with correct number of arguments" do

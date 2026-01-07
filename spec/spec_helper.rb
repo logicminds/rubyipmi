@@ -40,6 +40,10 @@ def verify_ipmitool_command(cmdobj, exp_args_count, expcmd, required_args)
   expect(args_match.count).to eq(exp_args_count)
 end
 
+def mock_success_status
+  instance_double(Process::Status, success?: true)
+end
+
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:expect]
