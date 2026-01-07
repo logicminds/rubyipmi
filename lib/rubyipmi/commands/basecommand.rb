@@ -95,8 +95,7 @@ module Rubyipmi
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-      rescue e
-        raise e
+      rescue
         Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
         raise "Could not find fix for error code: \n#{result}"
       end
