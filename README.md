@@ -43,7 +43,7 @@ Rubyipmi was built because I wanted an object oriented way to get data from BMC 
 and if any IPMI hacks/workarounds were required I wanted to build those into the library to make life easier.
 
 ## Projects that use Rubyipmi
-* https://github.com/sensu/sensu-community-plugins/blob/master/plugins/ipmi/check-sensor.rb
+* https://github.com/sensu-plugins/sensu-plugins-ipmi
 * https://github.com/theforeman/smart-proxy  (Turns Rubyipmi into a Remote Web API Proxy server)
 * https://github.com/logicminds/ipmispec (just started)
 
