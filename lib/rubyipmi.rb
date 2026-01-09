@@ -147,7 +147,7 @@ module Rubyipmi
 
   # test-friendly capture3
   def self.capture3(cmd)
-    return Open3.capture3(cmd)
+    return Open3.capture3(*cmd)
   end
 
   # method used to find the command which also makes it easier to mock with

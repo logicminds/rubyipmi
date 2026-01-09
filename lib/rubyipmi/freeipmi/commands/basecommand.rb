@@ -25,9 +25,9 @@ module Rubyipmi::Freeipmi
         else
           "--#{k}=#{v}"
         end
-      end.join(" ")
+      end
 
-      "#{cmd} #{args.rstrip}"
+      [cmd] + args.compact
     end
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect

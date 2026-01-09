@@ -15,19 +15,19 @@ module Rubyipmi::Ipmitool
     end
 
     def makecommand
-      args = ''
+      args = []
       # need to format the options to ipmitool format
       @options.each do |k, v|
         # must remove from command line as its handled via conf file
         next if k == "P"
         next if k == "cmdargs"
-        args << " -#{k} #{v}"
+        args += ["-#{k}", v]
       end
 
       # since ipmitool requires commands to be in specific order
-      args << ' ' + options.fetch('cmdargs', '')
+      args += options.fetch('cmdargs', '').split
 
-      "#{cmd} #{args.lstrip}"
+      [cmd] + args.compact
     end
 
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes

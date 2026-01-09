@@ -66,7 +66,7 @@ module Rubyipmi
       logger.debug(makecommand) if logger
       begin
         command = makecommand
-        @lastcall = command.to_s
+        @lastcall = command
         @result, @result_err, status = Rubyipmi.capture3(command)
         # sometimes the command tool does not return the correct result, validate it with additional code
         process_status = validate_status(status)
