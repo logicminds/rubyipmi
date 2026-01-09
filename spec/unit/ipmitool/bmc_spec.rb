@@ -20,7 +20,7 @@ describe "Bmc" do
     end
 
     allow(@bmc).to receive(:locate_command).with('ipmitool').and_return("#{@path}/ipmitool")
-    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
 
     allow(@bmc).to receive(:guid).and_return("guid")
   end

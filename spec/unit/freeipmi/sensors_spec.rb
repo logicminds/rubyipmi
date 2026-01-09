@@ -24,7 +24,7 @@ describe :Sensors do
     allow(@sensors).to receive(:locate_command).with('ipmi-sensors').and_return('/usr/local/bin/ipmi-sensors')
 
     # these stubs allow us to run the command and return the fixtures
-    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
   end
 
   it "cmd should be ipmi-sensors with six arguments" do

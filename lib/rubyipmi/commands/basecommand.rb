@@ -95,8 +95,7 @@ module Rubyipmi
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-      rescue e
-        raise e
+      rescue
         Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
         raise "Could not find fix for error code: \n#{result}"
       end
@@ -108,8 +107,7 @@ module Rubyipmi
 
     # This method will check if the results are really valid as the exit code can be misleading and incorrect
     def validate_status(exitstatus)
-      raise "Error occurred" unless exitstatus
-      raise "Error occurred" if exitstatus.is_a?(Process::Status) && exitstatus.success?
+      raise "Error occurred" unless exitstatus.respond_to?(:success?) && exitstatus.success?
 
       true
     end

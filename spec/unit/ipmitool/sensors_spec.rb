@@ -20,7 +20,7 @@ describe :Sensors do
     File.open("spec/fixtures/#{provider}/sensors.txt", 'r') do |file|
       data = file.read
     end
-    allow(Rubyipmi).to receive(:capture3).and_return([data, '', true])
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
   end
 
   # it 'should figure out to add the -I lanplus' do
