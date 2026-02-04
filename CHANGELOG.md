@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] 
 - Drop support for testing ruby 2.x #66
+- Adds experimental testing support for ruby 4.0
+
 ## [0.12.1]  - 2026
 
 ### Fixed

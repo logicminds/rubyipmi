@@ -16,13 +16,28 @@ jobs:
           - "3.2"
           - "3.3"
           - "3.4"
-          - "4.0"
     steps:
       - uses: actions/checkout@v4
       - name: Install Ruby ${{ matrix.ruby }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run unit tests
+        run: bundle exec rake unit
+      - name: Verify gem builds
+        run: gem build *.gemspec
+
+  test-ruby-4:
+    name: Test Ruby 4.0 (experimental)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Ruby 4.0
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
           bundler-cache: true
       - name: Run unit tests
         run: bundle exec rake unit
