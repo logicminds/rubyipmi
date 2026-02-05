@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class ErrorCodes
     CODES = {
       "authentication type unavailable for attempted privilege level" => {"driver-type" => "LAN_2_0"},
       "authentication type unavailable for attempted privilege level\n" => {"driver-type" => "LAN_2_0"}
-    }
+    }.freeze
 
     def self.length
       CODES.length
@@ -25,6 +27,7 @@ module Rubyipmi::Freeipmi
         end
       end
       raise "No Fix found" if fix.nil?
+
       fix
     end
   end

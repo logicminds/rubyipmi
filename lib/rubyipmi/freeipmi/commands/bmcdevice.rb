@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class BmcDevice < Rubyipmi::Freeipmi::BaseCommand
     def initialize(opts = ObservableHash.new)
@@ -18,7 +20,7 @@ module Rubyipmi::Freeipmi
         key = "#{type}-reset"
         command(key)
       else
-        logger.error("reset type: #{type} is not a valid choice, use warm or cold") if logger
+        logger&.error("reset type: #{type} is not a valid choice, use warm or cold")
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
     end

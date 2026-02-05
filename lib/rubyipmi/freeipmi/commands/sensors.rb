@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubyipmi/commands/mixins/sensors_mixin'
 
 module Rubyipmi::Freeipmi
@@ -33,15 +35,15 @@ module Rubyipmi::Freeipmi
     private
 
     def normalize(text)
-      text.gsub(/\ /, '_').gsub(/\./, '').downcase
+      text.gsub(' ', '_').gsub('.', '').downcase
     end
 
     # Parse the individual sensor
     # Note: not all fields will exist on every server
     def parse(line)
-      fields = [:id_num, :name, :value, :unit, :status, :type, :state, :lower_nonrec,
-                :lower_crit, :lower_noncrit, :upper_crit, :upper_nonrec, :asserts_enabled, :deasserts_enabled]
-      data = line.split(/\|/)
+      fields = %i[id_num name value unit status type state lower_nonrec
+                  lower_crit lower_noncrit upper_crit upper_nonrec asserts_enabled deasserts_enabled]
+      data = line.split('|')
       # should we ever encounter a field not in the fields list, just use a counter based fieldname so we just
       # use field1, field2, field3, ...
       i = 0

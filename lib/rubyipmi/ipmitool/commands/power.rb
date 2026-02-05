@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubyipmi/commands/mixins/power_mixin'
 
 module Rubyipmi::Ipmitool
