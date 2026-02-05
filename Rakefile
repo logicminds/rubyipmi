@@ -1,4 +1,5 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 require 'bundler/gem_tasks'
 
 @base_dir = File.dirname(__FILE__)
@@ -6,8 +7,8 @@ require 'bundler/gem_tasks'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
+  warn e.message
+  warn "Run `bundle install` to install missing gems"
   exit e.status_code
 end
 require 'rake'
@@ -32,7 +33,7 @@ RSpec::Core::RakeTask.new :integration do |spec|
   ENV['ipmiuser'] = 'admin'
   ENV['ipmipass'] = 'password'
   ENV['ipmihost'] = '10.0.1.16'
-  providers ||= Array(ENV['ipmiprovider']) || ['freeipmi', 'ipmitool']
+  providers ||= Array(ENV.fetch('ipmiprovider', nil)) || ['freeipmi', 'ipmitool']
 
   providers.each do |provider|
     ENV['ipmiprovider'] = provider
@@ -59,9 +60,8 @@ task :send_diag, :user, :pass, :host do |_t, args|
   require 'json'
   require "highline/import"
 
-  if args.count < 3
-    raise "You must provide arguments: rake send_diag[user, pass, host]"
-  end
+  raise "You must provide arguments: rake send_diag[user, pass, host]" if args.count < 3
+
   data = Rubyipmi.get_diag(args[:user], args[:pass], args[:host])
   emailto = 'corey@logicminds.biz'
   subject = "Rubyipmi diagnostics data"
@@ -78,14 +78,14 @@ def send_email(to, data, opts = {})
   opts[:body] ||= data
   opts[:to] ||= to
   opts[:port] ||= 587
-  msg = <<END_OF_MESSAGE
-From: #{opts[:from_alias]} <#{opts[:from]}>
-To: <#{to}>
-Subject: #{opts[:subject]}
-Date: #{Time.now.rfc2822}
+  msg = <<~END_OF_MESSAGE
+    From: #{opts[:from_alias]} <#{opts[:from]}>
+    To: <#{to}>
+    Subject: #{opts[:subject]}
+    Date: #{Time.now.rfc2822}
 
-  #{opts[:body]}
-END_OF_MESSAGE
+      #{opts[:body]}
+  END_OF_MESSAGE
 
   smtp = Net::SMTP.new(opts[:server], opts[:port])
   smtp.enable_starttls
