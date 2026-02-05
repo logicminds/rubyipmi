@@ -1,464 +1,434 @@
-Table of Contents
-=================
-
-  * [Rubyipmi](#rubyipmi)
-    * [Projects that use Rubyipmi](#projects-that-use-rubyipmi)
-    * [Support](#support)
-    * [Using the library in your code](#using-the-library-in-your-code)
-      * [Requirements](#requirements)
-      * [Create a connection object](#create-a-connection-object)
-      * [Use power functions (not all listed)](#use-power-functions-not-all-listed)
-      * [Boot to specific device](#boot-to-specific-device)
-      * [Sensors](#sensors)
-      * [Fru](#fru)
-    * [Testing](#testing)
-    * [Security](#security)
-    * [How the library works](#how-the-library-works)
-      * [Creating a new command](#creating-a-new-command)
-      * [Writing a function for running a command](#writing-a-function-for-running-a-command)
-      * [Running the cmd](#running-the-cmd)
-      * [The Options hash](#the-options-hash)
-      * [How to get the results of the command](#how-to-get-the-results-of-the-command)
-      * [The command function](#the-command-function)
-    * [The following are tools bundled with freeipmi](#the-following-are-tools-bundled-with-freeipmi)
-    * [To contrast ipmitool has one command with many options](#to-contrast-ipmitool-has-one-command-with-many-options)
-    * [Auto Detect workarounds](#auto-detect-workarounds)
-    * [Troubleshooting](#troubleshooting)
-      * [Log files](#log-files)
-      * [Diagnostics Function](#diagnostics-function)
-      * [Test Function](#test-function)
-    * [Contributing to rubyipmi](#contributing-to-rubyipmi)
-    * [Copyright](#copyright)
-    * [Freeipmi Documented Workarounds](#freeipmi-documented-workarounds)
-
 # Rubyipmi
-This gem is a ruby wrapper for the freeipmi and ipmitool command line tools.
-It provides a ruby implementation of ipmi commands that will make it simple to connect to BMC devices from ruby.
 
-[![Build Status](https://travis-ci.org/logicminds/rubyipmi.png)](https://travis-ci.org/logicminds/rubyipmi)
-[![Gem Version](https://badge.fury.io/rb/rubyipmi.png)](http://badge.fury.io/rb/rubyipmi)
-[![Coverage Status](https://coveralls.io/repos/logicminds/rubyipmi/badge.png)](https://coveralls.io/r/logicminds/rubyipmi)
+A Ruby library for controlling and querying BMC (Baseboard Management Controller) devices. Rubyipmi wraps the **freeipmi** and **ipmitool** command-line tools behind a consistent, object-oriented API so you can drive IPMI from Ruby scripts, monitoring tools, or automation without shelling out or parsing CLI output yourself.
 
-Rubyipmi was built because I wanted an object oriented way to get data from BMC devices.  I also wanted it easy to use
-and if any IPMI hacks/workarounds were required I wanted to build those into the library to make life easier.
+---
 
-## Projects that use Rubyipmi
-* https://github.com/sensu-plugins/sensu-plugins-ipmi
-* https://github.com/theforeman/smart-proxy  (Turns Rubyipmi into a Remote Web API Proxy server)
-* https://github.com/logicminds/ipmispec (just started)
+## Table of Contents
 
-Don't see your project listed? Create a PR with your project listed here.
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage Scenarios](#usage-scenarios)
+  - [Connection options](#connection-options)
+  - [Power control](#power-control)
+  - [Boot device and PXE](#boot-device-and-pxe)
+  - [Sensors and monitoring](#sensors-and-monitoring)
+  - [FRU (Field Replaceable Unit) info](#fru-field-replaceable-unit-info)
+  - [BMC info and diagnostics](#bmc-info-and-diagnostics)
+- [Development](#development)
+  - [Running tests](#running-tests)
+  - [Extending the library](#extending-the-library)
+- [Troubleshooting](#troubleshooting)
+- [Security](#security)
+- [Projects using Rubyipmi](#projects-using-rubyipmi)
+- [Support](#support)
+- [Contributing](#contributing)
+- [License](#license)
+- [FreeIPMI workarounds](#freeipmi-documented-workarounds)
 
-## Support
-General support is offered via github issues and whenever I have time I will try to resolve any issues.  I do offer
-professional paid support through my [company](http://www.logicminds.biz) and can be contracted to work directly with your organization
-on Rubyipmi or other related automation/devops projects that you might have.
+---
 
-At this time I only have one test server (HP DL380 G5) which I used to perform tests against.  While I try to keep the code
-generic in nature there may be newer devices that do not work correctly and its an issue I cannot troubleshoot directly.  If you would
-like to see newer/other devices be part of my test suite and you have extra servers lying around. I would encourage you to donate
-server equipment so that I can extend my test suite against this newer equipment.
+## Requirements
 
-Servers I have never tested against.
+- **Ruby** 3.0+
+- One of:
+  - [freeipmi](https://www.gnu.org/software/freeipmi/) (from source or package), or
+  - **ipmitool**
 
-* Dell
-* IBM
-* HP server with ilo3+
-* Super Micro
-* Cisco
+Rubyipmi auto-detects which provider is installed. You can also force a specific provider (see [Connection options](#connection-options)).
 
-IPMI is designed to support any equipment that implements the standard.  But there are always problems with people deviating
-from the standard.  In general this library should work will all servers.
+---
 
-## Using the library in your code
+## Installation
 
-### Requirements
-
-
-   1. Install the freeipmi from source (http://www.gnu.org/software/freeipmi/) or ipmitool
-   2. `gem install rubyipmi`
-
-### Create a connection object
-
-   ```ruby
-   require 'rubyipmi'
-   conn = Rubyipmi.connect("username", "password", "hostname", "providertype")
-   ```
-
-   Additionally, if your using [openipmi](http://openipmi.sourceforge.net) and will be using rubyipmi to connect to
-   the  localhost you can utilize the openipmi driver and not have to pass in any connection parameters.
-   Openipmi works by installing a driver and makes it available to the host.  Freeipmi/Ipmitool will then try to use
-   this driver to automatically use the openipmi if no host is given.  The one caveat here is that you cannot control
-   remote hosts using openipmi.  The rubyipmi code must be executed on the host you want to control.
-   The upside is that you don't need any credentials.  Some commands may require root privileges to run when using openipmi.
-
-   Providertype: optional
-
-      valid options: 'auto', 'ipmitool', 'freeipmi'
-
-   If you don't specify the provider type, Rubyipmi will detect if freeipmi or ipmitool
-   is installed and load the first tool found.  If you specify the provider type rubyipmi will only use that specific
-   provider.
-
-   You can specify additional options by passing an options hash into the connection method
-   ```ruby
-      conn = Rubyipmi.connect("username", "password", "hostname", 'freeipmi', {:privilege  =>'USER', :driver => 'lan20'})
-   ```
-
-   Privilege
-
-      This option controls the role of the user making the ipmi call.
-      valid options: 'CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR'  -- defaults to nil and uses the freeipmi/ipmitool default
-
-   Driver
-
-      This option allows you to control which driver to use when making IPMI calls.  Selecting auto will choose
-      either lan15 or lan20 based on your device.  The open type is when using openipmi in conjunction with the provider.
-      valid options: "auto", "lan15", "lan20", "open"   -- defaults to lan20
-
-
-### power functions
-
-   ```ruby
-   require 'rubyipmi'
-   conn = Rubyipmi.connect("username", "password", "hostname")
-   conn.chassis.power.on
-   conn.chassis.power.off
-   conn.chassis.power.on?
-   conn.chassis.power.off?
-   conn.chassis.power.cycle
-
-   ```
-
-### Boot to specific device
-
-  ```ruby
-   require 'rubyipmi'
-   conn = Rubyipmi.connect("username", "password", "hostname")
-   conn.chassis.bootpxe(reboot=bool, persistent=bool)
-   conn.chassis.bootdisk(reboot=bool, persistent=bool)
-   
-   Examples:
-   conn.chassis.bootpxe(reboot=true, persistent=false) # reboot immediately, PXE boot once
-   conn.chassis.bootpxe(reboot=false, persistent=false) # on next reboot PXE boot once
-   conn.chassis.bootdisk(reboot=true, persistent=false) # reboot immediately, boot off disk once
-   conn.chassis.bootdisk(reboot=true, persistent=true) # reboot immediately, boot off disk forever
-   conn.chassis.bootdisk(reboot=false, persistent=true) # reboot off disk forever, starting on next reboot
-  ```
-
-
-### Sensors
-
-  ```ruby
-    require 'rubyipmi'
-    conn = Rubyipmi.connect("username", "password", "hostname")
-    conn.sensors.names
-    conn.sensors.list
-    conn.sensors.<sensor name>
-
-  ```
-
-### Fru
-
-  ```ruby
-    require 'rubyipmi'
-    conn = Rubyipmi.connect("username", "password", "hostname")
-    conn.fru.list
-    conn.fru.serial
-    conn.fru.manufacturer
-    conn.fru.product
-
-  ```
-
-## Testing
-There are a series of automated rspec tests that test the functionality of this library with the ipmi device.
-In order to perform use the following steps.
-
-DO NOT PERFORM THESE TEST ON ANY PRODUCTION SYSTEM.  THESE TESTS WILL TURN OFF THE DEVICE!
-
-
-1.  Install gem via source
-2.  bundle install
-3.  rake (runs unit tests, does not require a ipmi device) 
-3.  rake integration ipmiuser=ipmiuser ipmipass=ipmiuserpass ipmihost=192.168.1.22 ipmiprovider=freeipmi   (fill in your your details)
-4.  report any failures with your make/model/firmware revision to corey@logicminds.biz
-
-## Security
- The only security used throughout the library is the use of temporary password files that store the password while
- the command is being executed.  This password file is created and deleted on the fly with every library call.
- The password will not be shown in any logs or process lists due to this enhancement.  The filename is a long random string
- as is the folder name so it would be difficult to guess the password file.  If for some reason a command takes a long
- time to run anyone could get the location of the file but the file is 0600 so it should not be readable by anyone outside
- of the process.
-
-
-## How the library works
-Since this library is based off of running a suite of command line tools I have created a base class called baseCommand
-that performs the actual execution of the command.  The baseCommand only executes the command with the supplied
-arguments and options and returns the exit status.  Additionally the result of the executed command is stored in
-the result variable should we need to retrieve the output of the command. To further extend the baseCommand class.
-
-
-### Creating a new command
-Creating a new command is actually quite simple.  Follow these steps to wrap a freeipmi or ipmitool command.
-
-1.  Create a new subclass of BaseCommand
-2.  define the initialize function like so, and pass in the name of the command line tool to the super constructor.
-
-    ```ruby
-    def initialize(opts = {})
-      @options = opts
-      super("bmc-info", opts)
-    end
-
-    ```
-
-    ```ruby
-    def initialize(opts = {})
-      @options = opts
-      super("ipmitool", opts)
-    end
-
-    ```
-3.  Thats it.  The rest of the class is related to running the command and interperting the results
-
-### Writing a function for running a command
-The freeipmi command line tools have two different ways to run the commands.
-
-1.  ``` ipmipower --hostname=host --password=pass --username=user --off ```  (single action, multiple arguments)
-2.  ``` ipmi-chassis --hostname=host --password=pass --username=user --chassis-identify=FORCE ```  (multiple arguments, one main action with different qualifers)
-
-Because of the varying ways to run a command I have simplified them so it makes it easy to call the command line tools.
-
-1. Each subclassed baseCommand class inherits runcmd, result, cmd, and runcmd_with_args.
-2. The cmd executable gets set when instantiating a baseCommand class, where the class also finds the path of the executable.
-3. The options variable gets set when instantiating a subclass of the baseCommand class.
-
-### Running the cmd
-
-1.  To run the cmd, just call ``` runcmd ```  (which will automatically set all the options specified in the options hash)
-2.  To run the cmd, with arguments and options call ``` runcmd([]) ``` and pass in a array of the arguments.  (Arguments are actions only and look like --off, --on, --action)
-3.  To run the cmd, with just arguments ``` runcmd_with_args([]) ```  and pass in a array of the arguments.  (Example: 192.168.1.1)
-
-### The Options hash
-The options hash can be considered a global hash that is passed in through the connection object.
-Most of the options will be set at the connection level.  However, most commands require additional options
-that should be set at the subclassed BaseCommand level.  You must not forget to unset the option after calling
-the runcmd command.  Failure to do so will add previous options to subsequent run options.
-
-Example:
+Add to your Gemfile:
 
 ```ruby
-def ledlight(status=false, delay=300)
-      if status
-        if delay <= 0
-          options["chassis-identify"] = "FORCE"
-        else
-          options["chassis-identify"] = delay
-        end
-      else
-        options["chassis-identify"] = "TURN-OFF"
-      end
-      # Run the command
-      run
-      # unset the option by deleting from hash
-      options.delete("chassis-identify")
+gem 'rubyipmi'
+```
+
+Then:
+
+```bash
+bundle install
+```
+
+Or install globally:
+
+```bash
+gem install rubyipmi
+```
+
+---
+
+## Quick Start
+
+```ruby
+require 'rubyipmi'
+
+# Connect (provider is auto-detected: freeipmi or ipmitool)
+conn = Rubyipmi.connect("username", "password", "hostname")
+
+# Verify connectivity
+conn.connection_works?   # => true/false
+
+# Power
+conn.chassis.power.on?
+conn.chassis.power.off
+conn.chassis.power.on
+conn.chassis.power.cycle
+
+# Sensors
+conn.sensors.names
+conn.sensors.list
+
+# FRU (serial, model, etc.)
+conn.fru.list
+conn.fru.serial
+conn.fru.manufacturer
+conn.fru.product
+
+# BMC info
+conn.bmc.info
+conn.bmc.version
+```
+
+---
+
+## Usage Scenarios
+
+### Connection options
+
+**Basic connection** (auto-detect provider):
+
+```ruby
+conn = Rubyipmi.connect("username", "password", "192.168.1.10")
+```
+
+**Choose provider explicitly** (`'auto'`, `'freeipmi'`, or `'ipmitool'`):
+
+```ruby
+conn = Rubyipmi.connect("username", "password", "192.168.1.10", "freeipmi")
+```
+
+**Extra options** (privilege, driver):
+
+```ruby
+conn = Rubyipmi.connect("username", "password", "192.168.1.10", "freeipmi", {
+  privilege: 'ADMINISTRATOR',
+  driver:    'lan20'   # or 'lan15', 'auto', 'open'
+})
+```
+
+**Local host with OpenIPMI** (no credentials; run on the same host as the BMC):
+
+```ruby
+# Uses openipmi driver; no username/password/host needed
+conn = Rubyipmi.connect(nil, nil, "localhost", "freeipmi", { driver: 'open' })
+```
+
+Valid `privilege` values: `'CALLBACK'`, `'USER'`, `'OPERATOR'`, `'ADMINISTRATOR'`.  
+Valid `driver` values: `'auto'`, `'lan15'`, `'lan20'`, `'open'`.
+
+---
+
+### Power control
+
+```ruby
+conn = Rubyipmi.connect(user, pass, host)
+
+conn.chassis.power.on          # power on
+conn.chassis.power.off         # power off
+conn.chassis.power.cycle       # power cycle
+conn.chassis.power.on?         # => true if on
+conn.chassis.power.off?        # => true if off
+```
+
+---
+
+### Boot device and PXE
+
+Set next boot device and optionally reboot. Methods take `(reboot, persistent)`:
+
+```ruby
+conn = Rubyipmi.connect(user, pass, host)
+
+# PXE once, then revert to normal boot (reboot now)
+conn.chassis.bootpxe(true, false)
+
+# PXE on next reboot only (no reboot now)
+conn.chassis.bootpxe(false, false)
+
+# Boot from disk once, with immediate reboot
+conn.chassis.bootdisk(true, false)
+
+# Boot from disk from now on (persistent)
+conn.chassis.bootdisk(true, true)
+
+# CDROM
+conn.chassis.bootcdrom(true, false)
+```
+
+`reboot`: perform a power cycle after setting the boot device.  
+`persistent`: keep the boot device across reboots (otherwise one-time).
+
+---
+
+### Sensors and monitoring
+
+Useful for monitoring stacks (e.g. Sensu, Prometheus exporters):
+
+```ruby
+conn = Rubyipmi.connect(user, pass, host)
+
+# List sensor names
+conn.sensors.names
+
+# Full sensor list (array of sensor data)
+conn.sensors.list
+
+# Access a sensor by normalized name (underscores, no spaces/dots)
+conn.sensors.temperature_cpu1
+conn.sensors.fan_speed_1
+```
+
+Example: collect temperatures for a custom monitor:
+
+```ruby
+conn.sensors.list.each do |sensor|
+  next unless sensor[:name].to_s.include?('temp')
+  puts "#{sensor[:name]}: #{sensor[:value]} #{sensor[:unit]}"
 end
-
 ```
 
-### How to get the results of the command
-After running a command it may be desirable to get the results for further processing.
-Note that there are two kinds of results.
-1. the text returned from the shell command, this is stored in @results
-2. the status value returned from the shell command (true or false only) this is returned from runcmd.
+---
 
-To get the results:
+### FRU (Field Replaceable Unit) info
 
-Example:
+Serial numbers, product names, manufacturers:
 
 ```ruby
+conn = Rubyipmi.connect(user, pass, host)
 
-    def status
-      value = command("--stat")
-      if value == true
-         @result.split(":").last.chomp.trim
-      end
-    end
-
-    def command(opt)
-      status = run([opt])
-      return status
-    end
-
-    def on?
-      status == "on"
-    end
-
+conn.fru.list           # full FRU data
+conn.fru.serial         # serial number(s)
+conn.fru.manufacturer   # manufacturer
+conn.fru.product        # product name
 ```
 
-### The command function
-Although its not necessary to implement the command function it may be desirable if your code starts to repeat itself.
-  In this example the command function is just a wrapper command that calls run.  Your implementation will vary,
-  but be sure to always call it the "command" function, so its easily identified.
-  Additionally, should this gem ever become out of date one could call the command function and pass in any
-  arguments that have not already been implemented in the rest of the class.
+Handy for asset tracking or automation that needs to identify hardware.
+
+---
+
+### BMC info and diagnostics
+
+**BMC info and version:**
 
 ```ruby
-
- def command(opt)
-      status = runcmd([opt])
-      return status
- end
-
- def on
-      command("--on")
- end
-
+conn.bmc.info
+conn.bmc.version
 ```
 
-## The following are tools bundled with freeipmi
+**Connection check** (single place to validate credentials/host):
 
-* ipmi-chassis
-* ipmi-oem
-* ipmi-chassis-config
-* ipmiping
-* ipmiconsole
-* ipmipower
-* ipmidetect
-* ipmi-raw
-* ipmi-fru
-* ipmi-sel
-* ipmi-locate
-* ipmi-sensors
-* ipmimonitoring
-* ipmi-sensors-config
-* bmc-config
-* bmc-device
-* bmc-info
+```ruby
+if conn.connection_works?
+  # proceed with power, sensors, etc.
+else
+  # handle unreachable or bad credentials
+end
+```
 
-## To contrast ipmitool has one command with many options
-* ipmitool
+**Generate a diagnostics file** (for bug reports or vendor-specific issues):
 
+```ruby
+require 'rubyipmi'
+Rubyipmi.get_diag(user, pass, host)
+# Writes: /tmp/rubyipmi_diag_data.txt
+# Review for sensitive data (IP/MAC, etc.) before sharing.
+```
 
+With debug logging:
 
-## Auto Detect workarounds
-IPMI is great for a vendor neutral management interface.  However, not all servers are 100% compatible with the specifications.
-In order to overcome ipmi non-compliance there will be some workarounds built into this library
+```ruby
+require 'rubyipmi'
+require 'logger'
+Rubyipmi.log_level = Logger::DEBUG
+Rubyipmi.get_diag(user, pass, host)
+# Also creates /tmp/rubyipmi.log with commands run
+```
+
+---
+
+## Development
+
+### Running tests
+
+**Unit tests** (no BMC required; mocks only):
+
+```bash
+bundle install
+bundle exec rake unit
+```
+
+**Integration tests** (require a real BMC; **they will power off/cycle the device**):
+
+Do **not** run on production systems.
+
+```bash
+bundle exec rake integration \
+  ipmiuser=USER \
+  ipmipass=PASS \
+  ipmihost=192.168.1.10 \
+  ipmiprovider=freeipmi
+```
+
+**Vagrant-based integration** (if you use the spec Vagrant setup):
+
+```bash
+cd spec && vagrant up && vagrant provision
+vagrant ssh -c "/rubyipmi/rake integration ipmiuser=... ipmipass=... ipmihost=... ipmiprovider=freeipmi"
+```
+
+**CI:** The repo uses GitHub Actions; see `.github/workflows/test.yml`. Typical flow: checkout → Ruby 3.x → `bundle install` → `bundle exec rake unit` → `gem build`.
+
+---
+
+### Extending the library
+
+Rubyipmi runs the underlying CLI tools via a small command layer. To add or wrap new behavior:
+
+1. **Subclass the provider’s BaseCommand**  
+   Use `Rubyipmi::Freeipmi::Commands::BaseCommand` or `Rubyipmi::Ipmitool::Commands::BaseCommand`.
+
+2. **Initialize with the executable name** (e.g. freeipmi’s `bmc-info` or `ipmitool`):
+
+   ```ruby
+   def initialize(opts = {})
+     @options = opts
+     super("bmc-info", opts)   # or "ipmitool" for ipmitool
+   end
+   ```
+
+3. **Use the shared execution helpers**  
+   - `runcmd` – run with current `options` (e.g. hostname, username, password).  
+   - `runcmd(["--option"])` – run with extra arguments.  
+   - `runcmd_with_args([...])` – run with only the given args.  
+   - `@result` holds stdout; the return value of `runcmd` is the command success (true/false).
+
+4. **Options hash**  
+   Connection options (host, user, password, driver, privilege) are in `options`. Add command-specific keys for that run, then **delete them after** so they don’t leak into the next command:
+
+   ```ruby
+   def some_action
+     options["chassis-identify"] = "FORCE"
+     runcmd
+     options.delete("chassis-identify")
+   end
+   ```
+
+5. **Expose the new command from the Connection**  
+   In `lib/rubyipmi/freeipmi/connection.rb` (or ipmitool equivalent), add an accessor and instantiate your command class with `@options`.
+
+**Freeipmi** uses many separate binaries (e.g. `ipmi-chassis`, `ipmi-sensors`, `bmc-info`). **Ipmitool** uses a single `ipmitool` binary with subcommands. Implement the appropriate BaseCommand and wire it into the connection object.
+
+---
 
 ## Troubleshooting
 
-### Log files
-Rubyipmi has a built in logging system for debugging purposes.  By default logging is disabled.  The logger is a class instance
-variable and will stay in memory for as long as your program or interpreter is loaded. In order to enable logging
-you need to do the following.
+### Logging
+
+By default, logging is disabled. To trace commands and options:
 
 ```ruby
-    require 'rubyipmi'
-    require 'logger'
-    Rubyipmi.log_level = Logger::DEBUG
+require 'rubyipmi'
+require 'logger'
+Rubyipmi.log_level = Logger::DEBUG
+# Log file: /tmp/rubyipmi.log
 ```
-This will create a log file in /tmp/rubyipmi.log which you can use to trace the commands Rubyipmi generates and runs.
 
-If you want to setup a custom logger (not required) you can also pass in a logger instance as well.
+Custom logger:
 
 ```ruby
-   require 'rubyipmi'
-   require 'logger'
-   custom_logger = Logger.new('/var/log/rubyipmi_custom.log')
-   custom_logger.progname = 'Rubyipmi'
-   custom_logger.level = Logger::DEBUG
-   Rubyipmi.logger = custom_logger
+custom = Logger.new('/var/log/rubyipmi.log')
+custom.progname = 'Rubyipmi'
+custom.level = Logger::DEBUG
+Rubyipmi.logger = custom
 ```
 
-### Diagnostics Function
-Running IPMI commands can be frustrating sometimes and with the addition of this library you are bound to find edge
-cases.  If you do find an edge case there is a easy function that will generate a diagnostics file that you can
-review and optionally create an issue with us to work with.  Without this information its really hard to help because
-every server is different. The following code will generate a file in /tmp/rubyipmi_diag_data.txt that we can use
-as test cases.  Please look over the file for any sensitive data you don't want to share like ip/mac address.
+### Diagnostics
+
+For support or bug reports, generate a diagnostics file and (after redacting) attach it:
 
 ```ruby
-   require 'rubyipmi'
-   Rubyipmi.get_diag(user, pass, host)
+Rubyipmi.get_diag(user, pass, host)
+# Edit /tmp/rubyipmi_diag_data.txt to remove sensitive data, then share.
 ```
 
-You can couple this with the logger and also generate a log file of all the commands get_diag uses as well.
+### Connection test
 
 ```ruby
-   require 'rubyipmi'
-   require 'logger'
-   Rubyipmi.log_level = Logger::DEBUG
-   Rubyipmi.get_diag(user, pass, host)
+conn = Rubyipmi.connect(user, pass, host)
+conn.connection_works?   # => true/false
 ```
 
-### Test Function
-If you need to test if the bmc device and run a basic call there is now a function that retruns boolean true when
-the connection attempt was successful.
+---
 
-```ruby
-   require 'rubyipmi'
-   conn = Rubyipmi.connect(user, pass, host)
-   conn.connection_works?  => true|false
-```
+## Security
 
-## Contributing to rubyipmi
+Credentials are not passed on the command line. The library uses temporary files (mode `0600`) to pass passwords to the underlying CLI tools; files are created and removed around each call. Filenames and directory names are randomized to avoid guessing. Passwords do not appear in process listings or in logs.
 
-* Check out the latest code to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
-* Fork the project.
-* Start a feature/bugfix branch.
-* Commit and push until you are happy with your contribution.
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+---
 
-## Copyright
+## Projects using Rubyipmi
 
-Copyright (c) 2015 Corey Osman. See LICENSE.txt for
-further details.
+- [sensu-plugins-ipmi](https://github.com/sensu-plugins/sensu-plugins-ipmi) – IPMI checks for Sensu  
+- [smart-proxy](https://github.com/theforeman/smart-proxy) – Foreman Smart Proxy (exposes Rubyipmi as a remote API)  
+- [ipmispec](https://github.com/logicminds/ipmispec)
 
+If you use Rubyipmi in a project, open a PR to add it to this list.
 
-## Freeipmi Documented Workarounds
+---
 
+## Support
 
-One of my design goals is to raise exceptions and have the library try workarounds before ultimately failing since there is a whole list of workarounds that can be attempted.However, it would be nice to know the make and model of the server up front to decrease workaround attempts.
+- **Community:** Open a [GitHub issue](https://github.com/logicminds/rubyipmi/issues) for bugs or feature requests.  
+- **Paid support:** [LogicMinds](http://www.logicminds.biz) offers professional support and custom development.
 
-So essentially I need to figure out how to save a command call and then retry if it doesn't work.
+Test coverage is limited to the hardware available to the maintainers (e.g. HP DL380 G5). IPMI is vendor-neutral, but implementations vary. Devices not regularly tested include Dell, IBM, HP iLO3+, Supermicro, Cisco. If you hit vendor-specific issues, diagnostics (see above) and FreeIPMI workarounds (below) often help.
 
-With so many different vendors implementing their own IPMI solutions, different vendors may implement their IPMI protocols incorrectly. The following describes a number of workarounds currently available to handle discovered compliance issues. When possible, workarounds have been implemented so they will be transparent to the user. However, some will require the user to specify a workaround be used via the -W option.
-The hardware listed below may only indicate the hardware that a problem was discovered on. Newer versions of hardware may fix the problems indicated below. Similar machines from vendors may or may not exhibit the same problems. Different vendors may license their firmware from the same IPMI firmware developer, so it may be worthwhile to try workarounds listed below even if your motherboard is not listed.
+---
 
-If you believe your hardware has an additional compliance issue that needs a workaround to be implemented, please contact the FreeIPMI maintainers on <freeipmi-users@gnu.org> or <freeipmi-devel@gnu.org>.
+## Contributing
 
-assumeio - This workaround flag will assume inband interfaces communicate with system I/O rather than being memory-mapped. This will work around systems that report invalid base addresses. Those hitting this issue may see "device not supported" or "could not find inband device" errors. Issue observed on HP ProLiant DL145 G1.
+1. Check existing issues and PRs to avoid duplicate work.  
+2. Fork the repo and create a feature or bugfix branch.  
+3. Add tests for new behavior (unit tests for logic, integration only when needed).  
+4. Keep Rakefile, version, and history changes minimal; if necessary, isolate in a single commit.  
+5. Open a pull request with a clear description of the change.
 
-spinpoll - This workaround flag will inform some inband drivers (most notably the KCS driver) to spin while polling rather than putting the process to sleep. This may significantly improve the wall clock running time of tools because an operating system scheduler's granularity may be much larger than the time it takes to perform a single IPMI message transaction. However, by spinning, your system may be performing less useful work by not contexting out the tool for a more useful task.
+---
 
-authcap - This workaround flag will skip early checks for username capabilities, authentication capabilities, and K_g support and allow IPMI authentication to succeed. It works around multiple issues in which the remote system does not properly report username capabilities, authentication capabilities, or K_g status. Those hitting this issue may see "username invalid", "authentication type unavailable for attempted privilege level", or "k_g invalid" errors. Issue observed on Asus P5M2/P5MT-R/RS162-E4/RX4, Intel SR1520ML/X38ML, and Sun Fire 2200/4150/4450 with ELOM.
+## License
 
-idzero - This workaround flag will allow empty session IDs to be accepted by the client. It works around IPMI sessions that report empty session IDs to the client. Those hitting this issue may see "session timeout" errors. Issue observed on Tyan S2882 with M3289 BMC.
+Copyright (c) 2015 Corey Osman. See [LICENSE.txt](LICENSE.txt) for details (LGPL-2.1).
 
-unexpectedauth - This workaround flag will allow unexpected non-null authcodes to be checked as though they were expected. It works around an issue when packets contain non-null authentication data when they should be null due to disabled per-message authentication. Those hitting this issue may see "session timeout" errors. Issue observed on Dell PowerEdge 2850,SC1425. Confirmed fixed on newer firmware.
+---
 
-forcepermsg - This workaround flag will force per-message authentication to be used no matter what is advertised by the remote system. It works around an issue when per-message authentication is advertised as disabled on the remote system, but it is actually required for the protocol. Those hitting this issue may see "session timeout" errors. Issue observed on IBM eServer 325.
+## FreeIPMI documented workarounds
 
-endianseq - This workaround flag will flip the endian of the session sequence numbers to allow the session to continue properly. It works around IPMI 1.5 session sequence numbers that are the wrong endian. Those hitting this issue may see "session timeout" errors. Issue observed on some Sun ILOM 1.0/2.0 (depends on service processor endian).
+Many vendors implement IPMI with quirks. FreeIPMI documents workarounds (e.g. `-W intel20`, `-W supermicro20`). Rubyipmi may expose or use some of these; for the full list and `-W` options, see the [FreeIPMI documentation](https://www.gnu.org/software/freeipmi/). If you need a workaround not yet supported, opening an issue with your BMC model and the FreeIPMI workaround that works on the CLI can help.
 
-intel20 - This workaround flag will work around several Intel IPMI 2.0 authentication issues. The issues covered include padding of usernames, and password truncation if the authentication algorithm is HMAC-MD5-128. Those hitting this issue may see "username invalid", "password invalid", or "k_g invalid" errors. Issue observed on Intel SE7520AF2 with Intel Server Management Module (Professional Edition).
+Common workaround flags (refer to FreeIPMI for current details):
 
-supermicro20 - This workaround flag will work around several Supermicro IPMI 2.0 authentication issues on motherboards w/ Peppercon IPMI firmware. The issues covered include handling invalid length authentication codes. Those hitting this issue may see "password invalid" errors. Issue observed on Supermicro H8QME with SIMSO daughter card. Confirmed fixed on newerver firmware.
+- **assumeio** – inband I/O (e.g. HP ProLiant DL145 G1).  
+- **authcap** – skip early auth capability checks (e.g. Asus, Intel, Sun).  
+- **intel20** – Intel IPMI 2.0 auth (e.g. Intel SE7520AF2).  
+- **supermicro20** – Supermicro IPMI 2.0 (e.g. H8QME).  
+- **sun20** / **opensesspriv** – Sun/ILOM auth and session handling.  
+- **idzero**, **unexpectedauth**, **forcepermsg**, **endianseq** – session and auth quirks on various Dell, IBM, Tyan, Sun.  
+- **No IPMI 1.5 support** – use driver `lan20` (e.g. HP ProLiant DL145).  
+- **slowcommit** / **veryslowcommit** – BMCs that need slower config commits (e.g. Supermicro, Quanta/Dell).
 
-sun20 - This workaround flag will work work around several Sun IPMI 2.0 authentication issues. The issues covered include invalid lengthed hash keys, improperly hashed keys, and invalid cipher suite records. Those hitting this issue may see "password invalid" or "bmc error" errors. Issue observed on Sun Fire 4100/4200/4500 with ILOM. This workaround automatically includes the "opensesspriv" workaround.
-
-opensesspriv - This workaround flag will slightly alter FreeIPMI's IPMI 2.0 connection protocol to workaround an invalid hashing algorithm used by the remote system. The privilege level sent during the Open Session stage of an IPMI 2.0 connection is used for hashing keys instead of the privilege level sent during the RAKP1 connection stage. Those hitting this issue may see "password invalid", "k_g invalid", or "bad rmcpplus status code" errors. Issue observed on Sun Fire 4100/4200/4500 with ILOM, Inventec 5441/Dell Xanadu II, Supermicro X8DTH, Supermicro X8DTG, Intel S5500WBV/Penguin Relion 700, Intel S2600JF/Appro 512X, and Quanta QSSC-S4R//Appro GB812X-CN. This workaround is automatically triggered with the "sun20" workaround.
-
-integritycheckvalue - This workaround flag will work around an invalid integrity check value during an IPMI 2.0 session establishment when using Cipher Suite ID 0. The integrity check value should be 0 length, however the remote motherboard responds with a non-empty field. Those hitting this issue may see "k_g invalid" errors. Issue observed on Supermicro X8DTG, Supermicro X8DTU, and Intel S5500WBV/Penguin Relion 700, and Intel S2600JF/Appro 512X.
-
-No IPMI 1.5 Support - Some motherboards that support IPMI 2.0 have been found to not support IPMI 1.5. Those hitting this issue may see "ipmi 2.0 unavailable" or "connection timeout" errors. This issue can be worked around by using IPMI 2.0 instead of IPMI 1.5 by specifying --driver-address=LAN_2_0. Issue observed on HP Proliant DL 145.
-
-slowcommit - This workaround will slow down commits to the BMC by sleeping one second between the commit of sections. It works around motherboards that have BMCs that can be overwhelmed by commits. Those hitting this issue may see commit errors or commits not being written to the BMC. Issue observed on Supermicro H8QME.
-
-veryslowcommit - This workaround will slow down commits to the BMC by sleeping one second between the commit of every key. It works around motherboards that have BMCs that can be overwhelmed by commits. Those hitting this issue may see commit errors or commits not being written to the BMC. Issue observed on Quanta S99Q/Dell FS12-TY.
-
-
-
+Hardware listed is where issues were first seen; newer firmware may fix them. Similar or licensed firmware from other vendors may behave the same. To request new workarounds in FreeIPMI, contact [freeipmi-users](https://www.gnu.org/software/freeipmi/) or [freeipmi-devel](https://www.gnu.org/software/freeipmi/).
