@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'fileutils'
 require 'logger'
@@ -19,17 +21,15 @@ describe "rubyipmi" do
   it "should test if a provider is present" do
     value = Rubyipmi.is_provider_installed?("ipmitool")
     value2 = Rubyipmi.is_provider_installed?("freeipmi")
-    expect((value | value2)).to eq true
+    expect(value | value2).to eq true
   end
 
   it "should create a connection object if freeipmi is present" do
-    begin
-      conn = Rubyipmi.connect(@user, @pass, @host, "freeipmi")
-      expect(conn.kind_of?(Rubyipmi::Freeipmi::Connection)).to eq true
-    rescue Exception => e
-      expect(e.message.match(/freeipmi\ is\ not\ installed/)).to eq true
-      puts "#{e.message}"
-    end
+    conn = Rubyipmi.connect(@user, @pass, @host, "freeipmi")
+    expect(conn.kind_of?(Rubyipmi::Freeipmi::Connection)).to eq true
+  rescue Exception => e
+    expect(e.message.match(/freeipmi\ is\ not\ installed/)).to eq true
+    puts e.message
   end
 
   it "should create a connection object if ipmitool is present" do
@@ -37,18 +37,16 @@ describe "rubyipmi" do
       conn = Rubyipmi.connect(@user, @pass, @host, "ipmitool")
     rescue Exception => e
       expect(e.message).to match(/ipmitool\ is\ not\ installed/)
-      puts "#{e.message}"
+      puts e.message
       return true
     end
     expect(conn.kind_of?(Rubyipmi::Ipmitool::Connection)).to eq true
   end
 
   it "should not create a connection object if a provider is not present" do
-    begin
-      Rubyipmi.connect(@user, @pass, @host, "bogus")
-    rescue Exception => e
-      expect(e.message).to match(/The IPMI provider: bogus is not installed/)
-    end
+    Rubyipmi.connect(@user, @pass, @host, "bogus")
+  rescue Exception => e
+    expect(e.message).to match(/The IPMI provider: bogus is not installed/)
   end
 
   it "check to find any available installed providers" do

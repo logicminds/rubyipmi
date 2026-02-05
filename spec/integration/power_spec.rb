@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "Power" do
@@ -24,13 +26,12 @@ describe "Power" do
   it "test to check if power status is off" do
     @conn.chassis.power.off
     max_count = 12
-    while 0 < max_count
-      if @conn.chassis.power.off?
-        break
-      else
-        sleep(5)
-        max_count -= 1
-      end
+    while max_count > 0
+      break if @conn.chassis.power.off?
+
+      sleep(5)
+      max_count -= 1
+
     end
     expect(@conn.chassis.power.off?).to be true
   end

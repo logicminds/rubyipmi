@@ -18,7 +18,7 @@ module Rubyipmi::Freeipmi
     def self.search(code)
       # example error code:
       # "/usr/local/sbin/bmc-info: authentication type unavailable for attempted privilege level\n"
-      code.chomp! # clean up newline
+      code = code.chomp # clean up newline
       code = code.split(':').last.strip # clean up left hand side and strip white space from sides
       fix = CODES.fetch(code, nil)
       if fix.nil?
