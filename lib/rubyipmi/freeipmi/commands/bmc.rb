@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class Bmc < Rubyipmi::Freeipmi::BaseCommand
     # attr_accessor :options
@@ -16,7 +18,7 @@ module Rubyipmi::Freeipmi
     end
 
     def info
-      if @bmcinfo.length > 0
+      if @bmcinfo.length.positive?
         @bmcinfo
       else
         information.retrieve
@@ -40,11 +42,11 @@ module Rubyipmi::Freeipmi
     end
 
     def information
-      @info ||= Rubyipmi::Freeipmi::BmcInfo.new(options)
+      @information ||= Rubyipmi::Freeipmi::BmcInfo.new(options)
     end
 
     def device
-      @bmcdevice ||= Rubyipmi::Freeipmi::BmcDevice.new(options)
+      @device ||= Rubyipmi::Freeipmi::BmcDevice.new(options)
     end
   end
 end

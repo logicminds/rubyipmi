@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class BmcDevice < Rubyipmi::Freeipmi::BaseCommand
     def initialize(opts = ObservableHash.new)
