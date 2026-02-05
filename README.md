@@ -293,6 +293,18 @@ vagrant ssh -c "/rubyipmi/rake integration ipmiuser=... ipmipass=... ipmihost=..
 
 **CI:** The repo uses GitHub Actions; see `.github/workflows/test.yml`. Typical flow: checkout → Ruby 3.x → `bundle install` → `bundle exec rake unit` → `gem build`.
 
+### CI, security, and automation
+
+| Workflow | Purpose |
+|----------|---------|
+| [test.yml](.github/workflows/test.yml) | Unit tests and gem build (Ruby 3.0–3.4) |
+| [lint.yml](.github/workflows/lint.yml) | RuboCop style and lint checks |
+| [codeql.yml](.github/workflows/codeql.yml) | CodeQL security and code-quality analysis |
+| [security.yml](.github/workflows/security.yml) | Dependency review (PRs) and `bundler-audit` for gem vulnerabilities |
+
+- **Dependabot** (`.github/dependabot.yml`): weekly dependency and GitHub Actions updates; security alerts appear in the **Security** tab.
+- **GitHub Copilot Code Review:** For automatic AI-assisted reviews on pull requests, enable **Rules → Rulesets** in the repo **Settings**, add a rule, and choose **Require a review from GitHub Copilot**. You can enable “Run on each push” and “Run on drafts” there. (Requires a Copilot-enabled account.)
+
 ---
 
 ### Extending the library
