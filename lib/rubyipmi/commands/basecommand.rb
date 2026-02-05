@@ -51,8 +51,8 @@ module Rubyipmi
     def runcmd
       @success = false
       @success = run
-      logger.debug(@lastcall.inspect) if logger && logger && !@lastcall.nil?
-      logger.debug(@result) if logger && logger && !@result.nil?
+      logger&.debug(@lastcall.inspect) unless @lastcall.nil?
+      logger&.debug(@result) unless @result.nil?
       @success
     end
 
