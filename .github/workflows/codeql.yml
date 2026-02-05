@@ -1,0 +1,35 @@
+# CodeQL: security and code quality analysis (GitHub Advanced Security)
+# https://docs.github.com/en/code-security/code-scanning
+name: CodeQL
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Weekly run (optional)
+    - cron: '0 0 * * 1'
+
+jobs:
+  analyze:
+    name: Analyze (Ruby)
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ruby
+          # Optional: use security-extended for more security queries
+          queries: security-extended
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:ruby"
