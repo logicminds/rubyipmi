@@ -1,19 +1,20 @@
 Style/StringLiterals:
   Enabled: false
 AllCops:
+  NewCops: enable
   Exclude:
   - 'rubyipmi.gemspec'
-SignalException:
+Style/SignalException:
   EnforcedStyle: only_raise
-Documentation:
+Style/Documentation:
   Enabled: false
-ClassAndModuleChildren:
+Style/ClassAndModuleChildren:
   Enabled: false
-HashSyntax:
+Style/HashSyntax:
   EnforcedStyle: hash_rockets
-ClassCheck:
+Style/ClassCheck:
   EnforcedStyle: kind_of?
-SpaceInsideHashLiteralBraces:
+Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 Style/WordArray:
   Enabled: false
@@ -24,14 +25,22 @@ Metrics/AbcSize:
   Max: 60
 Metrics/CyclomaticComplexity:
   Max: 19
-Metrics/LineLength:
+  Exclude:
+    - 'lib/rubyipmi.rb'
+Layout/LineLength:
   Max: 149
 Metrics/MethodLength:
   Max: 44
+  Exclude:
+    - 'lib/rubyipmi.rb'
 Metrics/ModuleLength:
   Max: 128
+  Exclude:
+    - 'lib/rubyipmi.rb'
 Metrics/PerceivedComplexity:
   Max: 22
+  Exclude:
+    - 'lib/rubyipmi.rb'
 Style/SpecialGlobalVars:
   Exclude:
     - 'lib/rubyipmi.rb'
@@ -44,23 +53,61 @@ Style/RescueModifier:
 Style/RegexpLiteral:
   Exclude:
     - 'spec/spec_helper.rb'
-Style/PredicateName:
+Naming/PredicatePrefix:
   Exclude:
     - 'lib/rubyipmi.rb'
 Lint/RescueException:
   Exclude:
     - 'spec/integration/rubyipmi_spec.rb'
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Fixed by deprecation
-Style/MethodName:
+Naming/MethodName:
   Exclude:
     - 'lib/rubyipmi/commands/mixins/power_mixin.rb'
 
 # Don't understand
-Style/FileName:
+Naming/FileName:
   Exclude:
     - 'spec/unit/freeipmi/bmc-info_spec.rb'
+
+# Spec files often have long describe blocks and intentional patterns
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'spec/**/*.rb'
+Style/OptionalBooleanParameter:
+  Enabled: false
+Lint/DuplicateMethods:
+  Exclude:
+    - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
+    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
+    - 'lib/rubyipmi/freeipmi/commands/lan.rb'
+    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
+    - 'lib/rubyipmi/ipmitool/commands/lan.rb'
+Style/MissingRespondToMissing:
+  Exclude:
+    - 'lib/rubyipmi/commands/mixins/sensors_mixin.rb'
+    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
+    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
+Lint/MissingSuper:
+  Exclude:
+    - 'lib/rubyipmi.rb'
+    - 'lib/rubyipmi/freeipmi/commands/fru.rb'
+    - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
+    - 'lib/rubyipmi/ipmitool/commands/fru.rb'
+    - 'lib/rubyipmi/ipmitool/commands/sensors.rb'
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+Lint/EmptyFile:
+  Exclude:
+    - 'spec/unit/freeipmi/lan_spec.rb'
+Lint/Void:
+  Exclude:
+    - 'lib/rubyipmi/ipmitool/commands/lan.rb'
+Naming/PredicateMethod:
+  Enabled: false
