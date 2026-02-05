@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'observer', '~> 0.1.0'
   s.add_dependency 'logger'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rdoc', "~> 6.1"
+  s.add_development_dependency 'rdoc', "~> 7.1"
   s.add_development_dependency 'bundler', ">= 2.0"
   s.add_development_dependency 'highline', '>= 1.0', '< 3'
   s.add_development_dependency 'rake', '~> 13'
