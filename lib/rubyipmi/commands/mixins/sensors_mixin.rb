@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Rubyipmi
   module SensorsMixin
     def refresh
-      @sensors = nil
+      @list = nil
       list
     end
 
     def list
-      @sensors ||= parse(getsensors)
+      @list ||= parse(getsensors)
     end
 
     def count
@@ -27,18 +29,16 @@ module Rubyipmi
     def templist(refreshdata = false)
       refresh if refreshdata
       list.each_with_object({}) do |(name, sensor), tlist|
-        tlist[name] = sensor if (sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/)
+        tlist[name] = sensor if sensor[:unit] =~ /.*degree.*/ || name =~ /.*temp.*/
       end
     end
 
     private
 
     def method_missing(method, *_args, &_block)
-      if !list.key?(method.to_s)
-        raise NoMethodError
-      else
-        list[method.to_s]
-      end
+      raise NoMethodError unless list.key?(method.to_s)
+
+      list[method.to_s]
     end
 
     def parse(data)

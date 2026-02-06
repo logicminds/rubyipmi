@@ -1,8 +1,8 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class Lan
-    attr_accessor :info
-    attr_accessor :channel
-    attr_accessor :config
+    attr_accessor :info, :channel, :config
 
     def initialize(opts)
       @config = Rubyipmi::Freeipmi::BmcConfig.new(opts)
@@ -11,7 +11,7 @@ module Rubyipmi::Freeipmi
     end
 
     def info
-      if @info.length < 1
+      if @info.empty?
         @config.verbose(true)
         parse(@config.section("Lan_Conf"))
         @config.verbose(false)
@@ -60,12 +60,10 @@ module Rubyipmi::Freeipmi
 
     # validates that the address, returns true/false
     def validaddr?(source)
-      valid = /^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$/.match("#{source}")
-      if valid.nil?
-        raise "#{source} is not a valid address"
-      else
-        return true
-      end
+      valid = /^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$/.match(source.to_s)
+      raise "#{source} is not a valid address" if valid.nil?
+
+      true
     end
 
     def ip=(address)
@@ -90,7 +88,8 @@ module Rubyipmi::Freeipmi
           # clean up the data from spaces
           next if line.match(/#+/)
           next if line.match(/Section/i)
-          line.gsub!(/\t/, '')
+
+          line.gsub!("\t", '')
           item = line.split(/\s+/)
           key = item.first.strip.downcase
           value = item.last.strip

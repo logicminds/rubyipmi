@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "observer"
 require 'tempfile'
 require 'rubyipmi'
@@ -5,9 +7,9 @@ require 'rubyipmi'
 module Rubyipmi
   class BaseCommand
     include Observable
-    attr_reader :cmd, :max_retry_count
+
+    attr_reader :cmd, :max_retry_count, :lastcall, :result
     attr_accessor :options, :passfile
-    attr_reader :lastcall, :result
 
     def logger
       Rubyipmi.logger
@@ -37,7 +39,7 @@ module Rubyipmi
     end
 
     def locate_command(commandname)
-      unless location = Rubyipmi.locate_command(commandname)
+      unless (location = Rubyipmi.locate_command(commandname))
         logger&.error("#{commandname} command not found, is #{commandname} installed?")
         raise "#{commandname} command not found, is #{commandname} installed?"
       end
@@ -49,8 +51,8 @@ module Rubyipmi
     def runcmd
       @success = false
       @success = run
-      logger.debug(@lastcall.inspect) unless @lastcall.nil? if logger
-      logger.debug(@result) unless @result.nil? if logger
+      logger&.debug(@lastcall.inspect) unless @lastcall.nil?
+      logger&.debug(@result) unless @result.nil?
       @success
     end
 
@@ -59,29 +61,27 @@ module Rubyipmi
       # we also don't want to add this to the initialize since mocking is difficult and we don't want to
       # throw errors upon object creation
       retrycount = 0
-      process_status = false
       @cmd = locate_command(@cmdname)
       setpass
       @result = nil
-      logger.debug(makecommand) if logger
+      logger&.debug(makecommand)
       begin
         command = makecommand
         @lastcall = command
         @result, @result_err, status = Rubyipmi.capture3(command)
         # sometimes the command tool does not return the correct result, validate it with additional code
-        process_status = validate_status(status)
-      rescue
+        validate_status(status)
+      rescue StandardError
         if retrycount < max_retry_count
           find_fix(@result)
           retrycount = retrycount.next
           retry
         else
-          logger.error("Exhausted all auto fixes, cannot determine what the problem is") if logger
+          logger&.error("Exhausted all auto fixes, cannot determine what the problem is")
           raise "Exhausted all auto fixes, cannot determine what the problem is"
         end
       ensure
         removepass
-        process_status
       end
     end
 
@@ -91,11 +91,12 @@ module Rubyipmi
     # this must be overrided in the subclass, as there are no generic errors that fit both providers
     def find_fix(result)
       return unless result
+
       # The errorcode code hash contains the fix
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-      rescue
+      rescue StandardError
         Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
         raise "Could not find fix for error code: \n#{result}"
       end

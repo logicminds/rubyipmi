@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class ChassisConfig < Rubyipmi::Freeipmi::BaseCommand
     def initialize(opts = ObservableHash.new)
@@ -36,11 +38,11 @@ module Rubyipmi::Freeipmi
 
     def bootpersistent(value)
       # TODO: find out if we can specify multiple key-pair values
-      if value == true
-        flag = "Chassis_Boot_Flags:Boot_Flags_Persistent=Yes"
-      else
-        flag = "Chassis_Boot_Flags:Boot_Flags_Persistent=No"
-      end
+      flag = if value == true
+               "Chassis_Boot_Flags:Boot_Flags_Persistent=Yes"
+             else
+               "Chassis_Boot_Flags:Boot_Flags_Persistent=No"
+             end
       @options["key-pair"] = "\"#{flag}\""
       value = commit
       @options.delete_notify("key-pair")

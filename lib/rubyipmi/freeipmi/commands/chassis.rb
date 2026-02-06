@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class Chassis < Rubyipmi::Freeipmi::BaseCommand
     def initialize(opts = ObservableHash.new)
@@ -6,15 +8,15 @@ module Rubyipmi::Freeipmi
 
     # Turn the led light on / off or with a delay
     def identify(status = false, delay = 0)
-      if status
-        if delay <= 0
-          options["chassis-identify"] = "FORCE"
-        else
-          options["chassis-identify"] = delay
-        end
-      else
-        options["chassis-identify"] = "TURN-OFF"
-      end
+      options["chassis-identify"] = if status
+                                      if delay <= 0
+                                        "FORCE"
+                                      else
+                                        delay
+                                      end
+                                    else
+                                      "TURN-OFF"
+                                    end
       # Run the command
       value = runcmd
       options.delete_notify("chassis-identify")
@@ -37,7 +39,7 @@ module Rubyipmi::Freeipmi
         bootstatus = config.bootdevice(device, persistent)
         power.cycle if reboot && bootstatus
       else
-        logger.error("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
+        logger&.error("Device with name: #{device} is not a valid boot device for host #{options['hostname']}")
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
       end
     end
@@ -74,11 +76,9 @@ module Rubyipmi::Freeipmi
       options["get-status"] = false
       value = runcmd
       options.delete_notify("get-status")
-      if value
-        return parsestatus
-      else
-        return value
-      end
+      return parsestatus if value
+
+      value
     end
 
     # A currently unsupported method to retrieve the led status

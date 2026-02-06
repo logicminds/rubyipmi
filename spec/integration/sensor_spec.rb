@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe "Sensors" do
   attr_accessor :provider
+
   before :each do
     user = ENV["ipmiuser"] || 'admin'
     pass = ENV["ipmipass"] || 'password'

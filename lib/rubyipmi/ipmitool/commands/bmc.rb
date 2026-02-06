@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Ipmitool
   class Bmc < Rubyipmi::Ipmitool::BaseCommand
     attr_accessor :config
@@ -12,7 +14,7 @@ module Rubyipmi::Ipmitool
     end
 
     def info
-      if @bmcinfo.length > 0
+      if @bmcinfo.length.positive?
         @bmcinfo
       else
         retrieve
@@ -32,9 +34,9 @@ module Rubyipmi::Ipmitool
         @options["cmdargs"] = "bmc reset #{type}"
         value = runcmd
         @options.delete_notify("cmdargs")
-        return value
+        value
       else
-        logger.error("reset type: #{type} is not a valid choice, use warm or cold") if logger
+        logger&.error("reset type: #{type} is not a valid choice, use warm or cold")
         raise "reset type: #{type} is not a valid choice, use warm or cold"
       end
     end
@@ -44,6 +46,7 @@ module Rubyipmi::Ipmitool
       value = runcmd
       @options.delete_notify("cmdargs")
       return unless value
+
       @result.lines.each do |line|
         line.chomp
         line.split(":").last.strip if line =~ /GUID/
@@ -56,29 +59,27 @@ module Rubyipmi::Ipmitool
       status = runcmd
       @options.delete_notify("cmdargs")
       subkey = nil
-      if !status
-        raise @result
-      else
-        @result.lines.each do |line|
-          # clean up the data from spaces
-          item = line.split(':')
-          key = item.first.strip
-          value = item.last.strip
-          # if the following condition is met we have subvalues
-          if value.empty?
-            subkey = key
-            @bmcinfo[subkey] = []
-          elsif key == value && subkey
-            # subvalue found
-            @bmcinfo[subkey] << value
-          else
-            # Normal key/value pair with no subkeys
-            subkey = nil
-            @bmcinfo[key] = value
-          end
+      raise @result unless status
+
+      @result.lines.each do |line|
+        # clean up the data from spaces
+        item = line.split(':')
+        key = item.first.strip
+        value = item.last.strip
+        # if the following condition is met we have subvalues
+        if value.empty?
+          subkey = key
+          @bmcinfo[subkey] = []
+        elsif key == value && subkey
+          # subvalue found
+          @bmcinfo[subkey] << value
+        else
+          # Normal key/value pair with no subkeys
+          subkey = nil
+          @bmcinfo[key] = value
         end
-        return @bmcinfo
       end
+      @bmcinfo
     end
   end
 end

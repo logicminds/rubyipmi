@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "Connection" do
@@ -35,10 +37,10 @@ describe "Connection" do
   end
 
   it 'can get diag info' do
-    expect(@conn.get_diag.keys).to eq([:provider, :frus, :sensors, :bmc_info, :version])
+    expect(@conn.get_diag.keys).to eq(%i[provider frus sensors bmc_info version])
   end
 
   it 'can get version info' do
-    expect(@conn.bmc.version).to match(/[\d\.]{3,4}/)
+    expect(@conn.bmc.version).to match(/[\d.]{3,4}/)
   end
 end

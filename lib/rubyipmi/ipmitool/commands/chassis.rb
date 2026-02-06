@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Ipmitool
   class Chassis < Rubyipmi::Ipmitool::BaseCommand
     def initialize(opts = ObservableHash.new)
@@ -7,15 +9,15 @@ module Rubyipmi::Ipmitool
     # Turn the led light on / off or with a delay
     # status means to enable or disable the blinking
     def identify(status = false, delay = 0)
-      if status
-        if !delay.between?(1, 255)
-          options["cmdargs"] = "chassis identify 255"
-        else
-          options["cmdargs"] = "chassis identify #{delay}"
-        end
-      else
-        options["cmdargs"] = "chassis identify 0"
-      end
+      options["cmdargs"] = if status
+                             if delay.between?(1, 255)
+                               "chassis identify #{delay}"
+                             else
+                               "chassis identify 255"
+                             end
+                           else
+                             "chassis identify 0"
+                           end
       # Run the command
       value = runcmd
       options.delete_notify("cmdargs")
@@ -38,7 +40,7 @@ module Rubyipmi::Ipmitool
         bootstatus = config.bootdevice(device, persistent)
         power.cycle if reboot && status
       else
-        logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
+        logger&.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}")
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
       end
       bootstatus
