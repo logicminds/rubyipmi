@@ -88,7 +88,7 @@ end
 - See `.rubocop.yml` for complete configuration
 
 ### Ruby Version
-- **Required**: Ruby 3.0+
+- **Required**: Ruby 3.0+ (tested through 3.4)
 - Use modern Ruby features but maintain compatibility with Ruby 3.0
 
 ### Documentation
