@@ -98,7 +98,7 @@ module Rubyipmi
     opts[:timeout] ||= 'default'
 
     if opts[:privilege] && !supported_privilege_type?(opts[:privilege])
-      logger.error("Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}") if logger
+      logger&.error("Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}")
       raise "Invalid privilege type :#{opts[:privilege]}, must be one of: #{PRIV_TYPES.join("\n")}"
     end
 
@@ -119,7 +119,7 @@ module Rubyipmi
     # Support multiple drivers
     # Note: these are just generic names of drivers that need to be specified for each provider
     unless valid_drivers.include?(opts[:driver])
-      logger.debug("You must specify a valid driver: #{valid_drivers.join(',')}") if logger
+      logger&.debug("You must specify a valid driver: #{valid_drivers.join(',')}")
       raise "You must specify a valid driver: #{valid_drivers.join(',')}"
     end
 
@@ -130,12 +130,12 @@ module Rubyipmi
       elsif provider == "ipmitool"
         Rubyipmi::Ipmitool::Connection.new(user, pass, host, opts)
       else
-        logger.error("Incorrect provider given, must use one of #{valid_providers.join(', ')}") if logger
+        logger&.error("Incorrect provider given, must use one of #{valid_providers.join(', ')}")
         raise "Incorrect provider given, must use one of #{valid_providers.join(', ')}"
       end
     else
       # Can't find the provider command line tool, maybe try other provider?
-      logger.error("The IPMI provider: #{provider} is not installed") if logger
+      logger&.error("The IPMI provider: #{provider} is not installed")
       raise "The IPMI provider: #{provider} is not installed"
     end
   end
@@ -167,7 +167,7 @@ module Rubyipmi
     when "ipmitool"
       cmdpath = locate_command('ipmitool')
     else
-      logger.error("Invalid BMC provider type #{provider}") if logger
+      logger&.error("Invalid BMC provider type #{provider}")
       false
     end
     # return false if command was not found

@@ -49,8 +49,8 @@ module Rubyipmi
     def runcmd
       @success = false
       @success = run
-      logger.debug(@lastcall.inspect) unless @lastcall.nil? if logger
-      logger.debug(@result) unless @result.nil? if logger
+      logger&.debug(@lastcall.inspect) unless @lastcall.nil?
+      logger&.debug(@result) unless @result.nil?
       @success
     end
 
@@ -63,7 +63,7 @@ module Rubyipmi
       @cmd = locate_command(@cmdname)
       setpass
       @result = nil
-      logger.debug(makecommand) if logger
+      logger&.debug(makecommand)
       begin
         command = makecommand
         @lastcall = command
@@ -76,7 +76,7 @@ module Rubyipmi
           retrycount = retrycount.next
           retry
         else
-          logger.error("Exhausted all auto fixes, cannot determine what the problem is") if logger
+          logger&.error("Exhausted all auto fixes, cannot determine what the problem is")
           raise "Exhausted all auto fixes, cannot determine what the problem is"
         end
       ensure
@@ -96,7 +96,7 @@ module Rubyipmi
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
       rescue
-        Rubyipmi.logger.debug("Could not find fix for error code: \n#{result}") if logger
+        logger&.debug("Could not find fix for error code: \n#{result}")
         raise "Could not find fix for error code: \n#{result}"
       end
     end
