@@ -1,5 +1,9 @@
-require 'coveralls'
-Coveralls.wear!
+# Only load Coveralls when running in CI with proper credentials
+# This prevents firewall issues in restricted environments
+if ENV['CI'] && ENV['COVERALLS_REPO_TOKEN']
+  require 'coveralls'
+  Coveralls.wear!
+end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
