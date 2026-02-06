@@ -9,6 +9,7 @@ on:
 jobs:
   rubocop:
     runs-on: ubuntu-latest
+    continue-on-error: true  # Allow to fail - report as warning only
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby

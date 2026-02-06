@@ -38,7 +38,7 @@ module Rubyipmi::Ipmitool
         bootstatus = config.bootdevice(device, persistent)
         power.cycle if reboot && status
       else
-        logger.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}") if logger
+        logger&.debug("Device with name: #{device} is not a valid boot device for host #{options['hostname']}")
         raise "Device with name: #{device} is not a valid boot device for host #{options['hostname']}"
       end
       bootstatus
