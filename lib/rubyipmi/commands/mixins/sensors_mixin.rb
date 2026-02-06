@@ -3,7 +3,7 @@
 module Rubyipmi
   module SensorsMixin
     def refresh
-      @sensors = nil
+      @list = nil
       list
     end
 
