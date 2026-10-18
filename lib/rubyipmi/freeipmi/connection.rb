@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rubyipmi/freeipmi/errorcodes'
 require 'rubyipmi/observablehash'
 require 'rubyipmi/commands/basecommand'
 require 'rubyipmi/freeipmi/commands/basecommand'
 
-Dir[File.dirname(__FILE__) + '/commands/*.rb'].each do |file|
+Dir["#{File.dirname(__FILE__)}/commands/*.rb"].sort.each do |file|
   require file
 end
 
@@ -15,12 +17,13 @@ module Rubyipmi
       DRIVERS_MAP = {
         'lan15' => 'LAN',
         'lan20' => 'LAN_2_0',
-        'open'  => 'OPENIPMI'
-      }
+        'open' => 'OPENIPMI'
+      }.freeze
 
       def initialize(user, pass, host, opts)
         @options = Rubyipmi::ObservableHash.new
         raise("Must provide a host to connect to") unless host
+
         @options["hostname"] = host
         # Credentials can also be stored in the freeipmi configuration file
         # So they are not required
@@ -29,15 +32,15 @@ module Rubyipmi
         if opts.key?(:privilege)
           @options["privilege-level"] = opts[:privilege] # privilege type
         end
-        # Note: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
+        # NOTE: rubyipmi should auto detect which driver to use so its unnecessary to specify the driver unless
         #       the user really wants to
         @options['driver-type'] = DRIVERS_MAP[opts[:driver]] unless DRIVERS_MAP[opts[:driver]].nil?
       end
 
       # test the connection to ensure we can at least make a single call
       def connection_works?
-        ! (bmc.info.nil? || bmc.info.empty?)
-      rescue
+        !(bmc.info.nil? || bmc.info.empty?)
+      rescue StandardError
         false
       end
 
