@@ -1,9 +1,21 @@
+inherit_from: .rubocop_todo.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
 Style/StringLiterals:
   Enabled: false
 AllCops:
   NewCops: enable
   Exclude:
-  - 'rubyipmi.gemspec'
+    - 'rubyipmi.gemspec'
+    # Setting AllCops/Exclude replaces RuboCop's defaults. Keep generated
+    # paths ignored so CI does not lint gems installed under vendor/bundle.
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
 Style/SignalException:
   EnforcedStyle: only_raise
 Style/Documentation:
