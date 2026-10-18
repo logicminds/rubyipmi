@@ -78,7 +78,6 @@ Lint/Void:
 # SupportedStylesForLeadingUnderscores: disallowed, required, optional
 Naming/MemoizedInstanceVariableName:
   Exclude:
-    - 'lib/rubyipmi/commands/mixins/sensors_mixin.rb'
     - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
 
 # Offense count: 5

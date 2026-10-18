@@ -3,12 +3,12 @@
 module Rubyipmi
   module SensorsMixin
     def refresh
-      @sensors = nil
+      @list = nil
       list
     end
 
     def list
-      @sensors ||= parse(getsensors)
+      @list ||= parse(getsensors)
     end
 
     def count
