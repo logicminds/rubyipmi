@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 # require 'rubyipmi/Freeipmi/errorcodes'
 
@@ -13,6 +15,12 @@ describe "Errorcodes" do
   it 'should return a fix if code is found' do
     code = 'authentication type unavailable for attempted privilege level'
     expect(Rubyipmi::Freeipmi::ErrorCodes.search(code)).to eq("driver-type" => "LAN_2_0")
+  end
+
+  it 'returns a fix for a frozen command error that ends with a newline' do
+    code = "/usr/sbin/bmc-info: authentication type unavailable for attempted privilege level\n"
+    expect(Rubyipmi::Freeipmi::ErrorCodes.search(code)).to eq("driver-type" => "LAN_2_0")
+    expect(code).to end_with("\n")
   end
 
   it 'should throw and error if no fix is found' do

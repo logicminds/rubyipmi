@@ -154,7 +154,6 @@ Style/FrozenStringLiteralComment:
     - 'spec/unit/freeipmi/bmc-info_spec.rb'
     - 'spec/unit/freeipmi/bmc_spec.rb'
     - 'spec/unit/freeipmi/connection_spec.rb'
-    - 'spec/unit/freeipmi/errorcodes_spec.rb'
     - 'spec/unit/freeipmi/fru_spec.rb'
     - 'spec/unit/freeipmi/sensors_spec.rb'
     - 'spec/unit/ipmitool/bmc_spec.rb'
