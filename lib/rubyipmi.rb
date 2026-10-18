@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2014 Corey Osman
 #
 #     This library is free software; you can redistribute it and/or
@@ -22,15 +24,13 @@ require 'logger'
 require 'open3'
 
 class NullLogger < Logger
-  def initialize(*_args)
-  end
+  def initialize(*_args); end
 
-  def add(*_args, &_block)
-  end
+  def add(*_args, &_block); end
 end
 
 module Rubyipmi
-  PRIV_TYPES = ['CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR']
+  PRIV_TYPES = ['CALLBACK', 'USER', 'OPERATOR', 'ADMINISTRATOR'].freeze
   attr_accessor :logger, :log_level
 
   # set a logger instance yourself to customize where the logs should go
@@ -69,6 +69,7 @@ module Rubyipmi
   def self.valid_providers
     ['auto', 'ipmitool', 'freeipmi']
   end
+
   # The connect method will create a connection object based the provider type passed in
   # If provider is left blank the function will use the first available provider
   # When the driver is set to auto, rubyipmi will try and figure out which driver to use by common error messages.  We will most likely be using
@@ -147,7 +148,7 @@ module Rubyipmi
 
   # test-friendly capture3
   def self.capture3(cmd)
-    return Open3.capture3(*cmd)
+    Open3.capture3(*cmd)
   end
 
   # method used to find the command which also makes it easier to mock with
@@ -156,6 +157,7 @@ module Rubyipmi
     logger&.error("Which command returned: #{stderr}") unless status.success?
 
     return nil unless status.success?
+
     stdout.strip
   end
 
@@ -180,7 +182,7 @@ module Rubyipmi
 
   # returns true if any of the providers are installed
   def self.provider_installed?
-    providers_installed.length > 0
+    providers_installed.length.positive?
   end
 
   def self.providers_installed
@@ -208,7 +210,7 @@ module Rubyipmi
         data[:ipmitool] = ipmiconn.get_diag
       end
     end
-    File.open('/tmp/rubyipmi_diag_data.txt', 'w') { |f| f.write(data) }
+    File.write('/tmp/rubyipmi_diag_data.txt', data)
     puts "Created file /tmp/rubyipmi_diag_data.txt"
   end
 end

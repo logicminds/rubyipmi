@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi
   module PowerMixin
     # Turn the system on
