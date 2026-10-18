@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Ipmitool
   class Lan < Rubyipmi::Ipmitool::BaseCommand
-    attr_accessor :info
-    attr_accessor :channel
+    attr_accessor :info, :channel
+
     MAX_RETRY = 1
 
     def initialize(opts = ObservableHash.new)
@@ -22,10 +24,10 @@ module Rubyipmi::Ipmitool
 
     def info
       retrycount = 0
-      if @info.length < 1
+      if @info.empty?
         begin
           parse(print)
-        rescue
+        rescue StandardError
           # sometimes we need to get the info from channel 1,
           # wait for error to occur then retry using channel 1
           if retrycount < MAX_RETRY
@@ -131,7 +133,7 @@ module Rubyipmi::Ipmitool
     end
 
     def normalize(text)
-      text.gsub(/\ /, '_').gsub(/\./, '').downcase
+      text.gsub(' ', '_').gsub('.', '').downcase
     end
   end
 end
