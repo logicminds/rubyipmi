@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Ipmitool
   class Fru < Rubyipmi::Ipmitool::BaseCommand
     attr_accessor :list
@@ -45,37 +47,32 @@ module Rubyipmi::Ipmitool
       fru = list.fetch(name, nil)
       # if the user wanted some data from the default fru, lets show the data for the fru.  Otherwise
       # we return the Fru with the given name
-      if fru.nil?
-        if list[DEFAULT_FRU].keys.include?(name)
-          return list[DEFAULT_FRU][name]
-        else
-          # maybe we should return nil instead? hmm...
-          raise NoMethodError
-        end
-      else
-        return fru
-      end
+      return fru unless fru.nil?
+      return list[DEFAULT_FRU][name] if list[DEFAULT_FRU].keys.include?(name)
+
+      # maybe we should return nil instead? hmm...
+      raise NoMethodError
     end
 
     # parse the fru information
     def parse(data)
       return unless data
+
       parsed_data = []
       data.lines.each do |line|
-        if line =~ /^FRU.*/
-          # this is the either the first line of of the fru or another fru
-          if parsed_data.count != 0
-            # we have reached a new fru device so lets record the previous fru
-            new_fru = FruData.new(parsed_data)
-            parsed_data = []
-            @list[new_fru[:name]] = new_fru
-          end
-
+        # this is the either the first line of of the fru or another fru
+        if (line =~ /^FRU.*/) && parsed_data.any?
+          # we have reached a new fru device so lets record the previous fru
+          new_fru = FruData.new(parsed_data)
+          parsed_data = []
+          @list[new_fru[:name]] = new_fru
         end
+
         parsed_data << line
       end
       # process the last fru
-      return if parsed_data.count == 0
+      return if parsed_data.none?
+
       # we have reached a new fru device so lets record the previous fru
       new_fru = FruData.new(parsed_data)
       parsed_data = []
@@ -87,7 +84,7 @@ module Rubyipmi::Ipmitool
       @options["cmdargs"] = "fru"
       value = runcmd
       @options.delete_notify("cmdargs")
-      return @result if value
+      @result if value
     end
   end
 
@@ -103,14 +100,13 @@ module Rubyipmi::Ipmitool
     # parse the fru information that should be an array of lines
     def parse(data)
       return unless data
+
       data.each do |line|
         key, value = line.split(':', 2)
         if key =~ /^FRU\s+Device.*/
-          if value =~ /([\w\s]*)\(.*\)/
-            self[:name] = $~[1].strip.gsub(/\ /, '_').downcase
-          end
+          self[:name] = $~[1].strip.gsub(' ', '_').downcase if value =~ /([\w\s]*)\(.*\)/
         else
-          key = key.strip.gsub(/\ /, '_').downcase
+          key = key.strip.gsub(' ', '_').downcase
           self[key] = value.strip unless value.nil?
         end
       end
