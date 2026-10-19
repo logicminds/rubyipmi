@@ -20,7 +20,6 @@ describe :Fru do
     end
 
     allow(@fru).to receive(:locate_command).with('ipmi-fru').and_return("#{@path}/ipmi-fru")
-    allow(@fru).to receive(:`).and_return(data)
     allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
   end
 
