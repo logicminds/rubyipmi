@@ -68,6 +68,23 @@ describe "Lan" do
     expect(@lan.static?).to eq false
   end
 
+  it 'retries lan info on channel 1 after the first read fails' do
+    failed = instance_double(Process::Status, :success? => false)
+    calls = 0
+    allow(Rubyipmi).to receive(:capture3) do
+      calls += 1
+      if calls == 1
+        ['channel problem', '', failed]
+      else
+        ["IP Address              : 10.1.1.1\n", '', mock_success_status]
+      end
+    end
+
+    expect(@lan.info['ip_address']).to eq('10.1.1.1')
+    expect(@lan.channel).to eq(1)
+    expect(calls).to eq(2)
+  end
+
   # it 'should attempt to apply fix and fail, then switch to channel 1' do
   #  channelbefore = @lan.channel
   #  error = "some lan channel problem"
