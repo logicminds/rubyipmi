@@ -37,7 +37,7 @@ describe "Connection" do
   end
 
   it 'can get diag info' do
-    expect(@conn.get_diag.keys).to eq(%i[provider frus sensors bmc_info version])
+    expect(@conn.get_diag.keys).to eq([:provider, :frus, :sensors, :bmc_info, :version])
   end
 
   it 'can get version info' do
