@@ -69,4 +69,8 @@ describe :Fru do
       expect(fru[:name]).to eq(name)
     end
   end
+
+  it 'raises when the requested fru field does not exist' do
+    expect { @fru.not_a_real_fru_field }.to raise_error(NoMethodError)
+  end
 end
