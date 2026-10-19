@@ -29,12 +29,6 @@ require 'rubyipmi'
 
 # Dir["#{File.dirname(__FILE__)}/unit/**/*.rb"].each {|f| require f}
 
-def command_is_eql?(source, expected)
-  src = source.split(' ')
-  exp = expected.split(' ')
-  exp - src
-end
-
 def verify_freeipmi_command(cmdobj, exp_args_count, expcmd)
   actual = cmdobj.lastcall
   expect(actual.first).to eq(expcmd)
