@@ -1,8 +1,22 @@
-# Only load Coveralls when running in CI with proper credentials
-# This prevents firewall issues in restricted environments
+# Coveralls uploads when a token is present. COVERAGE=1 writes an HTML and JSON
+# report instead. A low percentage does not fail the build.
 if ENV['CI'] && ENV['COVERALLS_REPO_TOKEN']
   require 'coveralls'
   Coveralls.wear!
+elsif ENV['COVERAGE'] == '1'
+  require 'simplecov'
+  SimpleCov.start do
+    enable_coverage :branch
+    enable_coverage :line
+    skip %r{/spec/}
+    skip %r{/vendor/}
+    formatter SimpleCov::Formatter::MultiFormatter.new(
+      [
+        SimpleCov::Formatter::HTMLFormatter,
+        SimpleCov::Formatter::JSONFormatter
+      ]
+    )
+  end
 end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../', 'lib'))
