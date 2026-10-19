@@ -10,4 +10,5 @@ group :development do
   gem 'pry-rescue'
   gem "reline"
   gem "rubocop", :require => false
+  gem 'simplecov', '~> 1.2', :require => false
 end

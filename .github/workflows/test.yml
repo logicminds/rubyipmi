@@ -24,7 +24,20 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: Run unit tests
+        env:
+          # One matrix cell publishes the report. Other cells stay unchanged.
+          COVERAGE: ${{ matrix.ruby == '3.3' && '1' || '0' }}
         run: bundle exec rake unit
+      - name: Publish coverage summary
+        if: matrix.ruby == '3.3'
+        run: ruby script/report_coverage.rb
+      - name: Upload coverage report
+        if: matrix.ruby == '3.3'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-ruby-3.3
+          path: coverage
+          if-no-files-found: error
       - name: Verify gem builds
         run: gem build *.gemspec
 
