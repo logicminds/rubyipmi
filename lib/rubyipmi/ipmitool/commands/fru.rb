@@ -81,7 +81,7 @@ module Rubyipmi::Ipmitool
 
     # run the command and return result
     def command
-      @options["cmdargs"] = "fru"
+      @options["cmdargs"] = ["fru"]
       value = runcmd
       @options.delete_notify("cmdargs")
       @result if value

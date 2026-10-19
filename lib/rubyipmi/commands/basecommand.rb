@@ -3,6 +3,7 @@
 require "observer"
 require 'tempfile'
 require 'rubyipmi'
+require 'rubyipmi/secure_files'
 
 module Rubyipmi
   class BaseCommand
@@ -20,7 +21,8 @@ module Rubyipmi
     end
 
     def setpass
-      @passfile = Tempfile.new('')
+      @passfile = Tempfile.new(['rubyipmi', '.pw'], Rubyipmi::SecureFiles.private_runtime_dir)
+      @passfile.chmod(0o600)
     end
 
     def removepass

@@ -20,6 +20,7 @@
 
 require 'rubyipmi/ipmitool/connection'
 require 'rubyipmi/freeipmi/connection'
+require 'rubyipmi/secure_files'
 require 'logger'
 require 'open3'
 
@@ -52,7 +53,9 @@ module Rubyipmi
     # by default the log will be set to info
     unless @logger
       if @log_level && @log_level >= 0
-        @logger = Logger.new('/tmp/rubyipmi.log')
+        io = SecureFiles.open_private('rubyipmi.log', :append => true)
+        io.sync = true
+        @logger = Logger.new(io)
         @logger.progname = 'Rubyipmi'
         @logger.level = @log_level
       else
@@ -60,6 +63,14 @@ module Rubyipmi
       end
     end
     @logger
+  end
+
+  def self.log_path
+    File.join(SecureFiles.private_runtime_dir, 'rubyipmi.log')
+  end
+
+  def self.diag_path
+    File.join(SecureFiles.private_runtime_dir, 'rubyipmi_diag_data.txt')
   end
 
   def self.valid_drivers
@@ -153,7 +164,7 @@ module Rubyipmi
 
   # method used to find the command which also makes it easier to mock with
   def self.locate_command(commandname)
-    stdout, stderr, status = Open3.capture3("which #{commandname}")
+    stdout, stderr, status = Open3.capture3('which', commandname.to_s)
     logger&.error("Which command returned: #{stderr}") unless status.success?
 
     return nil unless status.success?
@@ -210,7 +221,12 @@ module Rubyipmi
         data[:ipmitool] = ipmiconn.get_diag
       end
     end
-    File.write('/tmp/rubyipmi_diag_data.txt', data)
-    puts "Created file /tmp/rubyipmi_diag_data.txt"
+    file = SecureFiles.open_private('rubyipmi_diag_data.txt')
+    begin
+      file.write(data)
+    ensure
+      file.close
+    end
+    puts "Created file #{diag_path}"
   end
 end

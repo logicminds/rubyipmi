@@ -22,10 +22,26 @@ end
 
 desc "Run integrations tests against real systems using a vagrant box"
 task :vintegration, :user, :pass, :host do |_task, args|
-  vars = "ipmiuser=#{args[:user]} ipmipass=#{args[:pass]} ipmihost=#{args[:host]}"
-  puts `cd #{@base_dir}/spec && vagrant up`
-  puts `cd #{@base_dir}/spec && vagrant provision`
-  puts `vagrant ssh \"/rubyipmi/rake integration #{vars}\"`
+  require 'open3'
+  require 'shellwords'
+
+  spec_dir = File.join(@base_dir, 'spec')
+  remote = [
+    '/rubyipmi/rake integration',
+    "ipmiuser=#{Shellwords.shellescape(args[:user].to_s)}",
+    "ipmipass=#{Shellwords.shellescape(args[:pass].to_s)}",
+    "ipmihost=#{Shellwords.shellescape(args[:host].to_s)}"
+  ].join(' ')
+
+  [
+    ['vagrant', 'up'],
+    ['vagrant', 'provision'],
+    ['vagrant', 'ssh', '-c', remote]
+  ].each do |argv|
+    stdout, stderr, = Open3.capture3(*argv, :chdir => spec_dir)
+    puts stdout
+    warn stderr unless stderr.empty?
+  end
 end
 
 desc "Run integrations tests against real systems"
