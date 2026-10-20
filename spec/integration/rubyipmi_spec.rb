@@ -58,12 +58,13 @@ describe "rubyipmi" do
   it 'can get diag info' do
     # must have both freeipmi and ipmitool for this to pass
     Rubyipmi.get_diag(@user, @pass, @host)
-    expect(File.exist?('/tmp/rubyipmi_diag_data.txt')).to be true
-    FileUtils.rm('/tmp/rubyipmi_diag_data.txt')
+    expect(File.exist?(Rubyipmi.diag_path)).to be true
+    FileUtils.rm(Rubyipmi.diag_path)
   end
 
   describe :logger do
     before :each do
+      FileUtils.rm_f(Rubyipmi.log_path)
       FileUtils.rm_f('/tmp/rubyipmi.log')
       Rubyipmi.log_level = nil
       Rubyipmi.logger = nil
@@ -72,16 +73,16 @@ describe "rubyipmi" do
     it 'should only create an info log level' do
       Rubyipmi.log_level = Logger::INFO
       Rubyipmi.get_diag(@user, @pass, @host)
-      expect(File.exist?('/tmp/rubyipmi.log')).to be true
-      size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
+      expect(File.exist?(Rubyipmi.log_path)).to be true
+      size = File.open(Rubyipmi.log_path, 'r') { |f| f.read.length }
       expect(size).to be_within(60).of(100)
     end
 
     it 'should create a log with debug level' do
       Rubyipmi.log_level = Logger::DEBUG
       Rubyipmi.get_diag(@user, @pass, @host)
-      expect(File.exist?('/tmp/rubyipmi.log')).to be true
-      size = File.open('/tmp/rubyipmi.log', 'r') { |f| f.read.length }
+      expect(File.exist?(Rubyipmi.log_path)).to be true
+      size = File.open(Rubyipmi.log_path, 'r') { |f| f.read.length }
       expect(size).to be > 100
     end
 
@@ -100,12 +101,14 @@ describe "rubyipmi" do
     it 'should not create a log file when log level is nil' do
       Rubyipmi.get_diag(@user, @pass, @host)
       expect(Rubyipmi.logger.instance_of?(NullLogger)).to be true
+      expect(File.exist?(Rubyipmi.log_path)).to be false
       expect(File.exist?('/tmp/rubyipmi.log')).to be false
     end
 
     it 'should not create a log file when logger is set to nil and log_level is nil' do
       Rubyipmi.get_diag(@user, @pass, @host)
       expect(Rubyipmi.logger.instance_of?(NullLogger)).to be true
+      expect(File.exist?(Rubyipmi.log_path)).to be false
       expect(File.exist?('/tmp/rubyipmi.log')).to be false
     end
   end

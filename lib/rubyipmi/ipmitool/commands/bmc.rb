@@ -29,7 +29,7 @@ module Rubyipmi::Ipmitool
     # reset the bmc device, useful for troubleshooting
     def reset(type = 'cold')
       if ['cold', 'warm'].include?(type)
-        @options["cmdargs"] = "bmc reset #{type}"
+        @options["cmdargs"] = ["bmc", "reset", type]
         value = runcmd
         @options.delete_notify("cmdargs")
         return value
@@ -40,7 +40,7 @@ module Rubyipmi::Ipmitool
     end
 
     def guid
-      @options["cmdargs"] = "bmc guid"
+      @options["cmdargs"] = ["bmc", "guid"]
       value = runcmd
       @options.delete_notify("cmdargs")
       return unless value
@@ -52,7 +52,7 @@ module Rubyipmi::Ipmitool
 
     # This function will get the bmcinfo and return a hash of each item in the info
     def retrieve
-      @options["cmdargs"] = "bmc info"
+      @options["cmdargs"] = ["bmc", "info"]
       status = runcmd
       @options.delete_notify("cmdargs")
       subkey = nil

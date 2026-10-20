@@ -9,12 +9,12 @@ module Rubyipmi::Ipmitool
     def identify(status = false, delay = 0)
       if status
         if !delay.between?(1, 255)
-          options["cmdargs"] = "chassis identify 255"
+          options["cmdargs"] = ["chassis", "identify", "255"]
         else
-          options["cmdargs"] = "chassis identify #{delay}"
+          options["cmdargs"] = ["chassis", "identify", delay.to_s]
         end
       else
-        options["cmdargs"] = "chassis identify 0"
+        options["cmdargs"] = ["chassis", "identify", "0"]
       end
       # Run the command
       value = runcmd
@@ -77,7 +77,7 @@ module Rubyipmi::Ipmitool
     end
 
     def status
-      options["cmdargs"] = "chassis status"
+      options["cmdargs"] = ["chassis", "status"]
       value = runcmd
       options.delete_notify("cmdargs")
       {:result => @result, :value => value}
@@ -85,7 +85,7 @@ module Rubyipmi::Ipmitool
 
     # A currently unsupported method to retrieve the led status
     def identifystatus
-      options["cmdargs"] = "chassis identify status"
+      options["cmdargs"] = ["chassis", "identify", "status"]
       value = runcmd
       options.delete_notify("cmdargs")
       @result.chomp.split(":").last.strip if value

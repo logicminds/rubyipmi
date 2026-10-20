@@ -7,9 +7,9 @@ module Rubyipmi::Ipmitool
     # Set the boot device
     def bootdevice(device, persistent = false)
       if persistent
-        @options["cmdargs"] = "chassis bootdev #{device}"
+        @options["cmdargs"] = ["chassis", "bootdev", device]
       else
-        @options["cmdargs"] = "chassis bootparam set bootflag force_#{device}"
+        @options["cmdargs"] = ["chassis", "bootparam", "set", "bootflag", "force_#{device}"]
       end
       value = runcmd
       @options.delete_notify("cmdargs")

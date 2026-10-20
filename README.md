@@ -245,7 +245,7 @@ end
 ```ruby
 require 'rubyipmi'
 Rubyipmi.get_diag(user, pass, host)
-# Writes: /tmp/rubyipmi_diag_data.txt
+# Writes Rubyipmi.diag_path (a 0600 file in a per-user 0700 directory).
 # Review for sensitive data (IP/MAC, etc.) before sharing.
 ```
 
@@ -256,7 +256,7 @@ require 'rubyipmi'
 require 'logger'
 Rubyipmi.log_level = Logger::DEBUG
 Rubyipmi.get_diag(user, pass, host)
-# Also creates /tmp/rubyipmi.log with commands run
+# Also creates a 0600 log at Rubyipmi.log_path with commands run
 ```
 
 ---
@@ -357,7 +357,7 @@ By default, logging is disabled. To trace commands and options:
 require 'rubyipmi'
 require 'logger'
 Rubyipmi.log_level = Logger::DEBUG
-# Log file: /tmp/rubyipmi.log
+# Log file: Rubyipmi.log_path (mode 0600, inside a per-user 0700 directory)
 ```
 
 Custom logger:
@@ -375,7 +375,7 @@ For support or bug reports, generate a diagnostics file and (after redacting) at
 
 ```ruby
 Rubyipmi.get_diag(user, pass, host)
-# Edit /tmp/rubyipmi_diag_data.txt to remove sensitive data, then share.
+# Edit the file at Rubyipmi.diag_path to remove sensitive data, then share.
 ```
 
 ### Connection test
@@ -389,7 +389,7 @@ conn.connection_works?   # => true/false
 
 ## Security
 
-Credentials are not passed on the command line. The library uses temporary files (mode `0600`) to pass passwords to the underlying CLI tools; files are created and removed around each call. Filenames and directory names are randomized to avoid guessing. Passwords do not appear in process listings or in logs.
+Credentials are not passed on the command line. The library writes passwords to temporary files (mode `0600`) inside a per-user directory (mode `0700`) and removes those files around each call. Password filenames are random. Log and diagnostic files use that same directory, are created mode `0600`, and are not opened through a symlink. Passwords do not appear in process listings or in logs. Usernames and passwords that contain a line break, a null byte, or a backslash are rejected for FreeIPMI, because that tool reads them from a line-oriented config file. A `#` in a credential is escaped so it is not treated as a comment.
 
 ---
 
