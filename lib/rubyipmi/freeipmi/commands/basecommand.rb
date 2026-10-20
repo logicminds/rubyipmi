@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubyipmi/freeipmi/errorcodes'
 
 module Rubyipmi::Freeipmi
@@ -20,10 +22,11 @@ module Rubyipmi::Freeipmi
         # must remove from command line as its handled via conf file
         next if k == 'password'
         next if k == 'username'
-        if !v
-          "--#{k}"
-        else
+
+        if v
           "--#{k}=#{v}"
+        else
+          "--#{k}"
         end
       end
 
@@ -39,11 +42,10 @@ module Rubyipmi::Freeipmi
         # essentially any result greater than 23 characters is an error
         raise "Error occurred" if @result.length > 23
       when "bmc-config"
-        if @result.length > 100 && exitstatus.success?
-          return true
-        else
-          raise "Error occurred"
-        end
+        return true if @result.length > 100 && exitstatus.success?
+
+        raise "Error occurred"
+
       else
         super
       end
@@ -54,11 +56,12 @@ module Rubyipmi::Freeipmi
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
     def find_fix(result)
       return unless result
+
       # The errorcode code hash contains the fix
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-      rescue
+      rescue StandardError
         raise "Could not find fix for error code: \n#{result}"
       end
     end

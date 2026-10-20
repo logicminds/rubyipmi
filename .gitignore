@@ -11,6 +11,7 @@ doc
 Gemfile.lock
 # bundler
 .bundle
+vendor/bundle
 Gemfile.lock
 # built gems
 *.gem
