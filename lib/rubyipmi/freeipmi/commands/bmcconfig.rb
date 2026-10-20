@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Rubyipmi::Freeipmi
   class BmcConfig < Rubyipmi::Freeipmi::BaseCommand
     def initialize(opts = ObservableHash.new)
@@ -45,11 +47,11 @@ module Rubyipmi::Freeipmi
 
     # Returns a list of available sections to inspect
     def listsections
-      if @sections.length < 1
+      if @sections.empty?
         @options["listsections"] = false
         value = runcmd
         @options.delete_notify("listsections")
-        @sections = @result.split(/\n/) if value
+        @sections = @result.split("\n") if value
       end
       @sections
     end
