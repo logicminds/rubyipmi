@@ -24,8 +24,12 @@ module Rubyipmi::Ipmitool
         args += ["-#{k}", v]
       end
 
-      # since ipmitool requires commands to be in specific order
-      args += options.fetch('cmdargs', '').split
+      # ipmitool runs getopt on the whole argument vector, and getopt will
+      # treat a later field that begins with "-" as another global option.
+      # "--" ends option parsing so the subcommand keeps those fields.
+      subcommand = options.fetch('cmdargs', '').split
+      args << "--" unless subcommand.empty?
+      args.concat(subcommand)
 
       [cmd] + args.compact
     end
