@@ -19,15 +19,6 @@ Layout/EmptyLineAfterGuardClause:
     - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowAliasSyntax, AllowedMethods.
-# AllowedMethods: alias_method, public, protected, private
-Layout/EmptyLinesAroundAttributeAccessor:
-  Exclude:
-    - 'spec/integration/fru_spec.rb'
-    - 'spec/integration/sensor_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLinesAroundExceptionHandlingKeywords:
@@ -140,29 +131,6 @@ Style/FrozenStringLiteralComment:
     - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/Vagrantfile'
-    - 'spec/integration/bmc_spec.rb'
-    - 'spec/integration/chassis_config_spec.rb'
-    - 'spec/integration/chassis_spec.rb'
-    - 'spec/integration/connection_spec.rb'
-    - 'spec/integration/fru_spec.rb'
-    - 'spec/integration/lan_spec.rb'
-    - 'spec/integration/power_spec.rb'
-    - 'spec/integration/rubyipmi_spec.rb'
-    - 'spec/integration/sensor_spec.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/unit/freeipmi/bmc-info_spec.rb'
-    - 'spec/unit/freeipmi/bmc_spec.rb'
-    - 'spec/unit/freeipmi/connection_spec.rb'
-    - 'spec/unit/freeipmi/fru_spec.rb'
-    - 'spec/unit/freeipmi/sensors_spec.rb'
-    - 'spec/unit/ipmitool/bmc_spec.rb'
-    - 'spec/unit/ipmitool/connection_spec.rb'
-    - 'spec/unit/ipmitool/errorcodes_spec.rb'
-    - 'spec/unit/ipmitool/fru_spec.rb'
-    - 'spec/unit/ipmitool/lan_spec.rb'
-    - 'spec/unit/ipmitool/sensors_spec.rb'
-    - 'spec/unit/rubyipmi_spec.rb'
 
 # Offense count: 13
 # This cop supports safe autocorrection (--autocorrect).
@@ -176,16 +144,6 @@ Style/GuardClause:
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
     - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/integration/power_spec.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-# SupportedShorthandSyntax: always, never, either, consistent, either_consistent
-Style/HashSyntax:
-  Exclude:
-    - 'spec/spec_helper.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -204,8 +162,6 @@ Style/MutableConstant:
     - 'lib/rubyipmi/freeipmi/errorcodes.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
     - 'lib/rubyipmi/ipmitool/errorcodes.rb'
-    - 'spec/Vagrantfile'
-    - 'spec/unit/ipmitool/bmc_spec.rb'
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
@@ -234,32 +190,12 @@ Style/OneClassPerFile:
     - 'test/**/*'
     - 'lib/rubyipmi.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantBegin:
-  Exclude:
-    - 'spec/integration/rubyipmi_spec.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/RedundantInterpolation:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
     - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
-    - 'spec/integration/rubyipmi_spec.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantParentheses:
-  Exclude:
-    - 'spec/integration/rubyipmi_spec.rb'
 
 # Offense count: 15
 # This cop supports safe autocorrection (--autocorrect).
@@ -269,12 +205,6 @@ Style/RedundantRegexpArgument:
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
     - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'spec/integration/connection_spec.rb'
 
 # Offense count: 14
 # This cop supports safe autocorrection (--autocorrect).
@@ -300,12 +230,6 @@ Style/RescueStandardError:
     - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/SelectByRegexp:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
-# Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowModifier.
 Style/SoleNestedConditional:
@@ -319,7 +243,6 @@ Style/StringConcatenation:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/ipmitool/connection.rb'
-    - 'spec/unit/rubyipmi_spec.rb'
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
@@ -327,14 +250,6 @@ Style/StringConcatenation:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: forbid_for_all_comparison_operators, forbid_for_equality_operators_only, require_for_all_comparison_operators, require_for_equality_operators_only
-Style/YodaCondition:
-  Exclude:
-    - 'spec/integration/power_spec.rb'
 
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).
