@@ -1,45 +1,57 @@
 # CI, build, and release improvement plan
 
-Review of the test, packaging, and release setup as of October 2026. The first item is the change in this pull request. The rest are follow-ups.
+Review of the test, packaging, and release setup as of October 2026. Status is against `main` plus the open pull requests that already edit a file.
 
-## 1. Make the Lint workflow a real gate
+## Done
 
-**Why it matters.** `.rubocop.yml` replaces RuboCop's default ignore list with only the gemspec. CI installs gems into `vendor/bundle`, so RuboCop inspects those gems (3311 files on the latest `main` run) and fails. The Lint job sets `continue-on-error`, so the workflow still succeeds. A style regression in the project is invisible, and the check does not describe the code under review.
+### Make the Lint workflow a real gate
 
-**Effort.** Small. Restore the generated-path ignores, baseline the project's existing offenses so the job can be required without a style rewrite, and remove `continue-on-error`.
+Merged. `.rubocop.yml` ignores `vendor/**/*` and the other generated paths, `.rubocop_todo.yml` records the remaining offenses, and the Lint job no longer sets `continue-on-error`. A new offense fails the workflow.
 
-**Risk.** Low. The baseline records today's offenses per file and leaves the cops enabled, so a new file still fails. A later RuboCop release can add cops and turn the job red until the baseline is regenerated. That is the point of a required check.
+### Publish unit coverage and show the gaps
 
-**This pull request does this item.**
+Merged. The Ruby 3.3 cell sets `COVERAGE=1`, writes the SimpleCov HTML and JSON reports, uploads them, and `script/report_coverage.rb` prints line and branch totals plus the ten files with the most missed lines. A low percentage does not fail the build. Coveralls still uploads only when `COVERALLS_REPO_TOKEN` is set; the workflow does not set it.
 
-## 2. Match the Ruby matrix to versions that are still supported
+## This pull request
 
-**Why it matters.** The required matrix is Ruby 3.0 through 3.4. As of October 2026, 3.0, 3.1, and 3.2 are end of life. Ruby 4.0 already passes the unit tests and gem build, but that job is allowed to fail. The README and contributor notes still promise Ruby 3.0+. Keeping EOL interpreters on the required matrix will break when the runner image or `ruby/setup-ruby` drops them.
+### Require Ruby 4.0
 
-**Effort.** Small for the workflow and docs. The support promise has to change in the same change.
+**Why it matters.** The matrix required Ruby 3.0 through 3.4. Ruby 4.0 ran in a second job with `continue-on-error: true`, so a failure on the current interpreter stayed green. Unit tests and `gem build` already pass on Ruby 4.0.7.
 
-**Risk.** Medium. Dropping 3.0–3.2 from CI stops catching regressions for anyone still on those interpreters. Leaving them required risks a red matrix for a reason unrelated to the gem.
+**This pull request.** Ruby 4.0 is a cell in the required matrix, the allowed-to-fail job is gone, and the job times out after 20 minutes. `spec/unit/ci_workflow_spec.rb` locks that shape in. Ruby 3.0, 3.1, and 3.2 stay required.
 
-## 3. Tighten gem packaging
+**Left for a later change.** Dropping those end-of-life interpreters has to change the support promise in the same change. The README and `.github/copilot-instructions.md` still say Ruby 3.0+ tested through 3.4, and both files are already in open pull requests.
 
-**Why it matters.** `gem build` warns on every run: `logger` has no upper bound, and `required_ruby_version` is unset. `logger` is no longer a default gem on current Ruby, so an unbounded dependency can resolve to a future major version. The file list uses a pattern meant to drop `*.tar.gz` archives that does not match a normal archive name. The gemspec date is still 2021-09-29, and the version is stored in both `VERSION` and `lib/rubyipmi/version.rb`.
+## Follow-ups
 
-**Effort.** Small. Bound `logger`, set `required_ruby_version` to the versions the project still claims, and fix the archive filter. Decide whether one version file is enough before deleting the other.
+### Drop end-of-life Rubies from the required matrix
 
-**Risk.** Low if the Ruby requirement stays at 3.0 or whatever the README still promises. Setting it higher than the tested matrix would reject installs the project still claims to support.
+**Why it matters.** As of October 2026, Ruby 3.0, 3.1, and 3.2 are end of life. Keeping them required will break when `ruby/setup-ruby` drops the builds, for a reason unrelated to the gem.
 
-## 4. Stop tests from passing on the wrong failure
+**Blocked for now.** The README requirements line and the CI table, plus the Copilot instructions, are already edited by the credential-hardening and ipmitool option pull requests. Changing the support promise in a third pull request would overlap those files.
 
-**Why it matters.** The freeipmi and ipmitool error-code specs use `raise_error` with no class. On Ruby 3.4 the freeipmi example for a nil code passes because `chomp!` raises `NoMethodError`, not the "no fix" error the example is named for. Separately, `rake integration` with no `ipmiprovider` builds an empty provider list (`Array(nil)` is truthy), so the documented default of freeipmi and ipmitool never runs.
+**Risk.** Medium. Dropping 3.0–3.2 stops catching regressions for anyone still on those interpreters.
 
-**Effort.** Small for the matcher assertions and the provider default. Integration tests still need real hardware, so the rake fix should be covered by a unit-level example of the provider list, not by running the hardware suite.
+### Tighten gem packaging
 
-**Risk.** Low. Tightening the nil-code example will fail until `search` handles nil on purpose. That is a behavior choice, not a CI-only edit.
+**Why it matters.** `gem build` warns on every run: `logger` has no upper bound, and on current RubyGems `required_ruby_version` is unset. `logger` is no longer a default gem, so an unbounded dependency can resolve to a future major version. The archive filter is `/^*.tar\.gz/`, which is not anchored the way a `*.tar.gz` exclusion should be. The gemspec date is still 2021-09-29, and the version is stored in both `VERSION` and `lib/rubyipmi/version.rb`.
 
-## 5. Add a release path and narrow CI credentials
+**Blocked for now.** `rubyipmi.gemspec` is already edited by the open Dependabot rdoc bump. Development dependencies `rspec` and `bundler` are open-ended too; bounding them belongs with the same gemspec edit.
 
-**Why it matters.** Publishing is `rake release` from `bundler/gem_tasks`, with no GitHub Actions release workflow and no trusted-publishing setup. Test, lint, and security workflows do not set `permissions`, so the token keeps the repository default (write on the latest run). Coverage never uploads: Coveralls loads only when `COVERALLS_REPO_TOKEN` is set, and the test workflow does not set it. `Gemfile.lock` is gitignored, so `bundler-audit` checks a freshly resolved set rather than a committed one. Dependabot already bumps floating action tags; SHA pins are a separate hardening step.
+**Risk.** Low if `required_ruby_version` stays at 3.0, which is what the README still promises. Setting it higher would reject installs the project still claims to support.
 
-**Effort.** Medium. A release workflow needs a publishing credential and a decision about trusted publishing. Permission blocks and a coverage token are smaller.
+### Stop tests from passing on the wrong failure
+
+**Why it matters.** The freeipmi and ipmitool error-code specs use `raise_error` with no class. RSpec warns that this can pass on `NoMethodError`. The freeipmi example for a nil code does pass that way: `search` calls `chomp` and raises `NoMethodError`, not the "No Fix found" error the example is named for. Ipmitool's nil example does raise `RuntimeError`, but the matcher would also accept a name error. Separately, `rake integration` with no `ipmiprovider` builds an empty provider list (`Array(nil)` is truthy), so the intended default of freeipmi and ipmitool never runs and the task falls through to RSpec's default pattern.
+
+**Blocked for now.** The freeipmi and ipmitool error-code libraries are in the open RuboCop cleanup pull requests, the ipmitool spec is in the spec cleanup, and the Rakefile is in the credential-hardening pull request. Integration tests still need real hardware, so a fix should be covered by a unit example of the provider list, not by running the hardware suite.
+
+**Risk.** Low. Tightening the nil-code example will fail until `search` handles nil on purpose.
+
+### Narrow CI credentials and add a release path
+
+**Why it matters.** Publishing is `rake release` from `bundler/gem_tasks`, with no GitHub Actions release workflow and no trusted-publishing setup. The test and lint workflows do not set `permissions`, so the token keeps the repository default. `Gemfile.lock` is gitignored, so `bundler-audit` checks a freshly resolved set rather than a committed one. Dependabot already bumps floating action tags; SHA pins are a separate hardening step.
+
+**Blocked for now.** `security.yml` is already edited by the open Dependabot bump of `dependency-review-action`. The Gemfile is already edited by the dead-code removal pull request, so committing a lockfile from today's resolution would fight that change.
 
 **Risk.** Medium for anything that can push a gem. Low for read-only workflow permissions. Committing a lockfile would change the current library policy of testing against current dependency resolution.

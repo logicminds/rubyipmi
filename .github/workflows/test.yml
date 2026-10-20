@@ -7,6 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # setup-ruby plus the suite is normally under a minute. Cap a stuck
+    # self-hosted runner so one matrix cell cannot hold it for hours.
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -16,6 +19,8 @@ jobs:
           - "3.2"
           - "3.3"
           - "3.4"
+          # Current Ruby. Same required job as 3.x: a 4.0 failure fails the workflow.
+          - "4.0"
     steps:
       - uses: actions/checkout@v7
       - name: Install Ruby ${{ matrix.ruby }}
@@ -38,21 +43,5 @@ jobs:
           name: coverage-ruby-3.3
           path: coverage
           if-no-files-found: error
-      - name: Verify gem builds
-        run: gem build *.gemspec
-
-  test-ruby-4:
-    name: Test Ruby 4.0 (experimental)
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v7
-      - name: Install Ruby 4.0
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "4.0"
-          bundler-cache: true
-      - name: Run unit tests
-        run: bundle exec rake unit
       - name: Verify gem builds
         run: gem build *.gemspec
