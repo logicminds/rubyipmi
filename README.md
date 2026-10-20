@@ -389,7 +389,7 @@ conn.connection_works?   # => true/false
 
 ## Security
 
-Credentials are not passed on the command line. The library uses temporary files (mode `0600`) to pass passwords to the underlying CLI tools; files are created and removed around each call. Filenames and directory names are randomized to avoid guessing. Passwords do not appear in process listings or in logs.
+Credentials are not passed on the command line. The library uses temporary files (mode `0600`) to pass passwords to the underlying CLI tools; files are created and removed around each call. Filenames and directory names are randomized to avoid guessing. Passwords do not appear in process listings or in logs. ipmitool subcommands are placed after `--`, so a subcommand field is not parsed as another global option.
 
 ---
 
