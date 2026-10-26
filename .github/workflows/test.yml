@@ -33,7 +33,7 @@ jobs:
         run: ruby script/report_coverage.rb
       - name: Upload coverage report
         if: matrix.ruby == '3.3'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-ruby-3.3
           path: coverage
