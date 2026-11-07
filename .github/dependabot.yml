@@ -14,7 +14,7 @@ updates:
     commit-message:
       prefix: "chore(deps)"
 
-  # GitHub Actions
+  # GitHub Actions (workflows pin full SHAs with "# vX.Y.Z" comments for updates)
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

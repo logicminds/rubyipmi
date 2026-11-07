@@ -303,6 +303,7 @@ vagrant ssh -c "/rubyipmi/rake integration ipmiuser=... ipmipass=... ipmihost=..
 | [security.yml](.github/workflows/security.yml) | Dependency review (PRs) and `bundler-audit` for gem vulnerabilities |
 
 - **Dependabot** (`.github/dependabot.yml`): weekly dependency and GitHub Actions updates; security alerts appear in the **Security** tab.
+- **Supply-chain controls:** Actions are SHA-pinned, workflow tokens are read-scoped, and there is no Actions gem-publishing job. Maintainer notes: [docs/ci-supply-chain.md](docs/ci-supply-chain.md).
 - **GitHub Copilot Code Review:** For automatic AI-assisted reviews on pull requests, enable **Rules → Rulesets** in the repo **Settings**, add a rule, and choose **Require a review from GitHub Copilot**. You can enable “Run on each push” and “Run on drafts” there. (Requires a Copilot-enabled account.)
 
 ---
