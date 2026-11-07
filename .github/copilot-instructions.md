@@ -136,7 +136,7 @@ end
 require 'rubyipmi'
 require 'logger'
 Rubyipmi.log_level = Logger::DEBUG
-# Creates /tmp/rubyipmi.log
+# Creates a 0600 log at Rubyipmi.log_path, inside a per-user 0700 directory
 ```
 
 ### Error Handling
@@ -195,7 +195,7 @@ lib/rubyipmi/
 
 ### Diagnostics
 - `Rubyipmi.get_diag(user, pass, host)` creates diagnostics file
-- Writes to `/tmp/rubyipmi_diag_data.txt`
+- Writes to `Rubyipmi.diag_path` (a 0600 file in a per-user 0700 directory)
 - **Always redact sensitive data** (IPs, MACs, credentials) before sharing
 
 ### Projects Using Rubyipmi

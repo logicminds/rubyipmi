@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] 
+## [Unreleased]
+
+### Security
+- Keep password files, the debug log, and diagnostic output in a per-user `0700` directory, create the files mode `0600`, and refuse to follow symlinks.
+- Reject FreeIPMI usernames and passwords that would change the config-file structure, and escape `#`.
+- Pass ipmitool subcommands as argument arrays so a value is not split on whitespace.
+- Look up helper commands without invoking a shell.
+- Run the Vagrant integration task without interpolating credentials into a local shell command.
 
 ## [0.13.0] 
 - Drop support for testing ruby 2.x #66

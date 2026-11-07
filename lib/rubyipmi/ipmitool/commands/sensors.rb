@@ -11,7 +11,7 @@ module Rubyipmi::Ipmitool
     end
 
     def getsensors
-      options["cmdargs"] = "sensor"
+      options["cmdargs"] = ["sensor"]
       runcmd
       options.delete_notify("cmdargs")
       @result

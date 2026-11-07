@@ -67,7 +67,7 @@ describe :Rubyipmi do
   end
 
   it 'writes freeipmi diagnostics when that provider is installed' do
-    path = '/tmp/rubyipmi_diag_data.txt'
+    path = Rubyipmi.diag_path
     payload = {:frus => ['board']}
     connection = instance_double(Rubyipmi::Freeipmi::Connection, :get_diag => payload)
     calls = []
@@ -85,7 +85,7 @@ describe :Rubyipmi do
   end
 
   it 'writes an empty diagnostic file when no provider is installed' do
-    path = '/tmp/rubyipmi_diag_data.txt'
+    path = Rubyipmi.diag_path
     allow(Rubyipmi).to receive(:is_provider_installed?).and_return(false)
     expect(Rubyipmi).not_to receive(:connect)
 

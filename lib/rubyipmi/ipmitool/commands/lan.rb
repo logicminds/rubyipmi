@@ -77,21 +77,21 @@ module Rubyipmi::Ipmitool
     #  end
 
     def ip=(address)
-      @options["cmdargs"] = "lan set #{channel} ipaddr #{address}"
+      @options["cmdargs"] = ["lan", "set", channel.to_s, "ipaddr", address.to_s]
       value = runcmd
       @options.delete_notify("cmdargs")
       value
     end
 
     def netmask=(mask)
-      @options["cmdargs"] = "lan set #{channel} netmask #{mask}"
+      @options["cmdargs"] = ["lan", "set", channel.to_s, "netmask", mask.to_s]
       value = runcmd
       @options.delete_notify("cmdargs")
       value
     end
 
     def gateway=(address)
-      @options["cmdargs"] = "lan set #{channel} defgw ipaddr #{address}"
+      @options["cmdargs"] = ["lan", "set", channel.to_s, "defgw", "ipaddr", address.to_s]
       value = runcmd
       @options.delete_notify("cmdargs")
       value
@@ -106,7 +106,7 @@ module Rubyipmi::Ipmitool
     end
 
     def vlanid=(vlan)
-      @options["cmdargs"] = "lan set #{channel} vlan id #{vlan}"
+      @options["cmdargs"] = ["lan", "set", channel.to_s, "vlan", "id", vlan.to_s]
       value = runcmd
       @options.delete_notify("cmdargs")
       value
@@ -115,7 +115,7 @@ module Rubyipmi::Ipmitool
     private
 
     def print
-      @options["cmdargs"] = "lan print"
+      @options["cmdargs"] = ["lan", "print"]
       value = runcmd
       @options.delete_notify("cmdargs")
       @result if value

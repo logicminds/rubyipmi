@@ -12,7 +12,7 @@ module Rubyipmi::Ipmitool
 
     # The command function is a wrapper that actually calls the run method
     def command(opt)
-      @options["cmdargs"] = "power #{opt}"
+      @options["cmdargs"] = ["power", opt]
       value = runcmd
       @options.delete_notify("cmdargs")
       value

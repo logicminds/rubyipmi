@@ -25,10 +25,25 @@ module Rubyipmi::Ipmitool
       end
 
       # since ipmitool requires commands to be in specific order
-      args += options.fetch('cmdargs', '').split
+      args.concat(command_arguments)
 
       [cmd] + args.compact
     end
+
+    # Library commands pass cmdargs as an array so each value stays one
+    # argument. A string is still split for callers that set cmdargs that way.
+    def command_arguments
+      cmdargs = options['cmdargs']
+      case cmdargs
+      when nil, ''
+        []
+      when Array
+        cmdargs.map(&:to_s)
+      else
+        cmdargs.to_s.split
+      end
+    end
+    private :command_arguments
 
     # The findfix method acts like a recursive method and applies fixes defined in the errorcodes
     # If a fix is found it is applied to the options hash, and then the last run command is retried

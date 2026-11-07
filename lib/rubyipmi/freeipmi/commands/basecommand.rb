@@ -5,10 +5,23 @@ module Rubyipmi::Freeipmi
     def setpass
       super
       @options["config-file"] = @passfile.path
-      @passfile.write "username #{@options['username']}\n"
-      @passfile.write "password #{@options['password']}\n"
+      @passfile.write "username #{freeipmi_config_value(@options['username'])}\n"
+      @passfile.write "password #{freeipmi_config_value(@options['password'])}\n"
       @passfile.close
+    rescue StandardError
+      removepass if @passfile
+      raise
     end
+
+    # FreeIPMI config files are line oriented. A line break or a trailing
+    # backslash would add another directive, and "#" starts a comment.
+    def freeipmi_config_value(value)
+      text = value.to_s
+      raise "Credential contains characters that cannot be stored safely in a FreeIPMI config file" if text.match?(/[\r\n\x00\\]/)
+
+      text.gsub('#', '\\#')
+    end
+    private :freeipmi_config_value
 
     def max_retry_count
       @max_retry_count ||= Rubyipmi::Freeipmi::ErrorCodes.length
