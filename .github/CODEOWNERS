@@ -1,0 +1,4 @@
+# Verified public repo owner. Review workflow / Dependabot changes before merge.
+.github/workflows/ @logicminds
+.github/dependabot.yml @logicminds
+.github/CODEOWNERS @logicminds

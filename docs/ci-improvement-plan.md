@@ -38,8 +38,10 @@ Review of the test, packaging, and release setup as of October 2026. The first i
 
 ## 5. Add a release path and narrow CI credentials
 
-**Why it matters.** Publishing is `rake release` from `bundler/gem_tasks`, with no GitHub Actions release workflow and no trusted-publishing setup. Test, lint, and security workflows do not set `permissions`, so the token keeps the repository default (write on the latest run). Coverage never uploads: Coveralls loads only when `COVERALLS_REPO_TOKEN` is set, and the test workflow does not set it. `Gemfile.lock` is gitignored, so `bundler-audit` checks a freshly resolved set rather than a committed one. Dependabot already bumps floating action tags; SHA pins are a separate hardening step.
+**Why it matters.** Publishing is `rake release` from `bundler/gem_tasks`, with no GitHub Actions release workflow and no trusted-publishing setup. Coverage never uploads: Coveralls loads only when `COVERALLS_REPO_TOKEN` is set, and the test workflow does not set it. `Gemfile.lock` is gitignored, so `bundler-audit` checks a freshly resolved set rather than a committed one.
 
-**Effort.** Medium. A release workflow needs a publishing credential and a decision about trusted publishing. Permission blocks and a coverage token are smaller.
+**Done separately (supply-chain hardening).** Workflows set minimal `permissions`, pin third-party Actions to full commit SHAs, disable checkout credential persistence, and install a version-pinned `bundler-audit` while still running `check --update`. See [ci-supply-chain.md](ci-supply-chain.md). That work does **not** invent an Actions publishing pipeline.
 
-**Risk.** Medium for anything that can push a gem. Low for read-only workflow permissions. Committing a lockfile would change the current library policy of testing against current dependency resolution.
+**Effort (remaining).** Medium for a release workflow: needs a publishing credential decision (local credentials vs trusted publishing) and a careful trigger review. Coverage token wiring is smaller.
+
+**Risk.** Medium for anything that can push a gem. Committing a lockfile would change the current library policy of testing against current dependency resolution.
