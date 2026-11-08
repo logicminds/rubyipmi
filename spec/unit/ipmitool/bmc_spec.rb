@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "Bmc" do
@@ -69,4 +71,4 @@ RETRIEVE = {
     '0x00',
     '0x30'
   ]
-}
+}.freeze

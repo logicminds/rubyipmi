@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "Connection" do
@@ -39,6 +41,6 @@ describe "Connection" do
   end
 
   it 'can get version info' do
-    expect(@conn.bmc.version).to match(/[\d\.]{3,4}/)
+    expect(@conn.bmc.version).to match(/[\d.]{3,4}/)
   end
 end
