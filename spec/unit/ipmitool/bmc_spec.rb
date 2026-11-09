@@ -44,6 +44,19 @@ describe "Bmc" do
   it "info should parse as expected" do
     expect(@bmc.info).to eq(RETRIEVE)
   end
+
+  it "cold reset returns success and sends the reset command" do
+    expect(@bmc.reset('cold')).to eq(true)
+    expect(@bmc.lastcall.join(' ')).to include('bmc reset cold')
+  end
+
+  it "rejects a reset type other than cold or warm" do
+    expect { @bmc.reset('nope') }.to raise_error(RuntimeError, /not a valid choice/)
+  end
+
+  it "raises when an error has no automatic fix" do
+    expect { @bmc.find_fix('this is not a known ipmitool error') }.to raise_error(RuntimeError, /Could not find fix/)
+  end
 end
 
 RETRIEVE = {

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubyipmi/ipmitool/errorcodes'
 
 module Rubyipmi::Ipmitool
@@ -5,7 +7,7 @@ module Rubyipmi::Ipmitool
     def setpass
       super
       @options["f"] = @passfile.path
-      @passfile.write "#{@options['P']}"
+      @passfile.write @options['P'].to_s
       @passfile.rewind
       @passfile.close
     end
@@ -21,6 +23,7 @@ module Rubyipmi::Ipmitool
         # must remove from command line as its handled via conf file
         next if k == "P"
         next if k == "cmdargs"
+
         args += ["-#{k}", v]
       end
 
@@ -35,12 +38,12 @@ module Rubyipmi::Ipmitool
     # until all the fixes are exhausted or a error not defined in the errorcodes is found
     def find_fix(result)
       return unless result
+
       # The errorcode code hash contains the fix
       begin
         fix = ErrorCodes.search(result)
         @options.merge_notify!(fix)
-
-      rescue
+      rescue StandardError
         raise "Could not find fix for error code: \n#{result}"
       end
     end

@@ -15,9 +15,6 @@ Layout/EmptyLineAfterGuardClause:
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
@@ -28,12 +25,6 @@ Layout/EmptyLinesAroundAttributeAccessor:
     - 'spec/integration/fru_spec.rb'
     - 'spec/integration/sensor_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
@@ -43,21 +34,18 @@ Layout/EmptyLinesAroundExceptionHandlingKeywords:
 Layout/HashAlignment:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Layout/SpaceAfterNot:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/NonDeterministicRequireOrder:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -101,7 +89,6 @@ Style/CollectionQuerying:
 Style/CommentAnnotation:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
@@ -111,8 +98,6 @@ Style/ConditionalAssignment:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
     - 'lib/rubyipmi/freeipmi/commands/chassisconfig.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
 
 # Offense count: 52
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -134,12 +119,6 @@ Style/FrozenStringLiteralComment:
     - 'lib/rubyipmi/freeipmi/commands/sensors.rb'
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassisconfig.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
     - 'spec/Vagrantfile'
     - 'spec/integration/bmc_spec.rb'
     - 'spec/integration/chassis_config_spec.rb'
@@ -174,8 +153,6 @@ Style/GuardClause:
     - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
     - 'spec/integration/power_spec.rb'
 
 # Offense count: 1
@@ -202,8 +179,6 @@ Style/MutableConstant:
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/freeipmi/connection.rb'
     - 'lib/rubyipmi/freeipmi/errorcodes.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
-    - 'lib/rubyipmi/ipmitool/errorcodes.rb'
     - 'spec/Vagrantfile'
     - 'spec/unit/ipmitool/bmc_spec.rb'
 
@@ -213,8 +188,6 @@ Style/NegatedIfElseCondition:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/basecommand.rb'
     - 'lib/rubyipmi/freeipmi/commands/bmcinfo.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/chassis.rb'
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -224,7 +197,6 @@ Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
     - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
 
 # Offense count: 1
 # Configuration parameters: AllowedClasses.
@@ -252,7 +224,6 @@ Style/RedundantBegin:
 Style/RedundantInterpolation:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
     - 'spec/integration/rubyipmi_spec.rb'
 
 # Offense count: 2
@@ -286,7 +257,6 @@ Style/RedundantReturn:
     - 'lib/rubyipmi/freeipmi/commands/chassis.rb'
     - 'lib/rubyipmi/freeipmi/commands/fru.rb'
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
 
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
@@ -296,8 +266,6 @@ Style/RescueStandardError:
   Exclude:
     - 'lib/rubyipmi/freeipmi/commands/basecommand.rb'
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/commands/basecommand.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -318,7 +286,6 @@ Style/SoleNestedConditional:
 Style/StringConcatenation:
   Exclude:
     - 'lib/rubyipmi/freeipmi/connection.rb'
-    - 'lib/rubyipmi/ipmitool/connection.rb'
     - 'spec/unit/rubyipmi_spec.rb'
 
 # Offense count: 3
@@ -343,4 +310,3 @@ Style/ZeroLengthPredicate:
     - 'lib/rubyipmi/freeipmi/commands/bmc.rb'
     - 'lib/rubyipmi/freeipmi/commands/bmcconfig.rb'
     - 'lib/rubyipmi/freeipmi/commands/lan.rb'
-    - 'lib/rubyipmi/ipmitool/commands/bmc.rb'
