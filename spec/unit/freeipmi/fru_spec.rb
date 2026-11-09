@@ -67,4 +67,23 @@ describe :Fru do
       expect(fru[:name]).to eq(name)
     end
   end
+
+  it 'parses each fru when the output contains more than one device' do
+    data = <<~FRU
+      FRU Inventory Device: Default FRU Device (ID 00h)
+        FRU Board Manufacturer: HP
+
+      FRU Inventory Device: Power Supply (ID 01h)
+        FRU Board Manufacturer: Delta
+    FRU
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
+    @fru.instance_variable_set(:@list, {})
+
+    expect(@fru.names).to include('default_fru_device', 'power_supply')
+    expect(@fru.power_supply.board_manufacturer).to eq('Delta')
+  end
+
+  it 'raises when the requested fru field does not exist' do
+    expect { @fru.not_a_real_fru_field }.to raise_error(NoMethodError)
+  end
 end
