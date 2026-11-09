@@ -38,4 +38,27 @@ describe "Bmc" do
   it "info should not be nill" do
     expect(@bmc.info).not_to be_nil
   end
+
+  it "reads the firmware revision from bmc-info output" do
+    data = File.read("spec/fixtures/freeipmi/bmc_info.txt")
+    allow(@bmc).to receive(:info).and_call_original
+    allow(Rubyipmi).to receive(:locate_command).with('bmc-info').and_return("#{@path}/bmc-info")
+    allow(Rubyipmi).to receive(:capture3).and_return([data, '', mock_success_status])
+
+    expect(@bmc.info['Firmware Revision']).to eq('2.09')
+  end
+
+  it "cold reset asks the device to cold-reset" do
+    allow(Rubyipmi).to receive(:locate_command).with('bmc-device').and_return("#{@path}/bmc-device")
+    allow(Rubyipmi).to receive(:capture3).and_return(['', '', mock_success_status])
+
+    expect(@bmc.reset('cold')).to eq(true)
+    expect(@bmc.device.lastcall.join(' ')).to include('--cold-reset')
+  end
+
+  it "raises when an error has no automatic fix" do
+    expect do
+      @bmc.find_fix('this is not a known freeipmi error')
+    end.to raise_error(RuntimeError, /Could not find fix/)
+  end
 end
